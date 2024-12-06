@@ -47,10 +47,10 @@ def transmission_simulation():
     beacons, receiver, storedData = simulation_setup()
     beacon_positions = StoredData.set_beacon_positions(storedData, beacons)
 
-    transmission_interval = 0.5  # Beacons transmit every 0.5 seconds
-    estimation_interval = 0.52    # Receiver estimates position every 0.5 seconds
-    backend_update_interval = 2  # Backend updates every 2 seconds
-    simulation_duration = 20   # Run simulation for 20 seconds
+    transmission_interval = 1  # Beacons transmit every 0.5 seconds
+    estimation_interval = 1.02    # Receiver estimates position every 0.5 seconds
+    backend_update_interval = 5  # Backend updates every 2 seconds
+    simulation_duration = 30   # Run simulation for 15 seconds
 
     start_time = time.time()
     last_transmit = start_time
@@ -78,7 +78,7 @@ def transmission_simulation():
             accumulated_estimations.append(estimated_position)
             last_estimate = current_time
 
-        # Backend update $$Check weighted average
+        # Backend update
         if current_time - last_backend_update >= backend_update_interval:
             average_position = np.mean(accumulated_estimations, axis=0)
             backend_values.append(average_position)
@@ -100,7 +100,7 @@ def transmission_simulation():
     error = np.mean(estimation_errors)
     error_percentage = error / np.linalg.norm(np.array([receiver.x, receiver.y])) * 100
     print(f"| Average estimated position: {average_position}   True position: {receiver.x, receiver.y}")
-    print(f"| Average Error percentage: {error_percentage:.2f}%")
+    print(f"| Average Estimation Error percentage: {error_percentage:.2f}%")
 
 def main():
     # repeat_estimate()

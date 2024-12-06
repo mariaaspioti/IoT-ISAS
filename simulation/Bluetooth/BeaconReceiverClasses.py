@@ -65,6 +65,7 @@ class Receiver:
         self.x = x
         self.y = y
         self.noise = noise
+        self.used_beacons = []  # Attribute to store the list of beacons used for position estimation
 
     def calculate_rssi(self, beacon, distance):
         """
@@ -89,15 +90,20 @@ class Receiver:
         """
         distances = []
         positions = []
+        self.used_beacons = []  # Reset the list of used beacons
 
         # Calculate distances from RSSI
         for i, beacon in enumerate(beacon_calls):
             beacon_position = beacon_positions[i]
             beacon_distance = math.sqrt((self.x - beacon_position[0])**2 + (self.y - beacon_position[1])**2)
             rssi = self.calculate_rssi(beacon, beacon_distance)
+            # print("RSSI: ", rssi, "Distance: ", beacon_distance)
+            if rssi < -100:
+                continue
             distance = 10 ** ((beacon['tx_power'] - rssi) / (10 * 2))
             distances.append(distance)
             positions.append(beacon_position)
+            self.used_beacons.append(beacon)  # Store the used beacon
 
         # Trilateration for position estimation
         A = []
@@ -123,6 +129,7 @@ class Receiver:
         
         distances = []
         weights = []
+        self.used_beacons = []  # Reset the list of used beacons
 
         # Calculate distances and weights from RSSI
         for i, beacon in enumerate(beacon_calls):
@@ -136,6 +143,7 @@ class Receiver:
             weight = 1 / max(estimated_distance, 1e-3)  # Prevent division by zero
             weights.append(weight)
             distances.append(estimated_distance)
+            self.used_beacons.append(beacon)  # Store the used beacon
 
         # Normalize weights
         weights = np.array(weights)

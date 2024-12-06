@@ -22,15 +22,11 @@ RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 LIGHT_GREEN = (144, 238, 144)
 GRAY = (128, 128, 128)
+YELLOW = (255, 255, 0)
 
 def simulation_setup():
     num_beacons = 25
     beacons = [Beacon(tx_power=-59) for _ in range(num_beacons)]
-    # beacon_positions = [
-    #     [0, 0], [2, 0], [0, 2], [4, 0], [0, 4], [2, 2], [2, 4], [4, 2], [4, 4],
-    #     [6, 0], [0, 6], [6, 2], [2, 6], [6, 4], [4, 6], [6, 6],
-    #     [8, 0], [0, 8], [8, 2], [2, 8], [8, 4], [4, 8], [8, 6], [6, 8], [8, 8]
-    # ]
     # Generate beacon positions spaced out by 4 units
     beacon_positions = []
     spacing = 4
@@ -51,8 +47,6 @@ def scale_position(position):
 def handle_input(true_position):
     keys = pygame.key.get_pressed()
     # walking speed of 1.4 m/s, and the simulation runs at 2x speed
-    # movement_per_frame = 0.0045 * 4 # quadruple the time
-    # movement_per_frame = 0.001 * 4  # quadruple the time
     movement_per_frame = 0.02 * 2  # quadruple the time
 
     if keys[pygame.K_w]:
@@ -64,9 +58,10 @@ def handle_input(true_position):
     if keys[pygame.K_d]:
         true_position[0] += movement_per_frame
 
-def draw_elements(screen, beacon_positions, beacon_flash_times, current_time, true_position, 
+def draw_elements(screen, beacons, beacon_positions, beacon_flash_times, current_time, true_position, 
                   backend_values, pure_backend_values, last_10_average_values, 
-                  door_positions, receiver_trail=None, trail_lifetime=100000):
+                  door_positions, receiver_trail=None, trail_lifetime=100000, 
+                  bluetooth_estimations=None, used_beacons=None):
     screen.fill(GRAY)
 
     # Calculate the boundaries of the rectangle
@@ -100,9 +95,18 @@ def draw_elements(screen, beacon_positions, beacon_flash_times, current_time, tr
         pygame.draw.rect(screen, RED, (*door_top_left, door_bottom_right[0] - door_top_left[0], door_bottom_right[1] - door_top_left[1]))
 
     # Draw beacons
-    for i, pos in enumerate(beacon_positions):
-        color = LIGHT_GREEN if current_time - beacon_flash_times[i] < 100 else GREEN
-        pygame.draw.circle(screen, color, scale_position(pos), BEACON_RADIUS)
+    if used_beacons:
+        for i, pos in enumerate(beacon_positions):
+            for used_beacon in used_beacons:
+                if beacons[i].id == used_beacon["id"]:
+                    color = GREEN
+                    break
+            else:
+                color = BLACK
+            pygame.draw.circle(screen, color, scale_position(pos), BEACON_RADIUS)
+    else:
+        for pos in beacon_positions:
+            pygame.draw.circle(screen, BLACK, scale_position(pos), BEACON_RADIUS)
 
     # Draw true position
     pygame.draw.circle(screen, BLUE, scale_position(true_position), TRUE_POSITION_RADIUS)
@@ -115,19 +119,31 @@ def draw_elements(screen, beacon_positions, beacon_flash_times, current_time, tr
             trail_color = (0, 0, 255, alpha)
             pygame.gfxdraw.filled_circle(screen, *scale_position(trail_pos), RECEIVER_TRAIL_RADIUS, trail_color)
 
+    # Draw Bluetooth estimations as yellow dots with a short timespan
+    if bluetooth_estimations:
+        bluetooth_estimations = [(pos, timestamp) for pos, timestamp in bluetooth_estimations if current_time - timestamp < 1000]
+        for est_pos, timestamp in bluetooth_estimations:
+            alpha = max(0, 255 - int(255 * (current_time - timestamp) / 1000))  # Fade with age
+            est_color = (255, 255, 0, alpha)
+            pygame.gfxdraw.filled_circle(screen, *scale_position(est_pos), ESTIMATED_DOT_RADIUS, est_color)
+
     # Draw backend averaged positions
     backend_values = [(pos, timestamp) for pos, timestamp in backend_values if current_time - timestamp < 5000]
     for avg_pos, _ in backend_values:
         pygame.draw.circle(screen, RED, scale_position(avg_pos), ESTIMATED_DOT_RADIUS)
 
-    # Draw last 10 averages
+    # Draw last 10 averages as a continuous line
     if len(pure_backend_values) >= 5:
         last_10_avg = np.mean([pos for pos, _ in pure_backend_values[-5:]], axis=0)
         last_10_average_values.append(last_10_avg)
-        if len(last_10_average_values) > 1500:
+        if len(last_10_average_values) > 1000:
             last_10_average_values.pop(0)
-        for avg_pos in last_10_average_values:
-            pygame.draw.circle(screen, WHITE, scale_position(avg_pos), ESTIMATED_DOT_RADIUS)
+        if len(last_10_average_values) > 1:
+            scaled_positions = [scale_position(pos) for pos in last_10_average_values]
+            line_thickness = 3
+            pygame.draw.lines(screen, WHITE, False, scaled_positions, line_thickness)
+            for pos in scaled_positions:
+                pygame.draw.circle(screen, WHITE, pos, ESTIMATED_DOT_RADIUS)
 
 def update_backend(accumulated_estimations, backend_values, pure_backend_values, current_time):
     if accumulated_estimations:
@@ -188,7 +204,7 @@ def run_simulation(trail_enabled=False):
     gps_estimation_interval = 5000 / 2  # quadruple the time
     gps_backend_update_interval = 5000 / 2  # quadruple the time
 
-    trail_lifetime = 5000  # Lifetime of receiver trail
+    trail_lifetime = 15000  # Lifetime of receiver trail
 
     # State
     start_time = pygame.time.get_ticks()
@@ -197,15 +213,16 @@ def run_simulation(trail_enabled=False):
     last_backend_update = start_time
     beacon_flash_times = [0] * len(beacons)
     true_position = np.array([receiver.x, receiver.y])
+    previous_position = true_position.copy()  # Store the previous position
     accumulated_estimations = []
     backend_values = []
     pure_backend_values = []
     last_10_average_values = []
     receiver_trail = [] if trail_enabled else None
+    bluetooth_estimations = []  # List to store Bluetooth estimations with timestamps
     running = True
     tracking_method = "Bluetooth"  # Initial tracking method
     inside = True  # Initial state is inside
-    in_door = False  # Initial state is not in a door
 
     while running:
         current_time = pygame.time.get_ticks()
@@ -262,10 +279,14 @@ def run_simulation(trail_enabled=False):
         else:
             in_door = False
 
+        # Update previous position
+        previous_position = true_position.copy()
+
         # Simulate receiver estimation
         if current_time - last_estimate >= estimation_interval:
             if tracking_method == "Bluetooth":
                 estimated_position = receiver.calculate_position(beacon_positions, beacon_calls)
+                bluetooth_estimations.append((estimated_position, current_time))  # Store Bluetooth estimations with timestamps
             else:
                 estimated_position = gps_receiver.simulate_reading()
 
@@ -277,9 +298,11 @@ def run_simulation(trail_enabled=False):
             update_backend(accumulated_estimations, backend_values, pure_backend_values, current_time)
             last_backend_update = current_time
 
-        draw_elements(screen, beacon_positions, beacon_flash_times, current_time, 
+        used_beacons = receiver.used_beacons if tracking_method == "Bluetooth" else None
+        draw_elements(screen, beacons, beacon_positions, beacon_flash_times, current_time, 
                       true_position, backend_values, pure_backend_values, 
-                      last_10_average_values, door_positions, receiver_trail, trail_lifetime)
+                      last_10_average_values, door_positions, receiver_trail, trail_lifetime, 
+                      bluetooth_estimations, used_beacons)
 
         # Calculate elapsed time in seconds
         elapsed_time = (current_time - start_time) // 1000
@@ -289,8 +312,6 @@ def run_simulation(trail_enabled=False):
         # Calculate percentage error
         if len(last_10_average_values) > 0 and len(receiver_trail) > 0:
             last_white_dot = last_10_average_values[-1]
-            # corresponding_trail_pos = receiver_trail[-1][0]  # Assuming the last trail position corresponds to the last white dot
-            # find the shortest euclidean distance between the last white dot and all trail positions
             corresponding_trail_pos = min(receiver_trail, key=lambda x: np.linalg.norm(np.array(x[0]) - np.array(last_white_dot)))[0]
             percentage_error = calculate_percentage_error(corresponding_trail_pos, last_white_dot)
         else:
