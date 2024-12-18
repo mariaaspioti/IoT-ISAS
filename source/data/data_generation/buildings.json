@@ -1,0 +1,1258 @@
+[
+  {
+    "id": "urn:ngsi-ld:Building:0",
+    "type": "Building",
+    "address": {
+      "type": "StructuredValue",
+      "value": {
+        "addressCountry": "IE",
+        "addressLocality": "Leixlip",
+        "addressRegion": "Kildare",
+        "postalCode": "W23",
+        "streetAddress": "Collinstown Industrial Park"
+      }
+    },
+    "name": {
+      "type": "Text",
+      "value": "FAB 1"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Semiconductor manufacturing site"
+    },
+    "category": {
+      "type": "Text",
+      "value": "industrial"
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -6.512,
+              53.364
+            ],
+            [
+              -6.511,
+              53.364
+            ],
+            [
+              -6.511,
+              53.365
+            ],
+            [
+              -6.512,
+              53.365
+            ],
+            [
+              -6.512,
+              53.364
+            ]
+          ]
+        ]
+      }
+    },
+    "peopleCapacity": {
+      "type": "Number",
+      "value": 300
+    },
+    "peopleOccupancy": {
+      "type": "Number",
+      "value": 120
+    },
+    "cleanrooms": {
+      "type": "Relationship",
+      "value": [
+        "urn:ngsi-ld:Building:1"
+      ]
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Building:1",
+    "type": "Building",
+    "address": {
+      "type": "StructuredValue",
+      "value": {
+        "addressCountry": "IE",
+        "addressLocality": "Leixlip",
+        "addressRegion": "Kildare",
+        "postalCode": "W23",
+        "streetAddress": "Collinstown Industrial Park"
+      }
+    },
+    "name": {
+      "type": "Text",
+      "value": "Cleanroom 1"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Wafer fabrication cleanroom"
+    },
+    "category": {
+      "type": "Text",
+      "value": "industrial"
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -6.512,
+              53.364
+            ],
+            [
+              -6.511,
+              53.364
+            ],
+            [
+              -6.511,
+              53.365
+            ],
+            [
+              -6.512,
+              53.365
+            ],
+            [
+              -6.512,
+              53.364
+            ]
+          ]
+        ]
+      }
+    },
+    "peopleCapacity": {
+      "type": "Number",
+      "value": 180
+    },
+    "peopleOccupancy": {
+      "type": "Number",
+      "value": 125
+    },
+    "partOf": {
+      "type": "Relationship",
+      "value": "urn:ngsi-ld:Building:0"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Building:2",
+    "type": "Building",
+    "address": {
+      "type": "StructuredValue",
+      "value": {
+        "addressCountry": "IE",
+        "addressLocality": "Leixlip",
+        "addressRegion": "Kildare",
+        "postalCode": "W23",
+        "streetAddress": "Collinstown Industrial Park"
+      }
+    },
+    "name": {
+      "type": "Text",
+      "value": "FAB 2"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Semiconductor manufacturing site"
+    },
+    "category": {
+      "type": "Text",
+      "value": "industrial"
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -6.512,
+              53.364
+            ],
+            [
+              -6.511,
+              53.364
+            ],
+            [
+              -6.511,
+              53.365
+            ],
+            [
+              -6.512,
+              53.365
+            ],
+            [
+              -6.512,
+              53.364
+            ]
+          ]
+        ]
+      }
+    },
+    "peopleCapacity": {
+      "type": "Number",
+      "value": 300
+    },
+    "peopleOccupancy": {
+      "type": "Number",
+      "value": 130
+    },
+    "cleanrooms": {
+      "type": "Relationship",
+      "value": [
+        "urn:ngsi-ld:Building:3"
+      ]
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Building:3",
+    "type": "Building",
+    "address": {
+      "type": "StructuredValue",
+      "value": {
+        "addressCountry": "IE",
+        "addressLocality": "Leixlip",
+        "addressRegion": "Kildare",
+        "postalCode": "W23",
+        "streetAddress": "Collinstown Industrial Park"
+      }
+    },
+    "name": {
+      "type": "Text",
+      "value": "Cleanroom 2"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Wafer fabrication cleanroom"
+    },
+    "category": {
+      "type": "Text",
+      "value": "industrial"
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -6.512,
+              53.364
+            ],
+            [
+              -6.511,
+              53.364
+            ],
+            [
+              -6.511,
+              53.365
+            ],
+            [
+              -6.512,
+              53.365
+            ],
+            [
+              -6.512,
+              53.364
+            ]
+          ]
+        ]
+      }
+    },
+    "peopleCapacity": {
+      "type": "Number",
+      "value": 160
+    },
+    "peopleOccupancy": {
+      "type": "Number",
+      "value": 90
+    },
+    "partOf": {
+      "type": "Relationship",
+      "value": "urn:ngsi-ld:Building:2"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Building:4",
+    "type": "Building",
+    "address": {
+      "type": "StructuredValue",
+      "value": {
+        "addressCountry": "IE",
+        "addressLocality": "Leixlip",
+        "addressRegion": "Kildare",
+        "postalCode": "W23",
+        "streetAddress": "Collinstown Industrial Park"
+      }
+    },
+    "name": {
+      "type": "Text",
+      "value": "FAB 10"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Semiconductor manufacturing site"
+    },
+    "category": {
+      "type": "Text",
+      "value": "industrial"
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -6.512,
+              53.364
+            ],
+            [
+              -6.511,
+              53.364
+            ],
+            [
+              -6.511,
+              53.365
+            ],
+            [
+              -6.512,
+              53.365
+            ],
+            [
+              -6.512,
+              53.364
+            ]
+          ]
+        ]
+      }
+    },
+    "peopleCapacity": {
+      "type": "Number",
+      "value": 240
+    },
+    "peopleOccupancy": {
+      "type": "Number",
+      "value": 200
+    },
+    "cleanrooms": {
+      "type": "Relationship",
+      "value": [
+        "urn:ngsi-ld:Building:5"
+      ]
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Building:5",
+    "type": "Building",
+    "address": {
+      "type": "StructuredValue",
+      "value": {
+        "addressCountry": "IE",
+        "addressLocality": "Leixlip",
+        "addressRegion": "Kildare",
+        "postalCode": "W23",
+        "streetAddress": "Collinstown Industrial Park"
+      }
+    },
+    "name": {
+      "type": "Text",
+      "value": "Cleanroom 3"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Wafer fabrication cleanroom"
+    },
+    "category": {
+      "type": "Text",
+      "value": "industrial"
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -6.512,
+              53.364
+            ],
+            [
+              -6.511,
+              53.364
+            ],
+            [
+              -6.511,
+              53.365
+            ],
+            [
+              -6.512,
+              53.365
+            ],
+            [
+              -6.512,
+              53.364
+            ]
+          ]
+        ]
+      }
+    },
+    "peopleCapacity": {
+      "type": "Number",
+      "value": 130
+    },
+    "peopleOccupancy": {
+      "type": "Number",
+      "value": 70
+    },
+    "partOf": {
+      "type": "Relationship",
+      "value": "urn:ngsi-ld:Building:4"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Building:6",
+    "type": "Building",
+    "address": {
+      "type": "StructuredValue",
+      "value": {
+        "addressCountry": "IE",
+        "addressLocality": "Leixlip",
+        "addressRegion": "Kildare",
+        "postalCode": "W23",
+        "streetAddress": "Collinstown Industrial Park"
+      }
+    },
+    "name": {
+      "type": "Text",
+      "value": "FAB 14"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Semiconductor manufacturing site"
+    },
+    "category": {
+      "type": "Text",
+      "value": "industrial"
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -6.512,
+              53.364
+            ],
+            [
+              -6.511,
+              53.364
+            ],
+            [
+              -6.511,
+              53.365
+            ],
+            [
+              -6.512,
+              53.365
+            ],
+            [
+              -6.512,
+              53.364
+            ]
+          ]
+        ]
+      }
+    },
+    "peopleCapacity": {
+      "type": "Number",
+      "value": 250
+    },
+    "peopleOccupancy": {
+      "type": "Number",
+      "value": 110
+    },
+    "cleanrooms": {
+      "type": "Relationship",
+      "value": [
+        "urn:ngsi-ld:Building:7"
+      ]
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Building:7",
+    "type": "Building",
+    "address": {
+      "type": "StructuredValue",
+      "value": {
+        "addressCountry": "IE",
+        "addressLocality": "Leixlip",
+        "addressRegion": "Kildare",
+        "postalCode": "W23",
+        "streetAddress": "Collinstown Industrial Park"
+      }
+    },
+    "name": {
+      "type": "Text",
+      "value": "Cleanroom 4"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Wafer fabrication cleanroom"
+    },
+    "category": {
+      "type": "Text",
+      "value": "industrial"
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -6.512,
+              53.364
+            ],
+            [
+              -6.511,
+              53.364
+            ],
+            [
+              -6.511,
+              53.365
+            ],
+            [
+              -6.512,
+              53.365
+            ],
+            [
+              -6.512,
+              53.364
+            ]
+          ]
+        ]
+      }
+    },
+    "peopleCapacity": {
+      "type": "Number",
+      "value": 130
+    },
+    "peopleOccupancy": {
+      "type": "Number",
+      "value": 70
+    },
+    "partOf": {
+      "type": "Relationship",
+      "value": "urn:ngsi-ld:Building:6"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Building:8",
+    "type": "Building",
+    "address": {
+      "type": "StructuredValue",
+      "value": {
+        "addressCountry": "IE",
+        "addressLocality": "Leixlip",
+        "addressRegion": "Kildare",
+        "postalCode": "W23",
+        "streetAddress": "Collinstown Industrial Park"
+      }
+    },
+    "name": {
+      "type": "Text",
+      "value": "FAB 10 ENERGY CENTRE"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Energy and utilities building supporting FAB 10"
+    },
+    "category": {
+      "type": "Text",
+      "value": "industrial"
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -6.512,
+              53.364
+            ],
+            [
+              -6.511,
+              53.364
+            ],
+            [
+              -6.511,
+              53.365
+            ],
+            [
+              -6.512,
+              53.365
+            ],
+            [
+              -6.512,
+              53.364
+            ]
+          ]
+        ]
+      }
+    },
+    "peopleCapacity": {
+      "type": "Number",
+      "value": 50
+    },
+    "peopleOccupancy": {
+      "type": "Number",
+      "value": 20
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Building:9",
+    "type": "Building",
+    "address": {
+      "type": "StructuredValue",
+      "value": {
+        "addressCountry": "IE",
+        "addressLocality": "Leixlip",
+        "addressRegion": "Kildare",
+        "postalCode": "W23",
+        "streetAddress": "Collinstown Industrial Park"
+      }
+    },
+    "name": {
+      "type": "Text",
+      "value": "FAB 14 ENERGY CENTRE"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Energy and utilities building supporting FAB 14"
+    },
+    "category": {
+      "type": "Text",
+      "value": "industrial"
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -6.512,
+              53.364
+            ],
+            [
+              -6.511,
+              53.364
+            ],
+            [
+              -6.511,
+              53.365
+            ],
+            [
+              -6.512,
+              53.365
+            ],
+            [
+              -6.512,
+              53.364
+            ]
+          ]
+        ]
+      }
+    },
+    "peopleCapacity": {
+      "type": "Number",
+      "value": 50
+    },
+    "peopleOccupancy": {
+      "type": "Number",
+      "value": 20
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Building:10",
+    "type": "Building",
+    "address": {
+      "type": "StructuredValue",
+      "value": {
+        "addressCountry": "IE",
+        "addressLocality": "Leixlip",
+        "addressRegion": "Kildare",
+        "postalCode": "W23",
+        "streetAddress": "Collinstown Industrial Park"
+      }
+    },
+    "name": {
+      "type": "Text",
+      "value": "R&D"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Research and Development facility"
+    },
+    "category": {
+      "type": "Text",
+      "value": "industrial"
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -6.512,
+              53.364
+            ],
+            [
+              -6.511,
+              53.364
+            ],
+            [
+              -6.511,
+              53.365
+            ],
+            [
+              -6.512,
+              53.365
+            ],
+            [
+              -6.512,
+              53.364
+            ]
+          ]
+        ]
+      }
+    },
+    "peopleCapacity": {
+      "type": "Number",
+      "value": 100
+    },
+    "peopleOccupancy": {
+      "type": "Number",
+      "value": 40
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Building:11",
+    "type": "Building",
+    "address": {
+      "type": "StructuredValue",
+      "value": {
+        "addressCountry": "IE",
+        "addressLocality": "Leixlip",
+        "addressRegion": "Kildare",
+        "postalCode": "W23",
+        "streetAddress": "Collinstown Industrial Park"
+      }
+    },
+    "name": {
+      "type": "Text",
+      "value": "IR5"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Office building"
+    },
+    "category": {
+      "type": "Text",
+      "value": "office"
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -6.512,
+              53.364
+            ],
+            [
+              -6.511,
+              53.364
+            ],
+            [
+              -6.511,
+              53.365
+            ],
+            [
+              -6.512,
+              53.365
+            ],
+            [
+              -6.512,
+              53.364
+            ]
+          ]
+        ]
+      }
+    },
+    "peopleCapacity": {
+      "type": "Number",
+      "value": 200
+    },
+    "peopleOccupancy": {
+      "type": "Number",
+      "value": 150
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Building:12",
+    "type": "Building",
+    "address": {
+      "type": "StructuredValue",
+      "value": {
+        "addressCountry": "IE",
+        "addressLocality": "Leixlip",
+        "addressRegion": "Kildare",
+        "postalCode": "W23",
+        "streetAddress": "Collinstown Industrial Park"
+      }
+    },
+    "name": {
+      "type": "Text",
+      "value": "IR2"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Office building"
+    },
+    "category": {
+      "type": "Text",
+      "value": "office"
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -6.512,
+              53.364
+            ],
+            [
+              -6.511,
+              53.364
+            ],
+            [
+              -6.511,
+              53.365
+            ],
+            [
+              -6.512,
+              53.365
+            ],
+            [
+              -6.512,
+              53.364
+            ]
+          ]
+        ]
+      }
+    },
+    "peopleCapacity": {
+      "type": "Number",
+      "value": 200
+    },
+    "peopleOccupancy": {
+      "type": "Number",
+      "value": 150
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Building:13",
+    "type": "Building",
+    "address": {
+      "type": "StructuredValue",
+      "value": {
+        "addressCountry": "IE",
+        "addressLocality": "Leixlip",
+        "addressRegion": "Kildare",
+        "postalCode": "W23",
+        "streetAddress": "Collinstown Industrial Park"
+      }
+    },
+    "name": {
+      "type": "Text",
+      "value": "RODI"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Reverse Osmosis Deionized Water facility"
+    },
+    "category": {
+      "type": "Text",
+      "value": "industrial"
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -6.512,
+              53.364
+            ],
+            [
+              -6.511,
+              53.364
+            ],
+            [
+              -6.511,
+              53.365
+            ],
+            [
+              -6.512,
+              53.365
+            ],
+            [
+              -6.512,
+              53.364
+            ]
+          ]
+        ]
+      }
+    },
+    "peopleCapacity": {
+      "type": "Number",
+      "value": 50
+    },
+    "peopleOccupancy": {
+      "type": "Number",
+      "value": 20
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Building:14",
+    "type": "Building",
+    "address": {
+      "type": "StructuredValue",
+      "value": {
+        "addressCountry": "IE",
+        "addressLocality": "Leixlip",
+        "addressRegion": "Kildare",
+        "postalCode": "W23",
+        "streetAddress": "Collinstown Industrial Park"
+      }
+    },
+    "name": {
+      "type": "Text",
+      "value": "ASU"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Air Separation Units"
+    },
+    "category": {
+      "type": "Text",
+      "value": "industrial"
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -6.512,
+              53.364
+            ],
+            [
+              -6.511,
+              53.364
+            ],
+            [
+              -6.511,
+              53.365
+            ],
+            [
+              -6.512,
+              53.365
+            ],
+            [
+              -6.512,
+              53.364
+            ]
+          ]
+        ]
+      }
+    },
+    "peopleCapacity": {
+      "type": "Number",
+      "value": 50
+    },
+    "peopleOccupancy": {
+      "type": "Number",
+      "value": 20
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Building:15",
+    "type": "Building",
+    "address": {
+      "type": "StructuredValue",
+      "value": {
+        "addressCountry": "IE",
+        "addressLocality": "Leixlip",
+        "addressRegion": "Kildare",
+        "postalCode": "W23",
+        "streetAddress": "Collinstown Industrial Park"
+      }
+    },
+    "name": {
+      "type": "Text",
+      "value": "Ryebrook 110kV Substation"
+    },
+    "description": {
+      "type": "Text",
+      "value": "High-voltage power substation"
+    },
+    "category": {
+      "type": "Text",
+      "value": "industrial"
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -6.512,
+              53.364
+            ],
+            [
+              -6.511,
+              53.364
+            ],
+            [
+              -6.511,
+              53.365
+            ],
+            [
+              -6.512,
+              53.365
+            ],
+            [
+              -6.512,
+              53.364
+            ]
+          ]
+        ]
+      }
+    },
+    "peopleCapacity": {
+      "type": "Number",
+      "value": 20
+    },
+    "peopleOccupancy": {
+      "type": "Number",
+      "value": 10
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Building:16",
+    "type": "Building",
+    "address": {
+      "type": "StructuredValue",
+      "value": {
+        "addressCountry": "IE",
+        "addressLocality": "Leixlip",
+        "addressRegion": "Kildare",
+        "postalCode": "W23",
+        "streetAddress": "Collinstown Industrial Park"
+      }
+    },
+    "name": {
+      "type": "Text",
+      "value": "Waste Water Treatment Building"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Waste water treatment facility"
+    },
+    "category": {
+      "type": "Text",
+      "value": "industrial"
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -6.512,
+              53.364
+            ],
+            [
+              -6.511,
+              53.364
+            ],
+            [
+              -6.511,
+              53.365
+            ],
+            [
+              -6.512,
+              53.365
+            ],
+            [
+              -6.512,
+              53.364
+            ]
+          ]
+        ]
+      }
+    },
+    "peopleCapacity": {
+      "type": "Number",
+      "value": 50
+    },
+    "peopleOccupancy": {
+      "type": "Number",
+      "value": 20
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Building:17",
+    "type": "Building",
+    "address": {
+      "type": "StructuredValue",
+      "value": {
+        "addressCountry": "IE",
+        "addressLocality": "Leixlip",
+        "addressRegion": "Kildare",
+        "postalCode": "W23",
+        "streetAddress": "Collinstown Industrial Park"
+      }
+    },
+    "name": {
+      "type": "Text",
+      "value": "Water Treatment Building"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Water treatment facility"
+    },
+    "category": {
+      "type": "Text",
+      "value": "industrial"
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -6.512,
+              53.364
+            ],
+            [
+              -6.511,
+              53.364
+            ],
+            [
+              -6.511,
+              53.365
+            ],
+            [
+              -6.512,
+              53.365
+            ],
+            [
+              -6.512,
+              53.364
+            ]
+          ]
+        ]
+      }
+    },
+    "peopleCapacity": {
+      "type": "Number",
+      "value": 50
+    },
+    "peopleOccupancy": {
+      "type": "Number",
+      "value": 20
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Building:18",
+    "type": "Building",
+    "address": {
+      "type": "StructuredValue",
+      "value": {
+        "addressCountry": "IE",
+        "addressLocality": "Leixlip",
+        "addressRegion": "Kildare",
+        "postalCode": "W23",
+        "streetAddress": "Collinstown Industrial Park"
+      }
+    },
+    "name": {
+      "type": "Text",
+      "value": "MSCP"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Multi-Storey Car Park"
+    },
+    "category": {
+      "type": "Text",
+      "value": "parking"
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -6.512,
+              53.364
+            ],
+            [
+              -6.511,
+              53.364
+            ],
+            [
+              -6.511,
+              53.365
+            ],
+            [
+              -6.512,
+              53.365
+            ],
+            [
+              -6.512,
+              53.364
+            ]
+          ]
+        ]
+      }
+    },
+    "peopleCapacity": {
+      "type": "Number",
+      "value": 500
+    },
+    "peopleOccupancy": {
+      "type": "Number",
+      "value": 10
+    }
+  }
+]

@@ -1,0 +1,222 @@
+[
+  {
+    "id": "urn:ngsi-ld:Person:0",
+    "type": "Person",
+    "name": {
+      "type": "Text",
+      "value": "Elizabeth Franklin"
+    },
+    "hasDevices": {
+      "type": "Relationship",
+      "value": []
+    },
+    "currentFacility": {
+      "type": "Relationship",
+      "value": "urn:ngsi-ld:Building:0"
+    },
+    "role": {
+      "type": "Text",
+      "value": "Engineer"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Person:1",
+    "type": "Person",
+    "name": {
+      "type": "Text",
+      "value": "Scott Reynolds"
+    },
+    "hasDevices": {
+      "type": "Relationship",
+      "value": []
+    },
+    "currentFacility": {
+      "type": "Relationship",
+      "value": "urn:ngsi-ld:Building:0"
+    },
+    "role": {
+      "type": "Text",
+      "value": "Janitor"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Person:2",
+    "type": "Person",
+    "name": {
+      "type": "Text",
+      "value": "Michael Stewart"
+    },
+    "hasDevices": {
+      "type": "Relationship",
+      "value": []
+    },
+    "currentFacility": {
+      "type": "Relationship",
+      "value": "urn:ngsi-ld:Building:1"
+    },
+    "role": {
+      "type": "Text",
+      "value": "Technician"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Person:3",
+    "type": "Person",
+    "name": {
+      "type": "Text",
+      "value": "Wanda Brandt"
+    },
+    "hasDevices": {
+      "type": "Relationship",
+      "value": []
+    },
+    "currentFacility": {
+      "type": "Relationship",
+      "value": "urn:ngsi-ld:Building:1"
+    },
+    "role": {
+      "type": "Text",
+      "value": "Cleanroom Operator"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Person:4",
+    "type": "Person",
+    "name": {
+      "type": "Text",
+      "value": "Angelica Smith"
+    },
+    "hasDevices": {
+      "type": "Relationship",
+      "value": []
+    },
+    "currentFacility": {
+      "type": "Relationship",
+      "value": "urn:ngsi-ld:Building:2"
+    },
+    "role": {
+      "type": "Text",
+      "value": "Technician"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Person:5",
+    "type": "Person",
+    "name": {
+      "type": "Text",
+      "value": "Lauren Riley"
+    },
+    "hasDevices": {
+      "type": "Relationship",
+      "value": []
+    },
+    "currentFacility": {
+      "type": "Relationship",
+      "value": "urn:ngsi-ld:Building:2"
+    },
+    "role": {
+      "type": "Text",
+      "value": "Engineer"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Person:6",
+    "type": "Person",
+    "name": {
+      "type": "Text",
+      "value": "Christine Herman MD"
+    },
+    "hasDevices": {
+      "type": "Relationship",
+      "value": []
+    },
+    "currentFacility": {
+      "type": "Relationship",
+      "value": "urn:ngsi-ld:Building:3"
+    },
+    "role": {
+      "type": "Text",
+      "value": "Cleanroom Operator"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Person:7",
+    "type": "Person",
+    "name": {
+      "type": "Text",
+      "value": "Julian Jordan"
+    },
+    "hasDevices": {
+      "type": "Relationship",
+      "value": []
+    },
+    "currentFacility": {
+      "type": "Relationship",
+      "value": "urn:ngsi-ld:Building:3"
+    },
+    "role": {
+      "type": "Text",
+      "value": "Cleanroom Operator"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Person:8",
+    "type": "Person",
+    "name": {
+      "type": "Text",
+      "value": "Devin Martinez"
+    },
+    "hasDevices": {
+      "type": "Relationship",
+      "value": []
+    },
+    "currentFacility": {
+      "type": "Relationship",
+      "value": "urn:ngsi-ld:Building:4"
+    },
+    "role": {
+      "type": "Text",
+      "value": "Technician"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Person:9",
+    "type": "Person",
+    "name": {
+      "type": "Text",
+      "value": "Kevin Williams"
+    },
+    "hasDevices": {
+      "type": "Relationship",
+      "value": []
+    },
+    "currentFacility": {
+      "type": "Relationship",
+      "value": "urn:ngsi-ld:Building:4"
+    },
+    "role": {
+      "type": "Text",
+      "value": "Engineer"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Person:10",
+    "type": "Person",
+    "name": {
+      "type": "Text",
+      "value": "Rebecca Glenn"
+    },
+    "hasDevices": {
+      "type": "Relationship",
+      "value": []
+    },
+    "currentFacility": {
+      "type": "Relationship",
+      "value": "urn:ngsi-ld:Building:5"
+    },
+    "role": {
+      "type": "Text",
+      "value": "Cleanroom Operator"
+    }
+  }
+]
