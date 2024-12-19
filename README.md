@@ -14,8 +14,7 @@
 
 - Go to `./source/frontend/`
 - Execute `npm install` to have all the pertinent node modules
-- Execute `npm start` for the React app to start through the development server.` for the React app to start through the development server.
-</li>
+- Execute `npm start` for the React app to start through the development server.
 
 Visit http://localhost:3000
 
