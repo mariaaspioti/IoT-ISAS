@@ -43,6 +43,5 @@ Thumbs.db
 # Ignore generated documentation
 /docs/
 
-# Ignore compiled Python files
+# Ignore pycache
 __pycache__/
-
