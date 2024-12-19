@@ -42,6 +42,8 @@ function App() {
     return (
         <div>
             <h1>React + Node.js</h1>
+            <h3> Updates every 5 seconds, with data retrieved from the Node server.</h3>
+            <p> Click on the markers to see their coordinates and message/id.</p>
             {loading ? (
                 <p>Loading...</p>
             ) : (
