@@ -4,6 +4,12 @@
 # HOW TO:
 
 ---
+- Go to `./source.`
+- Make sure `concurrently` is installed with `npm install concurrently`
+- Execute `npm run start:all`
+
+_Alternatively:_
+---
 
 ## Start node server on localhost:3001
 - Go to `./source/`
