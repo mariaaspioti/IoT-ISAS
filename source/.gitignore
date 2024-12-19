@@ -9,6 +9,9 @@ Thumbs.db
 /node_modules/
 /yarn.lock
 
+# Ignore all node_modules in the project
+**/node_modules
+
 # Ignore build artifacts
 /build/
 /dist/
