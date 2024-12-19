@@ -5,8 +5,8 @@
 
 ---
 - Go to `./source.`
-- Make sure `concurrently` is installed with `npm install concurrently`
-- Execute `npm run start:all`
+- Execute `npm install`
+- Execute `npm run install-start:all`
 
 _Alternatively:_
 ---
