@@ -1,0 +1,1289 @@
+[
+  {
+    "id": "urn:ngsi-ld:Device:0",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "Bluetooth Tracker"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Bluetooth tracker for asset tracking"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "meter"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "location"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:0"
+      ]
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "bluetooth LE",
+        "bluetooth"
+      ]
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Point",
+        "coordinates": [
+          -40.329419,
+          -53.958373
+        ]
+      }
+    },
+    "rssi": {
+      "type": "Number",
+      "value": -83
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 40
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2024-12-08T02:24:55"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:1",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "Bluetooth Tracker"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Bluetooth tracker for asset tracking"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "meter"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "location"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:1"
+      ]
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "bluetooth LE",
+        "bluetooth"
+      ]
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Point",
+        "coordinates": [
+          -110.952736,
+          -74.05809
+        ]
+      }
+    },
+    "rssi": {
+      "type": "Number",
+      "value": -24
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 46
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2024-12-05T18:20:36"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:2",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "Bluetooth Tracker"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Bluetooth tracker for asset tracking"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "meter"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "location"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:2"
+      ]
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "bluetooth LE",
+        "bluetooth"
+      ]
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Point",
+        "coordinates": [
+          108.529454,
+          -72.548909
+        ]
+      }
+    },
+    "rssi": {
+      "type": "Number",
+      "value": -110
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 21
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2024-12-06T17:46:05"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:3",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "Bluetooth Tracker"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Bluetooth tracker for asset tracking"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "meter"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "location"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:3"
+      ]
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "bluetooth LE",
+        "bluetooth"
+      ]
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Point",
+        "coordinates": [
+          152.38171,
+          20.606456
+        ]
+      }
+    },
+    "rssi": {
+      "type": "Number",
+      "value": -28
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 88
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2024-12-12T00:04:51"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:4",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "Bluetooth Tracker"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Bluetooth tracker for asset tracking"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "meter"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "location"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:4"
+      ]
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "bluetooth LE",
+        "bluetooth"
+      ]
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Point",
+        "coordinates": [
+          16.002873,
+          -33.986388
+        ]
+      }
+    },
+    "rssi": {
+      "type": "Number",
+      "value": -13
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 67
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2024-12-15T21:38:49"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:5",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "Bluetooth Tracker"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Bluetooth tracker for asset tracking"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "meter"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "location"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:5"
+      ]
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "bluetooth LE",
+        "bluetooth"
+      ]
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Point",
+        "coordinates": [
+          -150.597834,
+          27.2649285
+        ]
+      }
+    },
+    "rssi": {
+      "type": "Number",
+      "value": -15
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 5
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2024-12-11T06:37:26"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:6",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "Bluetooth Tracker"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Bluetooth tracker for asset tracking"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "meter"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "location"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:6"
+      ]
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "bluetooth LE",
+        "bluetooth"
+      ]
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Point",
+        "coordinates": [
+          63.234022,
+          67.5705975
+        ]
+      }
+    },
+    "rssi": {
+      "type": "Number",
+      "value": -22
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 94
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2024-12-09T07:39:16"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:7",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "Bluetooth Tracker"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Bluetooth tracker for asset tracking"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "meter"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "location"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:7"
+      ]
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "bluetooth LE",
+        "bluetooth"
+      ]
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Point",
+        "coordinates": [
+          -162.686663,
+          -73.7875475
+        ]
+      }
+    },
+    "rssi": {
+      "type": "Number",
+      "value": -3
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 38
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2024-12-17T16:35:47"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:8",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "Bluetooth Tracker"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Bluetooth tracker for asset tracking"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "meter"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "location"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:8"
+      ]
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "bluetooth LE",
+        "bluetooth"
+      ]
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Point",
+        "coordinates": [
+          137.521205,
+          -70.733323
+        ]
+      }
+    },
+    "rssi": {
+      "type": "Number",
+      "value": -18
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 87
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2024-12-09T05:53:44"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:9",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "Bluetooth Tracker"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Bluetooth tracker for asset tracking"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "meter"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "location"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:9"
+      ]
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "bluetooth LE",
+        "bluetooth"
+      ]
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Point",
+        "coordinates": [
+          -39.490064,
+          -85.8535345
+        ]
+      }
+    },
+    "rssi": {
+      "type": "Number",
+      "value": -61
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 24
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2024-12-15T16:03:21"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:10",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "Bluetooth Tracker"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Bluetooth tracker for asset tracking"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "meter"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "location"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:10"
+      ]
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "bluetooth LE",
+        "bluetooth"
+      ]
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Point",
+        "coordinates": [
+          -176.099255,
+          56.9321685
+        ]
+      }
+    },
+    "rssi": {
+      "type": "Number",
+      "value": 0
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 50
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2024-12-04T14:58:59"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:11",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "GPS Tracker"
+    },
+    "description": {
+      "type": "Text",
+      "value": "GPS tracker for asset tracking outdoors"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "meter"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "location"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:0"
+      ]
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "lora"
+      ]
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Point",
+        "coordinates": [
+          -85.037827,
+          -45.779197
+        ]
+      }
+    },
+    "rssi": {
+      "type": "Number",
+      "value": -85
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 14
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2024-12-19T12:03:42"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:12",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "GPS Tracker"
+    },
+    "description": {
+      "type": "Text",
+      "value": "GPS tracker for asset tracking outdoors"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "meter"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "location"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:1"
+      ]
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "lora"
+      ]
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Point",
+        "coordinates": [
+          -56.907647,
+          21.346247
+        ]
+      }
+    },
+    "rssi": {
+      "type": "Number",
+      "value": -52
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 27
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2024-12-11T21:49:06"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:13",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "GPS Tracker"
+    },
+    "description": {
+      "type": "Text",
+      "value": "GPS tracker for asset tracking outdoors"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "meter"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "location"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:2"
+      ]
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "lora"
+      ]
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Point",
+        "coordinates": [
+          -123.409027,
+          -54.4337295
+        ]
+      }
+    },
+    "rssi": {
+      "type": "Number",
+      "value": -16
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 20
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2024-12-02T23:08:18"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:14",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "GPS Tracker"
+    },
+    "description": {
+      "type": "Text",
+      "value": "GPS tracker for asset tracking outdoors"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "meter"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "location"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:3"
+      ]
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "lora"
+      ]
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Point",
+        "coordinates": [
+          -63.803579,
+          4.94955
+        ]
+      }
+    },
+    "rssi": {
+      "type": "Number",
+      "value": -46
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 53
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2024-12-11T00:52:51"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:15",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "GPS Tracker"
+    },
+    "description": {
+      "type": "Text",
+      "value": "GPS tracker for asset tracking outdoors"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "meter"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "location"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:4"
+      ]
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "lora"
+      ]
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Point",
+        "coordinates": [
+          173.068324,
+          26.637523
+        ]
+      }
+    },
+    "rssi": {
+      "type": "Number",
+      "value": -52
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 18
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2024-12-09T17:20:15"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:16",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "GPS Tracker"
+    },
+    "description": {
+      "type": "Text",
+      "value": "GPS tracker for asset tracking outdoors"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "meter"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "location"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:5"
+      ]
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "lora"
+      ]
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Point",
+        "coordinates": [
+          -121.281543,
+          62.3021615
+        ]
+      }
+    },
+    "rssi": {
+      "type": "Number",
+      "value": -50
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 20
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2024-12-19T17:08:37"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:17",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "GPS Tracker"
+    },
+    "description": {
+      "type": "Text",
+      "value": "GPS tracker for asset tracking outdoors"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "meter"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "location"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:6"
+      ]
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "lora"
+      ]
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Point",
+        "coordinates": [
+          74.414799,
+          -83.6928485
+        ]
+      }
+    },
+    "rssi": {
+      "type": "Number",
+      "value": -119
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 65
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2024-12-20T12:04:11"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:18",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "GPS Tracker"
+    },
+    "description": {
+      "type": "Text",
+      "value": "GPS tracker for asset tracking outdoors"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "meter"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "location"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:7"
+      ]
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "lora"
+      ]
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Point",
+        "coordinates": [
+          -179.115089,
+          62.790711
+        ]
+      }
+    },
+    "rssi": {
+      "type": "Number",
+      "value": -35
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 76
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2024-12-07T17:23:56"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:19",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "GPS Tracker"
+    },
+    "description": {
+      "type": "Text",
+      "value": "GPS tracker for asset tracking outdoors"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "meter"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "location"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:8"
+      ]
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "lora"
+      ]
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Point",
+        "coordinates": [
+          0.035191,
+          -54.499305
+        ]
+      }
+    },
+    "rssi": {
+      "type": "Number",
+      "value": -7
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 4
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2024-12-01T04:33:21"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:20",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "GPS Tracker"
+    },
+    "description": {
+      "type": "Text",
+      "value": "GPS tracker for asset tracking outdoors"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "meter"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "location"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:9"
+      ]
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "lora"
+      ]
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Point",
+        "coordinates": [
+          30.613898,
+          -55.4997025
+        ]
+      }
+    },
+    "rssi": {
+      "type": "Number",
+      "value": -57
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 56
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2024-12-19T09:58:02"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:21",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "GPS Tracker"
+    },
+    "description": {
+      "type": "Text",
+      "value": "GPS tracker for asset tracking outdoors"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "meter"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "location"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:10"
+      ]
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "lora"
+      ]
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Point",
+        "coordinates": [
+          153.527658,
+          40.8838975
+        ]
+      }
+    },
+    "rssi": {
+      "type": "Number",
+      "value": -100
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 68
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2024-12-18T06:54:08"
+    }
+  }
+]

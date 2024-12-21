@@ -499,3 +499,381 @@ person_data = [
         }
     ]
 
+# =================== Device Data ===================
+
+device_data = [
+    {
+        "id": "urn:ngsi-ld:Device:0",
+        "type": "Device",
+        "name": "Bluetooth Tracker",
+        "description": "Bluetooth tracker for asset tracking",
+        "deviceCategory": ["meter"],
+        "controlledProperty": ["location"],
+        "controlledAsset": ["urn:ngsi-ld:Person:0"],
+        "supportedProtocol": ["bluetooth LE", "bluetooth"],
+        "coordinates": [
+            float(fk.longitude()),
+            float(fk.latitude())
+        ],
+        "rssi": fk.random_int(min=-120, max=0),
+        "batteryLevel": fk.random_int(min=0, max=100),
+        "dateLastValueReported": fk.date_time_this_month().isoformat()
+    },
+    {
+        "id": "urn:ngsi-ld:Device:1",
+        "type": "Device",
+        "name": "Bluetooth Tracker",
+        "description": "Bluetooth tracker for asset tracking",
+        "deviceCategory": ["meter"],
+        "controlledProperty": ["location"],
+        "controlledAsset": ["urn:ngsi-ld:Person:1"],
+        "supportedProtocol": ["bluetooth LE", "bluetooth"],
+        "coordinates": [
+            float(fk.longitude()),
+            float(fk.latitude())
+        ],
+        "rssi": fk.random_int(min=-120, max=0),
+        "batteryLevel": fk.random_int(min=0, max=100),
+        "dateLastValueReported": fk.date_time_this_month().isoformat()
+    },
+    {
+        "id": "urn:ngsi-ld:Device:2",
+        "type": "Device",
+        "name": "Bluetooth Tracker",
+        "description": "Bluetooth tracker for asset tracking",
+        "deviceCategory": ["meter"],
+        "controlledProperty": ["location"],
+        "controlledAsset": ["urn:ngsi-ld:Person:2"],
+        "supportedProtocol": ["bluetooth LE", "bluetooth"],
+        "coordinates": [
+            float(fk.longitude()),
+            float(fk.latitude())
+        ],
+        "rssi": fk.random_int(min=-120, max=0),
+        "batteryLevel": fk.random_int(min=0, max=100),
+        "dateLastValueReported": fk.date_time_this_month().isoformat()
+    },
+    {
+        "id": "urn:ngsi-ld:Device:3",
+        "type": "Device",
+        "name": "Bluetooth Tracker",
+        "description": "Bluetooth tracker for asset tracking",
+        "deviceCategory": ["meter"],
+        "controlledProperty": ["location"],
+        "controlledAsset": ["urn:ngsi-ld:Person:3"],
+        "supportedProtocol": ["bluetooth LE", "bluetooth"],
+        "coordinates": [
+            float(fk.longitude()),
+            float(fk.latitude())
+        ],
+        "rssi": fk.random_int(min=-120, max=0),
+        "batteryLevel": fk.random_int(min=0, max=100),
+        "dateLastValueReported": fk.date_time_this_month().isoformat()
+    },
+    {
+        "id": "urn:ngsi-ld:Device:4",
+        "type": "Device",
+        "name": "Bluetooth Tracker",
+        "description": "Bluetooth tracker for asset tracking",
+        "deviceCategory": ["meter"],
+        "controlledProperty": ["location"],
+        "controlledAsset": ["urn:ngsi-ld:Person:4"],
+        "supportedProtocol": ["bluetooth LE", "bluetooth"],
+        "coordinates": [
+            float(fk.longitude()),
+            float(fk.latitude())
+        ],
+        "rssi": fk.random_int(min=-120, max=0),
+        "batteryLevel": fk.random_int(min=0, max=100),
+        "dateLastValueReported": fk.date_time_this_month().isoformat()
+    },
+    {
+        "id": "urn:ngsi-ld:Device:5",
+        "type": "Device",
+        "name": "Bluetooth Tracker",
+        "description": "Bluetooth tracker for asset tracking",
+        "deviceCategory": ["meter"],
+        "controlledProperty": ["location"],
+        "controlledAsset": ["urn:ngsi-ld:Person:5"],
+        "supportedProtocol": ["bluetooth LE", "bluetooth"],
+        "coordinates": [
+            float(fk.longitude()),
+            float(fk.latitude())
+        ],
+        "rssi": fk.random_int(min=-120, max=0),
+        "batteryLevel": fk.random_int(min=0, max=100),
+        "dateLastValueReported": fk.date_time_this_month().isoformat()
+    },
+    {
+        "id": "urn:ngsi-ld:Device:6",
+        "type": "Device",
+        "name": "Bluetooth Tracker",
+        "description": "Bluetooth tracker for asset tracking",
+        "deviceCategory": ["meter"],
+        "controlledProperty": ["location"],
+        "controlledAsset": ["urn:ngsi-ld:Person:6"],
+        "supportedProtocol": ["bluetooth LE", "bluetooth"],
+        "coordinates": [
+            float(fk.longitude()),
+            float(fk.latitude())
+        ],
+        "rssi": fk.random_int(min=-120, max=0),
+        "batteryLevel": fk.random_int(min=0, max=100),
+        "dateLastValueReported": fk.date_time_this_month().isoformat()
+    },
+    {
+        "id": "urn:ngsi-ld:Device:7",
+        "type": "Device",
+        "name": "Bluetooth Tracker",
+        "description": "Bluetooth tracker for asset tracking",
+        "deviceCategory": ["meter"],
+        "controlledProperty": ["location"],
+        "controlledAsset": ["urn:ngsi-ld:Person:7"],
+        "supportedProtocol": ["bluetooth LE", "bluetooth"],
+        "coordinates": [
+            float(fk.longitude()),
+            float(fk.latitude())
+        ],
+        "rssi": fk.random_int(min=-120, max=0),
+        "batteryLevel": fk.random_int(min=0, max=100),
+        "dateLastValueReported": fk.date_time_this_month().isoformat()
+    },
+    {
+        "id": "urn:ngsi-ld:Device:8",
+        "type": "Device",
+        "name": "Bluetooth Tracker",
+        "description": "Bluetooth tracker for asset tracking",
+        "deviceCategory": ["meter"],
+        "controlledProperty": ["location"],
+        "controlledAsset": ["urn:ngsi-ld:Person:8"],
+        "supportedProtocol": ["bluetooth LE", "bluetooth"],
+        "coordinates": [
+            float(fk.longitude()),
+            float(fk.latitude())
+        ],
+        "rssi": fk.random_int(min=-120, max=0),
+        "batteryLevel": fk.random_int(min=0, max=100),
+        "dateLastValueReported": fk.date_time_this_month().isoformat()
+    },
+    {
+        "id": "urn:ngsi-ld:Device:9",
+        "type": "Device",
+        "name": "Bluetooth Tracker",
+        "description": "Bluetooth tracker for asset tracking",
+        "deviceCategory": ["meter"],
+        "controlledProperty": ["location"],
+        "controlledAsset": ["urn:ngsi-ld:Person:9"],
+        "supportedProtocol": ["bluetooth LE", "bluetooth"],
+        "coordinates": [
+            float(fk.longitude()),
+            float(fk.latitude())
+        ],
+        "rssi": fk.random_int(min=-120, max=0),
+        "batteryLevel": fk.random_int(min=0, max=100),
+        "dateLastValueReported": fk.date_time_this_month().isoformat()
+    },
+    {
+        "id": "urn:ngsi-ld:Device:10",
+        "type": "Device",
+        "name": "Bluetooth Tracker",
+        "description": "Bluetooth tracker for asset tracking",
+        "deviceCategory": ["meter"],
+        "controlledProperty": ["location"],
+        "controlledAsset": ["urn:ngsi-ld:Person:10"],
+        "supportedProtocol": ["bluetooth LE", "bluetooth"],
+        "coordinates": [
+            float(fk.longitude()),
+            float(fk.latitude())
+        ],
+        "rssi": fk.random_int(min=-120, max=0),
+        "batteryLevel": fk.random_int(min=0, max=100),
+        "dateLastValueReported": fk.date_time_this_month().isoformat()
+    },
+    {
+        "id": "urn:ngsi-ld:Device:11",
+        "type": "Device",
+        "name": "GPS Tracker",
+        "description": "GPS tracker for asset tracking outdoors",
+        "deviceCategory": ["meter"],
+        "controlledProperty": ["location"],
+        "controlledAsset": ["urn:ngsi-ld:Person:0"],
+        "supportedProtocol": ["lora"],
+        "coordinates": [
+            float(fk.longitude()),
+            float(fk.latitude())
+        ],
+        "rssi": fk.random_int(min=-120, max=0),
+        "batteryLevel": fk.random_int(min=0, max=100),
+        "dateLastValueReported": fk.date_time_this_month().isoformat()
+    },
+    {
+        "id": "urn:ngsi-ld:Device:12",
+        "type": "Device",
+        "name": "GPS Tracker",
+        "description": "GPS tracker for asset tracking outdoors",
+        "deviceCategory": ["meter"],
+        "controlledProperty": ["location"],
+        "controlledAsset": ["urn:ngsi-ld:Person:1"],
+        "supportedProtocol": ["lora"],
+        "coordinates": [
+            float(fk.longitude()),
+            float(fk.latitude())
+        ],
+        "rssi": fk.random_int(min=-120, max=0),
+        "batteryLevel": fk.random_int(min=0, max=100),
+        "dateLastValueReported": fk.date_time_this_month().isoformat()
+    },
+    {
+        "id": "urn:ngsi-ld:Device:13",
+        "type": "Device",
+        "name": "GPS Tracker",
+        "description": "GPS tracker for asset tracking outdoors",
+        "deviceCategory": ["meter"],
+        "controlledProperty": ["location"],
+        "controlledAsset": ["urn:ngsi-ld:Person:2"],
+        "supportedProtocol": ["lora"],
+        "coordinates": [
+            float(fk.longitude()),
+            float(fk.latitude())
+        ],
+        "rssi": fk.random_int(min=-120, max=0),
+        "batteryLevel": fk.random_int(min=0, max=100),
+        "dateLastValueReported": fk.date_time_this_month().isoformat()
+    },
+    {
+        "id": "urn:ngsi-ld:Device:14",
+        "type": "Device",
+        "name": "GPS Tracker",
+        "description": "GPS tracker for asset tracking outdoors",
+        "deviceCategory": ["meter"],
+        "controlledProperty": ["location"],
+        "controlledAsset": ["urn:ngsi-ld:Person:3"],
+        "supportedProtocol": ["lora"],
+        "coordinates": [
+            float(fk.longitude()),
+            float(fk.latitude())
+        ],
+        "rssi": fk.random_int(min=-120, max=0),
+        "batteryLevel": fk.random_int(min=0, max=100),
+        "dateLastValueReported": fk.date_time_this_month().isoformat()
+    },
+    {
+        "id": "urn:ngsi-ld:Device:15",
+        "type": "Device",
+        "name": "GPS Tracker",
+        "description": "GPS tracker for asset tracking outdoors",
+        "deviceCategory": ["meter"],
+        "controlledProperty": ["location"],
+        "controlledAsset": ["urn:ngsi-ld:Person:4"],
+        "supportedProtocol": ["lora"],
+        "coordinates": [
+            float(fk.longitude()),
+            float(fk.latitude())
+        ],
+        "rssi": fk.random_int(min=-120, max=0),
+        "batteryLevel": fk.random_int(min=0, max=100),
+        "dateLastValueReported": fk.date_time_this_month().isoformat()
+    },
+    {
+        "id": "urn:ngsi-ld:Device:16",
+        "type": "Device",
+        "name": "GPS Tracker",
+        "description": "GPS tracker for asset tracking outdoors",
+        "deviceCategory": ["meter"],
+        "controlledProperty": ["location"],
+        "controlledAsset": ["urn:ngsi-ld:Person:5"],
+        "supportedProtocol": ["lora"],
+        "coordinates": [
+            float(fk.longitude()),
+            float(fk.latitude())
+        ],
+        "rssi": fk.random_int(min=-120, max=0),
+        "batteryLevel": fk.random_int(min=0, max=100),
+        "dateLastValueReported": fk.date_time_this_month().isoformat()
+    },
+    {
+        "id": "urn:ngsi-ld:Device:17",
+        "type": "Device",
+        "name": "GPS Tracker",
+        "description": "GPS tracker for asset tracking outdoors",
+        "deviceCategory": ["meter"],
+        "controlledProperty": ["location"],
+        "controlledAsset": ["urn:ngsi-ld:Person:6"],
+        "supportedProtocol": ["lora"],
+        "coordinates": [
+            float(fk.longitude()),
+            float(fk.latitude())
+        ],
+        "rssi": fk.random_int(min=-120, max=0),
+        "batteryLevel": fk.random_int(min=0, max=100),
+        "dateLastValueReported": fk.date_time_this_month().isoformat()
+    },
+    {
+        "id": "urn:ngsi-ld:Device:18",
+        "type": "Device",
+        "name": "GPS Tracker",
+        "description": "GPS tracker for asset tracking outdoors",
+        "deviceCategory": ["meter"],
+        "controlledProperty": ["location"],
+        "controlledAsset": ["urn:ngsi-ld:Person:7"],
+        "supportedProtocol": ["lora"],
+        "coordinates": [
+            float(fk.longitude()),
+            float(fk.latitude())
+        ],
+        "rssi": fk.random_int(min=-120, max=0),
+        "batteryLevel": fk.random_int(min=0, max=100),
+        "dateLastValueReported": fk.date_time_this_month().isoformat()
+    },
+    {
+        "id": "urn:ngsi-ld:Device:19",
+        "type": "Device",
+        "name": "GPS Tracker",
+        "description": "GPS tracker for asset tracking outdoors",
+        "deviceCategory": ["meter"],
+        "controlledProperty": ["location"],
+        "controlledAsset": ["urn:ngsi-ld:Person:8"],
+        "supportedProtocol": ["lora"],
+        "coordinates": [
+            float(fk.longitude()),
+            float(fk.latitude())
+        ],
+        "rssi": fk.random_int(min=-120, max=0),
+        "batteryLevel": fk.random_int(min=0, max=100),
+        "dateLastValueReported": fk.date_time_this_month().isoformat()
+    },
+    {
+        "id": "urn:ngsi-ld:Device:20",
+        "type": "Device",
+        "name": "GPS Tracker",
+        "description": "GPS tracker for asset tracking outdoors",
+        "deviceCategory": ["meter"],
+        "controlledProperty": ["location"],
+        "controlledAsset": ["urn:ngsi-ld:Person:9"],
+        "supportedProtocol": ["lora"],
+        "coordinates": [
+            float(fk.longitude()),
+            float(fk.latitude())
+        ],
+        "rssi": fk.random_int(min=-120, max=0),
+        "batteryLevel": fk.random_int(min=0, max=100),
+        "dateLastValueReported": fk.date_time_this_month().isoformat()
+    },
+    {
+        "id": "urn:ngsi-ld:Device:21",
+        "type": "Device",
+        "name": "GPS Tracker",
+        "description": "GPS tracker for asset tracking outdoors",
+        "deviceCategory": ["meter"],
+        "controlledProperty": ["location"],
+        "controlledAsset": ["urn:ngsi-ld:Person:10"],
+        "supportedProtocol": ["lora"],
+        "coordinates": [
+            float(fk.longitude()),
+            float(fk.latitude())
+        ],
+        "rssi": fk.random_int(min=-120, max=0),
+        "batteryLevel": fk.random_int(min=0, max=100),
+        "dateLastValueReported": fk.date_time_this_month().isoformat()
+    }
+]

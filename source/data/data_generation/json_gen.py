@@ -136,9 +136,81 @@ def make_person_json(data):
     with open("people.json", "w") as f:
         json.dump(entities, f, indent=2)
 
+
+def generate_device_entities(data):
+    '''Generate Device entities based on the Device Smart Data Model
+    https://github.com/smart-data-models/dataModel.Device/blob/master/Device/doc/spec.md
+    Required fields:
+    - id: unique identifier
+    - type: entity type
+    - controlledProperty: the property or 'reading' that the device controls
+
+    Purpose: to generate Device entities for the semiconductor manufacturing site,
+     representing the environmental sensors, cameras, tracking devices, SOS buttons for each worker.'''
+    
+    entities = []
+    for device in data:
+        entity = {
+            "id": f"{device['id']}",
+            "type": "Device",
+            "name": {
+                "type": "Text",
+                "value": device['name']
+            },
+            "description": {
+                "type": "Text",
+                "value": device['description']
+            },
+            "deviceCategory": {
+                "type": "StructuredValue",
+                "value": device['deviceCategory']
+            },
+            "controlledProperty": {
+                "type": "StructuredValue",
+                "value": device['controlledProperty']
+            },
+            "controlledAsset": {
+                "type": "StructuredValue",
+                "value": device['controlledAsset']
+            },
+            "supportedProtocol": { 
+                "type": "StructuredValue",
+                "value": device['supportedProtocol']
+            },
+            "location": {
+                "type": "geo:json",
+                "value": {
+                    "type": "Point",
+                    "coordinates": device['coordinates']
+                }
+            },
+            "rssi" : {
+                "type": "Number",
+                "value": device['rssi']
+            },
+            "batteryLevel": {
+                "type": "Number",
+                "value": device['batteryLevel']
+            },
+            "dateLastValueReported": {
+                "type": "DateTime",
+                "value": device['dateLastValueReported']
+            }
+        }
+        entities.append(entity)
+    return entities
+
+def make_device_json(data):
+    '''Generate Device entities based on the Device Smart Data Model'''
+    
+    entities = generate_device_entities(data)
+    with open("devices.json", "w") as f:
+        json.dump(entities, f, indent=2)
+
 def main():
     # make_buildings_json(mydata.building_data)
-    make_person_json(mydata.person_data)
+    # make_person_json(mydata.person_data)
+    make_device_json(mydata.device_data)
 
 
 if __name__ == "__main__":

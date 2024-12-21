@@ -65,10 +65,37 @@ def post_person_entities():
     else:
         print("Failed to retrieve entities")
 
-def delete_in_test_path():
-    '''Delete all entities in the test path'''
-    # get all entities in the test path
+def post_device_entities():
+    '''Post Device entities to the Context Broker'''
+    with open("devices.json") as f:
+        entities = json.load(f)
+        for entity in entities:
+            response = requests.post(orion_url, headers=post_headers, json=entity)
+            if response.status_code == 201:
+                print(f"Entity {entity['id']} created successfully")
+            elif response.status_code == 422:
+                print(f"Entity {entity['id']} already exists")
+            else:
+                print(f"Failed to create entity {entity['id']} with status code {response.status_code}, response: {response.text}")
+
+    # test validity
     response = requests.get(orion_url, headers=gd_headers)
+    if response.status_code == 200:
+        print("Entities retrieved successfully")
+        print(response.json())
+    else:
+        print("Failed to retrieve entities")
+
+def delete_in_path():
+    '''Delete all entities in the given path'''
+    print(f"About to delete all entities in path: {fiware_service_path}. Are you sure? (y/n)")
+    userin = input()
+    if userin != "y":
+        print("Cancelled")
+        return
+    # get all entities in the given path
+    limit = 100
+    response = requests.get(orion_url + "?limit=" + str(limit), headers=gd_headers)
     if response.status_code == 200:
         entities = response.json()
         for entity in entities:
@@ -83,10 +110,11 @@ def delete_in_test_path():
 def main():
     post_building_entities()
     post_person_entities()
+    post_device_entities()
     userin = input("Press Enter to delete entities in the test path or type 'q' to exit: ")
     if userin == "q":
         return
-    delete_in_test_path()
+    delete_in_path()
 
 if __name__ == "__main__":
     main()
