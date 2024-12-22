@@ -22,7 +22,7 @@ def post_building_entities():
     with open("buildings.json") as f:
         entities = json.load(f) 
         for entity in entities:
-            if entity["name"]["value"] == "R&D":
+            if entity["name"]["value"] == "Water Treatment Building":
                 print(f"Entity: {entity}")
                 input("Press Enter to continue...")
             response = requests.post(orion_url, headers=post_headers, json=entity)
@@ -67,9 +67,9 @@ def post_person_entities():
     else:
         print("Failed to retrieve entities")
 
-def post_device_entities():
+def post_device_trackers_entities():
     '''Post Device entities to the Context Broker'''
-    with open("devices.json") as f:
+    with open("devices_trackers.json") as f:
         entities = json.load(f)
         for entity in entities:
             response = requests.post(orion_url, headers=post_headers, json=entity)
@@ -112,7 +112,7 @@ def delete_in_path():
 def main():
     post_building_entities()
     post_person_entities()
-    post_device_entities()
+    post_device_trackers_entities()
     userin = input("Press Enter to delete entities in the test path or type 'q' to exit: ")
     if userin == "q":
         return

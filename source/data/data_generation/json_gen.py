@@ -204,13 +204,13 @@ def make_device_json(data):
     '''Generate Device entities based on the Device Smart Data Model'''
     
     entities = generate_device_entities(data)
-    with open("devices.json", "w") as f:
+    with open("devices_trackers.json", "w") as f:
         json.dump(entities, f, indent=2)
 
 def main():
     make_buildings_json(mydata.building_data)
     # make_person_json(mydata.person_data)
-    # make_device_json(mydata.device_data)
+    # make_device_json(mydata.device_trackers_data)
     # pass
 
 

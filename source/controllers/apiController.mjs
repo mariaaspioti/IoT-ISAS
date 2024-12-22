@@ -25,7 +25,7 @@ let getData = (req, res) => {
     // res.json(responseObject);
 
     // get the coordinates from the Orion Context Broker
-    let MSCPaskCoords = `?type=Building&q=name==R%26D`;
+    let MSCPaskCoords = `?type=Building&q=name==Water Treatment Building`;
     let MSCPaskUrl = orionUrl + MSCPaskCoords;
     axios.get(MSCPaskUrl, {
         headers: getHeaders
