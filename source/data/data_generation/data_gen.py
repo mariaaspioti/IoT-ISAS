@@ -3,6 +3,8 @@ import json
 
 fake = Faker()
 
+#========== DELETE? ==========
+
 def generate_test_entities():
     entities = []
     for i in range(10):
