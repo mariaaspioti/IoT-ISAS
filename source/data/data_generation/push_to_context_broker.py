@@ -20,9 +20,11 @@ gd_headers = {
 def post_building_entities():
     '''Post Building entities to the Context Broker'''
     with open("buildings.json") as f:
-        entities = json.load(f)
+        entities = json.load(f) 
         for entity in entities:
-            # input(f"Press Enter to create entity: {entity}")
+            if entity["name"]["value"] == "R&D":
+                print(f"Entity: {entity}")
+                input("Press Enter to continue...")
             response = requests.post(orion_url, headers=post_headers, json=entity)
             if response.status_code == 201:
                 print(f"Entity {entity['id']} created successfully")

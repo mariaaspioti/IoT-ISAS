@@ -66,8 +66,9 @@ def assign_devices():
                     }
                     print(f"payload: {payload}")
                     print(f"Assigning device {device['id']} to person {person['id']}")
-                    userin = input("Continue? (y/n): ")
-                    if userin == "y":
+                    # userin = input("Continue? (y/n): ")
+                    userin = "y"
+                    if userin == "y" or True: # bypass user input
                         url = f"{orion_url}/{person['id']}/attrs"
                         response = requests.patch(url, headers=patch_headers, json=payload)
                         if response.status_code == 204:

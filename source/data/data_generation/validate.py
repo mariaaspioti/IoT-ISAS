@@ -49,9 +49,20 @@ def get_location_of_all_cleanroom_operators():
             building = response.json()
             print(f"{person['name']['value']} is in building {building['name']['value']}")
 
+def get_buildings_coordinates():
+    # find all buildings' coordinates
+    response = requests.get(orion_url + "?type=Building", headers=gd_headers)
+    if not response.ok:
+        print(f"Failed to retrieve entities with status code {response.status_code}, response: {response.text}")
+        return
+    buildings = response.json()
+    for i, building in enumerate(buildings):
+        print(f"{i}. {building['name']['value']} coordinates: {building['location']['value']['coordinates']}")
+
 def main():
     # get_persons_building_name(1)
-    get_location_of_all_cleanroom_operators()
+    # get_location_of_all_cleanroom_operators()
+    get_buildings_coordinates()
 
 if __name__ == "__main__":
     main()

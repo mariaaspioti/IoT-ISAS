@@ -1,7 +1,17 @@
 import React from 'react';
-import { MapContainer, TileLayer } from 'react-leaflet';
+import { MapContainer, TileLayer, useMapEvent } from 'react-leaflet';
 import CircleMarkerPopup from './CircleMarkerPopup';
 import 'leaflet/dist/leaflet.css';
+import { saveCoordinates } from '../services/api';
+
+const ClickLogger = () => {
+    useMapEvent('click', (e) => {
+        const { lat, lng } = e.latlng;
+        console.log(`Clicked at latitude: ${lat}, longitude: ${lng}`);
+        saveCoordinates({ lat, lng }); // Send to backend
+    });
+    return null;
+};
 
 const Map = ({ locations }) => {
     return (
@@ -10,6 +20,7 @@ const Map = ({ locations }) => {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
             />
+            <ClickLogger /> {/* Add click listener */}
             {locations.map((loc, index) => (
                 <CircleMarkerPopup key={index} location={loc} />
             ))}

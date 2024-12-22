@@ -40,22 +40,22 @@
       "value": {
         "type": "Point",
         "coordinates": [
-          -40.329419,
-          -53.958373
+          123.410429,
+          -25.572273
         ]
       }
     },
     "rssi": {
       "type": "Number",
-      "value": -83
+      "value": -94
     },
     "batteryLevel": {
       "type": "Number",
-      "value": 40
+      "value": 68
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2024-12-08T02:24:55"
+      "value": "2024-12-17T06:40:33"
     }
   },
   {
@@ -99,22 +99,22 @@
       "value": {
         "type": "Point",
         "coordinates": [
-          -110.952736,
-          -74.05809
+          -150.145656,
+          -39.5972855
         ]
       }
     },
     "rssi": {
       "type": "Number",
-      "value": -24
+      "value": -98
     },
     "batteryLevel": {
       "type": "Number",
-      "value": 46
+      "value": 83
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2024-12-05T18:20:36"
+      "value": "2024-12-19T17:46:26"
     }
   },
   {
@@ -158,22 +158,22 @@
       "value": {
         "type": "Point",
         "coordinates": [
-          108.529454,
-          -72.548909
+          -84.441023,
+          -45.547594
         ]
       }
     },
     "rssi": {
       "type": "Number",
-      "value": -110
+      "value": -20
     },
     "batteryLevel": {
       "type": "Number",
-      "value": 21
+      "value": 29
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2024-12-06T17:46:05"
+      "value": "2024-12-20T16:39:06"
     }
   },
   {
@@ -217,22 +217,22 @@
       "value": {
         "type": "Point",
         "coordinates": [
-          152.38171,
-          20.606456
+          -65.915277,
+          -55.1548795
         ]
       }
     },
     "rssi": {
       "type": "Number",
-      "value": -28
+      "value": -91
     },
     "batteryLevel": {
       "type": "Number",
-      "value": 88
+      "value": 92
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2024-12-12T00:04:51"
+      "value": "2024-12-18T11:35:35"
     }
   },
   {
@@ -276,22 +276,22 @@
       "value": {
         "type": "Point",
         "coordinates": [
-          16.002873,
-          -33.986388
+          -88.225223,
+          -72.421529
         ]
       }
     },
     "rssi": {
       "type": "Number",
-      "value": -13
+      "value": -73
     },
     "batteryLevel": {
       "type": "Number",
-      "value": 67
+      "value": 73
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2024-12-15T21:38:49"
+      "value": "2024-12-02T16:20:29"
     }
   },
   {
@@ -335,22 +335,22 @@
       "value": {
         "type": "Point",
         "coordinates": [
-          -150.597834,
-          27.2649285
+          -165.641677,
+          37.0101355
         ]
       }
     },
     "rssi": {
       "type": "Number",
-      "value": -15
+      "value": -96
     },
     "batteryLevel": {
       "type": "Number",
-      "value": 5
+      "value": 46
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2024-12-11T06:37:26"
+      "value": "2024-12-13T01:24:23"
     }
   },
   {
@@ -394,22 +394,22 @@
       "value": {
         "type": "Point",
         "coordinates": [
-          63.234022,
-          67.5705975
+          -147.812491,
+          -74.8549725
         ]
       }
     },
     "rssi": {
       "type": "Number",
-      "value": -22
+      "value": -34
     },
     "batteryLevel": {
       "type": "Number",
-      "value": 94
+      "value": 61
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2024-12-09T07:39:16"
+      "value": "2024-12-05T04:10:01"
     }
   },
   {
@@ -453,22 +453,22 @@
       "value": {
         "type": "Point",
         "coordinates": [
-          -162.686663,
-          -73.7875475
+          -85.560302,
+          -9.7423915
         ]
       }
     },
     "rssi": {
       "type": "Number",
-      "value": -3
+      "value": -15
     },
     "batteryLevel": {
       "type": "Number",
-      "value": 38
+      "value": 37
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2024-12-17T16:35:47"
+      "value": "2024-12-11T10:16:01"
     }
   },
   {
@@ -512,22 +512,22 @@
       "value": {
         "type": "Point",
         "coordinates": [
-          137.521205,
-          -70.733323
+          -166.193893,
+          -6.137036
         ]
       }
     },
     "rssi": {
       "type": "Number",
-      "value": -18
+      "value": -76
     },
     "batteryLevel": {
       "type": "Number",
-      "value": 87
+      "value": 72
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2024-12-09T05:53:44"
+      "value": "2024-12-18T23:28:01"
     }
   },
   {
@@ -571,22 +571,22 @@
       "value": {
         "type": "Point",
         "coordinates": [
-          -39.490064,
-          -85.8535345
+          177.842121,
+          -64.4393665
         ]
       }
     },
     "rssi": {
       "type": "Number",
-      "value": -61
+      "value": -64
     },
     "batteryLevel": {
       "type": "Number",
-      "value": 24
+      "value": 84
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2024-12-15T16:03:21"
+      "value": "2024-12-12T00:26:44"
     }
   },
   {
@@ -630,22 +630,22 @@
       "value": {
         "type": "Point",
         "coordinates": [
-          -176.099255,
-          56.9321685
+          -95.423891,
+          11.795257
         ]
       }
     },
     "rssi": {
       "type": "Number",
-      "value": 0
+      "value": -101
     },
     "batteryLevel": {
       "type": "Number",
-      "value": 50
+      "value": 12
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2024-12-04T14:58:59"
+      "value": "2024-12-06T23:02:30"
     }
   },
   {
@@ -688,22 +688,22 @@
       "value": {
         "type": "Point",
         "coordinates": [
-          -85.037827,
-          -45.779197
+          -115.31857,
+          -86.9831315
         ]
       }
     },
     "rssi": {
       "type": "Number",
-      "value": -85
+      "value": -11
     },
     "batteryLevel": {
       "type": "Number",
-      "value": 14
+      "value": 40
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2024-12-19T12:03:42"
+      "value": "2024-12-16T17:15:21"
     }
   },
   {
@@ -746,22 +746,22 @@
       "value": {
         "type": "Point",
         "coordinates": [
-          -56.907647,
-          21.346247
+          -50.153508,
+          68.158449
         ]
       }
     },
     "rssi": {
       "type": "Number",
-      "value": -52
+      "value": -81
     },
     "batteryLevel": {
       "type": "Number",
-      "value": 27
+      "value": 18
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2024-12-11T21:49:06"
+      "value": "2024-12-16T14:10:04"
     }
   },
   {
@@ -804,22 +804,22 @@
       "value": {
         "type": "Point",
         "coordinates": [
-          -123.409027,
-          -54.4337295
+          127.695188,
+          52.2637255
         ]
       }
     },
     "rssi": {
       "type": "Number",
-      "value": -16
+      "value": -108
     },
     "batteryLevel": {
       "type": "Number",
-      "value": 20
+      "value": 30
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2024-12-02T23:08:18"
+      "value": "2024-12-22T10:51:24"
     }
   },
   {
@@ -862,22 +862,22 @@
       "value": {
         "type": "Point",
         "coordinates": [
-          -63.803579,
-          4.94955
+          131.898636,
+          14.617006
         ]
       }
     },
     "rssi": {
       "type": "Number",
-      "value": -46
+      "value": -116
     },
     "batteryLevel": {
       "type": "Number",
-      "value": 53
+      "value": 52
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2024-12-11T00:52:51"
+      "value": "2024-12-11T02:35:02"
     }
   },
   {
@@ -920,22 +920,22 @@
       "value": {
         "type": "Point",
         "coordinates": [
-          173.068324,
-          26.637523
+          125.955276,
+          27.317706
         ]
       }
     },
     "rssi": {
       "type": "Number",
-      "value": -52
+      "value": -113
     },
     "batteryLevel": {
       "type": "Number",
-      "value": 18
+      "value": 23
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2024-12-09T17:20:15"
+      "value": "2024-12-12T03:45:06"
     }
   },
   {
@@ -978,22 +978,22 @@
       "value": {
         "type": "Point",
         "coordinates": [
-          -121.281543,
-          62.3021615
+          165.536221,
+          3.4127975
         ]
       }
     },
     "rssi": {
       "type": "Number",
-      "value": -50
+      "value": -71
     },
     "batteryLevel": {
       "type": "Number",
-      "value": 20
+      "value": 76
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2024-12-19T17:08:37"
+      "value": "2024-12-04T00:42:51"
     }
   },
   {
@@ -1036,22 +1036,22 @@
       "value": {
         "type": "Point",
         "coordinates": [
-          74.414799,
-          -83.6928485
+          54.462502,
+          78.835484
         ]
       }
     },
     "rssi": {
       "type": "Number",
-      "value": -119
+      "value": -14
     },
     "batteryLevel": {
       "type": "Number",
-      "value": 65
+      "value": 63
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2024-12-20T12:04:11"
+      "value": "2024-12-17T09:01:19"
     }
   },
   {
@@ -1094,22 +1094,22 @@
       "value": {
         "type": "Point",
         "coordinates": [
-          -179.115089,
-          62.790711
+          31.635672,
+          15.918923
         ]
       }
     },
     "rssi": {
       "type": "Number",
-      "value": -35
+      "value": -52
     },
     "batteryLevel": {
       "type": "Number",
-      "value": 76
+      "value": 86
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2024-12-07T17:23:56"
+      "value": "2024-12-17T20:42:27"
     }
   },
   {
@@ -1152,22 +1152,22 @@
       "value": {
         "type": "Point",
         "coordinates": [
-          0.035191,
-          -54.499305
+          -143.799441,
+          49.188779
         ]
       }
     },
     "rssi": {
       "type": "Number",
-      "value": -7
+      "value": -22
     },
     "batteryLevel": {
       "type": "Number",
-      "value": 4
+      "value": 10
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2024-12-01T04:33:21"
+      "value": "2024-12-05T20:44:28"
     }
   },
   {
@@ -1210,22 +1210,22 @@
       "value": {
         "type": "Point",
         "coordinates": [
-          30.613898,
-          -55.4997025
+          140.336632,
+          -41.2727995
         ]
       }
     },
     "rssi": {
       "type": "Number",
-      "value": -57
+      "value": -35
     },
     "batteryLevel": {
       "type": "Number",
-      "value": 56
+      "value": 69
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2024-12-19T09:58:02"
+      "value": "2024-12-13T02:54:29"
     }
   },
   {
@@ -1268,22 +1268,22 @@
       "value": {
         "type": "Point",
         "coordinates": [
-          153.527658,
-          40.8838975
+          133.566513,
+          -8.761358
         ]
       }
     },
     "rssi": {
       "type": "Number",
-      "value": -100
+      "value": -98
     },
     "batteryLevel": {
       "type": "Number",
-      "value": 68
+      "value": 25
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2024-12-18T06:54:08"
+      "value": "2024-12-22T01:16:12"
     }
   }
 ]

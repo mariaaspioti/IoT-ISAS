@@ -3,8 +3,13 @@ import axios from 'axios';
 
 import cors from 'cors';
 
+// 
 const app = express();
+
+// Routers
 const indexRouter = express.Router();
+import { apiRoutes } from './routes/apiRoutes.js';
+
 
 // Orion Context Broker URL
 const orionUrl = 'http://150.140.186.118:1026/v2/entities';
@@ -21,23 +26,10 @@ app.use(cors({ origin: 'http://localhost:3000' })); // allow requests from this,
 // Parse JSON bodies (as sent by API clients)
 app.use(express.json()); 
 
-// DEBUG
-// Sample API endpoint
-app.get('/api/data', (req, res) => {
-    // change the value every second
-    let dx = Math.random() * 0.01 - 0.05;
-    const responseObject = {
-        data: [
-            { lat: 51.505 + dx, lng: -0.09, msg: 'id 1' },
-            { lat: 51.505, lng: -0.09 + dx, msg: 'id 2' },
-        ],
-        message: 'Hello from the server!',
-    };
-    res.json(responseObject);
-});
-
 //
 app.use('/', indexRouter);
+app.use('/api', apiRoutes);
+
 
 // Serve static files (e.g., HTML, CSS, JS)
 // app.use(express.static('public'));
