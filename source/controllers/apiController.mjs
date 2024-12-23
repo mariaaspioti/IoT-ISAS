@@ -12,20 +12,8 @@ const getHeaders = {
 };
 
 let getData = (req, res) => {
-    // DEBUG:
-    // change the value every second
-    // let dx = Math.random() * 0.01 - 0.05;
-    // const responseObject = {
-    //     data: [
-    //         { lat: 51.505 + dx, lng: -0.09, msg: 'id 1' },
-    //         { lat: 51.505, lng: -0.09 + dx, msg: 'id 2' },
-    //     ],
-    //     message: 'Hello from the server!',
-    // };
-    // res.json(responseObject);
-
-    // get the coordinates from the Orion Context Broker
-    let MSCPaskCoords = `?type=Building&q=name==Water Treatment Building`;
+    // get the coordinates from the Orion Context Broker for a specific building
+    let MSCPaskCoords = `?type=Building&q=name==Waste Water Treatment Building`;
     let MSCPaskUrl = orionUrl + MSCPaskCoords;
     axios.get(MSCPaskUrl, {
         headers: getHeaders
@@ -45,6 +33,35 @@ let getData = (req, res) => {
                 msg: `MSCP ${i + 1}`,
             };
             responseObject.data.push(dataPoint);
+        }
+
+        res.json(responseObject);
+    })
+}
+
+let getAllData = (req, res) => {
+    // get the coordinates from the Orion Context Broker for all buildings
+    let allCoords = `?type=Building`;
+    let allUrl = orionUrl + allCoords;
+    axios.get(allUrl, {
+        headers: getHeaders
+    })
+    .then((response) => {
+        let responseObject = {
+            data: [],
+            message: 'Hello from the server!',
+        };
+        for (let i = 0; i < response.data.length; i++) {
+            let coords = response.data[i].location.value.coordinates[0];
+            for (let j = 0; j < coords.length; j++) {
+                let coord = coords[j];
+                let dataPoint = {
+                    lat: coord[1],
+                    lng: coord[0],
+                    msg: `${response.data[i].name.value} ${j + 1}`,
+                };
+                responseObject.data.push(dataPoint);
+            }
         }
 
         res.json(responseObject);
@@ -77,4 +94,4 @@ let saveCoordinates = (req, res) => {
     });
 };
 
-export { getData, saveCoordinates };
+export { getData, getAllData, saveCoordinates };

@@ -22,7 +22,7 @@ def post_building_entities():
     with open("buildings.json") as f:
         entities = json.load(f) 
         for entity in entities:
-            if entity["name"]["value"] == "Water Treatment Building":
+            if entity["name"]["value"] == "Waste Water Treatment Building":
                 print(f"Entity: {entity}")
                 input("Press Enter to continue...")
             response = requests.post(orion_url, headers=post_headers, json=entity)

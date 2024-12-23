@@ -1,10 +1,23 @@
+// Fetch 
 export const fetchLocations = async () => {
     try {
         const response = await fetch('/api/data');
         const json = await response.json();
-        return json.data; // Assuming data contains an array of coordinates
+        return json.data;
     } catch (error) {
         console.error('Error fetching data:', error);
+        throw error;
+    }
+};
+
+// Fetch all data
+export const fetchAllLocations = async () => {
+    try {
+        const response = await fetch('/api/all-data');
+        const json = await response.json();
+        return json.data;
+    } catch (error) {
+        console.error('Error fetching all data:', error);
         throw error;
     }
 };

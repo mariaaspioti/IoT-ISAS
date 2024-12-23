@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Map from './components/Map';
-import { fetchLocations } from './services/api';
+import { fetchLocations, fetchAllLocations } from './services/api';
 
 function App() {
     const [locations, setLocations] = useState([]);
