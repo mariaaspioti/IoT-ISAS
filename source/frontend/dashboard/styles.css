@@ -1,0 +1,111 @@
+:root {
+    --dark_green: #083842;
+    --teal: #21A29D;
+    --light_teal: #4EDBD5;
+    --white: #ffffff;
+    --light_grey :#F1F5F9;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background-color: var(--dark_green);
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    height: 80px;
+    
+    background-color: var(--dark_green);
+    color: white;
+    display: flex;
+    align-items: center;
+    padding-left: 61px;
+    padding-right: 0;
+}
+
+.header__title {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.main {
+    flex-grow: 1;
+    border-radius: 30px 30px 0 0;
+    /* Rounded top corners */
+    padding: 20px 16px 0px 12px;
+    background-color: var(--light_grey);
+    height: 100%;
+}
+
+.container {
+    display: flex;
+    flex-grow: 1;
+    
+    height: calc(100% - 10px); /* Adjust height to fill the remaining space */
+}
+
+/* Vertical Navbar */
+.vertical-navbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--dark_green);
+    /* Dark green background */
+    border-radius: 20px;
+    /* Rounded corners */
+    padding: 16px 0;
+    width: 75px;
+    /* flex-grow: 1; */
+}
+
+/* Buttons */
+.nav-button {
+    background-color: var(--teal);
+    /* Light teal button background */
+    border: none;
+    border-radius: 50%;
+    /* Circular buttons */
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 9px 0;
+    /* Spacing between buttons */
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Active and Hover Effects */
+.nav-button:hover {
+    transform: scale(1.1);
+    /* Slight scaling on hover */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.nav-button.active {
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+    background-color: var(--light_teal);
+    /* Stronger shadow for active button */
+}
+
+/* SVG Icons */
+.icon {
+    width: 24px;
+    height: 24px;
+    fill: #fff;
+    /* White icon color */
+}
+
+
+
+.main__body {
+    font-size: 18px;
+}

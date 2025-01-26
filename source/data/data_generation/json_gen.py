@@ -146,7 +146,7 @@ def generate_device_entities(data):
     - controlledProperty: the property or 'reading' that the device controls
 
     Purpose: to generate Device entities for the semiconductor manufacturing site,
-     representing the environmental sensors, cameras, tracking devices, SOS buttons for each worker.'''
+     representing the environmental sensors, cameras, tracking devices, RFID/NFC tags, SOS buttons for each worker.'''
     
     entities = []
     for device in data:
