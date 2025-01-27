@@ -9,7 +9,7 @@ function App() {
 
     useEffect(() => {
         const fetchData = () => {
-            fetchLocations()
+            fetchAllLocations()
                 .then((data) => {
                     setLocations(data);
                     setLoading(false);
