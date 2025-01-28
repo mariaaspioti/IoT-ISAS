@@ -119,6 +119,48 @@ let getAllDevicesLocationData = (req, res) => {
     })
 }
 
+let getAllDevicesControlledAssets = async (req, res) => {
+    // Get all devices from the Orion Context Broker
+    let allDevices = `?type=Device`;
+    let allDevicesUrl = orionUrl + allDevices;
+
+    try {
+        const deviceResponse = await axios.get(allDevicesUrl, { headers: getHeaders });
+        let responseObject = {
+            data: [],
+            message: 'Hello from the server!',
+        };
+
+        // Collect promises for fetching person data
+        let promises = deviceResponse.data.map(async (device) => {
+            let controlledAsset = device.controlledAsset.value;
+            // Fetch person details for the first controlled asset
+            let personUrl = orionUrl + `/${controlledAsset[0]}`;
+            const personResponse = await axios.get(personUrl, { headers: getHeaders });
+
+            // Validate that the person `hasDevices` the device
+            let hasDevices = personResponse.data.hasDevices.value;
+            if (hasDevices.includes(device.id)) {
+                let dataPoint = {
+                    person_name: personResponse.data.name.value,
+                    person_id: personResponse.data.id,
+                    device_id: device.id,
+                };
+                responseObject.data.push(dataPoint);
+            }
+        });
+
+        // Wait for all person-related promises to complete
+        await Promise.all(promises);
+
+        // Send the populated responseObject after all data is fetched
+        res.json(responseObject);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        res.status(500).json({ error: 'An error occurred while fetching data' });
+    }
+};
+
 let saveCoordinates = (req, res) => {
     const newCoord = req.body; // Expect { lat: number, lng: number }
 
@@ -231,6 +273,6 @@ let findCurrentFacilities = async (req, res) => {
     }
 };
 
-export { getData, getAllData, getDeviceLocationData, getAllDevicesLocationData, saveCoordinates,
-    getFacilities, findCurrentFacilities
+export { getData, getAllData, getDeviceLocationData, getAllDevicesLocationData, 
+    getAllDevicesControlledAssets, saveCoordinates, getFacilities, findCurrentFacilities
  };

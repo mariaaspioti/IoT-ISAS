@@ -22,7 +22,7 @@ export const fetchAllLocations = async () => {
     }
 };
 
-// Fetch device data
+// Fetch device location data
 export const fetchDeviceLocation = async (device_id) => {
     try {
         const response = await fetch(`/api/devices/${device_id}`);
@@ -34,7 +34,7 @@ export const fetchDeviceLocation = async (device_id) => {
     }
 };
 
-// Fetch all devices data
+// Fetch all devices' location data
 export const fetchAllDevicesLocations = async () => {
     try {
         const response = await fetch('/api/devices/location');
@@ -45,6 +45,18 @@ export const fetchAllDevicesLocations = async () => {
         throw error;
     }
 };
+
+// Fetch all devices' controlledAssets data
+export const fetchAllDevicesControlledAssets = async (devices) => {
+    try {
+        const response = await fetch('/api/devices/controlledAssets');
+        const json = await response.json();
+        return json.data;
+    } catch (error) {
+        console.error('Error fetching controlledAssets data:', error);
+        throw error;
+    }
+}
 
 // Save coordinates
 export const saveCoordinates = async (coordinate) => {
@@ -64,7 +76,6 @@ export const saveCoordinates = async (coordinate) => {
 };
 
 
-// Find the current facilities
 // Find the current facilities
 export const findCurrentFacilities = async (coordinates) => {
     try {

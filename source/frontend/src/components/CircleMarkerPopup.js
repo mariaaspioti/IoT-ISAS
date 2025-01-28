@@ -13,6 +13,8 @@ const CircleMarkerPopup = ({ data }) => {
             <Popup>
                 <strong>Coordinates:</strong> {data.lat}, {data.lng}
                 <br />
+                <strong>Belongs To:</strong> {data.person_name}
+                <br />
                 <strong>Current Facility:</strong> {data.facility}
                 <br />
                 <strong>Message:</strong> {data.msg || 'No message'}
