@@ -547,7 +547,7 @@ device_trackers_data = [
     {
         "id": "urn:ngsi-ld:Device:0",
         "type": "Device",
-        "name": "Bluetooth Tracker",
+        "name": "BluetoothTracker-0",
         "description": "Bluetooth tracker for asset tracking",
         "deviceCategory": ["meter"],
         "controlledProperty": ["location"],
@@ -564,7 +564,7 @@ device_trackers_data = [
     {
         "id": "urn:ngsi-ld:Device:1",
         "type": "Device",
-        "name": "Bluetooth Tracker",
+        "name": "BluetoothTracker-1",
         "description": "Bluetooth tracker for asset tracking",
         "deviceCategory": ["meter"],
         "controlledProperty": ["location"],
@@ -581,7 +581,7 @@ device_trackers_data = [
     {
         "id": "urn:ngsi-ld:Device:2",
         "type": "Device",
-        "name": "Bluetooth Tracker",
+        "name": "BluetoothTracker-2",
         "description": "Bluetooth tracker for asset tracking",
         "deviceCategory": ["meter"],
         "controlledProperty": ["location"],
@@ -598,7 +598,7 @@ device_trackers_data = [
     {
         "id": "urn:ngsi-ld:Device:3",
         "type": "Device",
-        "name": "Bluetooth Tracker",
+        "name": "BluetoothTracker-3",
         "description": "Bluetooth tracker for asset tracking",
         "deviceCategory": ["meter"],
         "controlledProperty": ["location"],
@@ -615,7 +615,7 @@ device_trackers_data = [
     {
         "id": "urn:ngsi-ld:Device:4",
         "type": "Device",
-        "name": "Bluetooth Tracker",
+        "name": "BluetoothTracker-4",
         "description": "Bluetooth tracker for asset tracking",
         "deviceCategory": ["meter"],
         "controlledProperty": ["location"],
@@ -632,7 +632,7 @@ device_trackers_data = [
     {
         "id": "urn:ngsi-ld:Device:5",
         "type": "Device",
-        "name": "Bluetooth Tracker",
+        "name": "BluetoothTracker-5",
         "description": "Bluetooth tracker for asset tracking",
         "deviceCategory": ["meter"],
         "controlledProperty": ["location"],
@@ -649,7 +649,7 @@ device_trackers_data = [
     {
         "id": "urn:ngsi-ld:Device:6",
         "type": "Device",
-        "name": "Bluetooth Tracker",
+        "name": "BluetoothTracker-6",
         "description": "Bluetooth tracker for asset tracking",
         "deviceCategory": ["meter"],
         "controlledProperty": ["location"],
@@ -666,7 +666,7 @@ device_trackers_data = [
     {
         "id": "urn:ngsi-ld:Device:7",
         "type": "Device",
-        "name": "Bluetooth Tracker",
+        "name": "BluetoothTracker-7",
         "description": "Bluetooth tracker for asset tracking",
         "deviceCategory": ["meter"],
         "controlledProperty": ["location"],
@@ -683,7 +683,7 @@ device_trackers_data = [
     {
         "id": "urn:ngsi-ld:Device:8",
         "type": "Device",
-        "name": "Bluetooth Tracker",
+        "name": "BluetoothTracker-8",
         "description": "Bluetooth tracker for asset tracking",
         "deviceCategory": ["meter"],
         "controlledProperty": ["location"],
@@ -700,7 +700,7 @@ device_trackers_data = [
     {
         "id": "urn:ngsi-ld:Device:9",
         "type": "Device",
-        "name": "Bluetooth Tracker",
+        "name": "BluetoothTracker-9",
         "description": "Bluetooth tracker for asset tracking",
         "deviceCategory": ["meter"],
         "controlledProperty": ["location"],
@@ -717,7 +717,7 @@ device_trackers_data = [
     {
         "id": "urn:ngsi-ld:Device:10",
         "type": "Device",
-        "name": "Bluetooth Tracker",
+        "name": "BluetoothTracker-10",
         "description": "Bluetooth tracker for asset tracking",
         "deviceCategory": ["meter"],
         "controlledProperty": ["location"],
@@ -734,7 +734,7 @@ device_trackers_data = [
     {
         "id": "urn:ngsi-ld:Device:11",
         "type": "Device",
-        "name": "GPS Tracker",
+        "name": "GPSTracker-0",
         "description": "GPS tracker for asset tracking outdoors",
         "deviceCategory": ["meter"],
         "controlledProperty": ["location"],
@@ -751,7 +751,7 @@ device_trackers_data = [
     {
         "id": "urn:ngsi-ld:Device:12",
         "type": "Device",
-        "name": "GPS Tracker",
+        "name": "GPSTracker-1",
         "description": "GPS tracker for asset tracking outdoors",
         "deviceCategory": ["meter"],
         "controlledProperty": ["location"],
@@ -768,7 +768,7 @@ device_trackers_data = [
     {
         "id": "urn:ngsi-ld:Device:13",
         "type": "Device",
-        "name": "GPS Tracker",
+        "name": "GPSTracker-2",
         "description": "GPS tracker for asset tracking outdoors",
         "deviceCategory": ["meter"],
         "controlledProperty": ["location"],
@@ -785,7 +785,7 @@ device_trackers_data = [
     {
         "id": "urn:ngsi-ld:Device:14",
         "type": "Device",
-        "name": "GPS Tracker",
+        "name": "GPSTracker-3",
         "description": "GPS tracker for asset tracking outdoors",
         "deviceCategory": ["meter"],
         "controlledProperty": ["location"],
@@ -802,7 +802,7 @@ device_trackers_data = [
     {
         "id": "urn:ngsi-ld:Device:15",
         "type": "Device",
-        "name": "GPS Tracker",
+        "name": "GPSTracker-4",
         "description": "GPS tracker for asset tracking outdoors",
         "deviceCategory": ["meter"],
         "controlledProperty": ["location"],
@@ -819,7 +819,7 @@ device_trackers_data = [
     {
         "id": "urn:ngsi-ld:Device:16",
         "type": "Device",
-        "name": "GPS Tracker",
+        "name": "GPSTracker-5",
         "description": "GPS tracker for asset tracking outdoors",
         "deviceCategory": ["meter"],
         "controlledProperty": ["location"],
@@ -836,7 +836,7 @@ device_trackers_data = [
     {
         "id": "urn:ngsi-ld:Device:17",
         "type": "Device",
-        "name": "GPS Tracker",
+        "name": "GPSTracker-6",
         "description": "GPS tracker for asset tracking outdoors",
         "deviceCategory": ["meter"],
         "controlledProperty": ["location"],
@@ -853,7 +853,7 @@ device_trackers_data = [
     {
         "id": "urn:ngsi-ld:Device:18",
         "type": "Device",
-        "name": "GPS Tracker",
+        "name": "GPSTracker-7",
         "description": "GPS tracker for asset tracking outdoors",
         "deviceCategory": ["meter"],
         "controlledProperty": ["location"],
@@ -870,7 +870,7 @@ device_trackers_data = [
     {
         "id": "urn:ngsi-ld:Device:19",
         "type": "Device",
-        "name": "GPS Tracker",
+        "name": "GPSTracker-8",
         "description": "GPS tracker for asset tracking outdoors",
         "deviceCategory": ["meter"],
         "controlledProperty": ["location"],
@@ -887,7 +887,7 @@ device_trackers_data = [
     {
         "id": "urn:ngsi-ld:Device:20",
         "type": "Device",
-        "name": "GPS Tracker",
+        "name": "GPSTracker-9",
         "description": "GPS tracker for asset tracking outdoors",
         "deviceCategory": ["meter"],
         "controlledProperty": ["location"],
@@ -904,7 +904,7 @@ device_trackers_data = [
     {
         "id": "urn:ngsi-ld:Device:21",
         "type": "Device",
-        "name": "GPS Tracker",
+        "name": "GPSTracker-10",
         "description": "GPS tracker for asset tracking outdoors",
         "deviceCategory": ["meter"],
         "controlledProperty": ["location"],

@@ -22,6 +22,30 @@ export const fetchAllLocations = async () => {
     }
 };
 
+// Fetch device data
+export const fetchDeviceLocation = async (device_id) => {
+    try {
+        const response = await fetch(`/api/devices/${device_id}`);
+        const json = await response.json();
+        return json.data;
+    } catch (error) {
+        console.error('Error fetching device data:', error);
+        throw error;
+    }
+};
+
+// Fetch all devices data
+export const fetchAllDevicesLocations = async () => {
+    try {
+        const response = await fetch('/api/devices/location');
+        const json = await response.json();
+        return json.data;
+    } catch (error) {
+        console.error('Error fetching devices data:', error);
+        throw error;
+    }
+};
+
 // Save coordinates
 export const saveCoordinates = async (coordinate) => {
     try {
@@ -36,5 +60,31 @@ export const saveCoordinates = async (coordinate) => {
         console.log('Coordinate saved successfully');
     } catch (error) {
         console.error('Error saving coordinate:', error);
+    }
+};
+
+
+// Find the current facilities
+// Find the current facilities
+export const findCurrentFacilities = async (coordinates) => {
+    try {
+        // Send coordinates to the server for calculation
+        const response = await fetch('/api/facilities/find', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ coordinates })
+        });
+
+        if (!response.ok) {
+            throw new Error(`Server error: ${response.status}`);
+        }
+
+        const json = await response.json();
+        return json.data; // Expect the server to return enriched coordinates
+    } catch (error) {
+        console.error('Error fetching facilities data:', error);
+        throw error;
     }
 };

@@ -208,9 +208,9 @@ def make_device_json(data):
         json.dump(entities, f, indent=2)
 
 def main():
-    make_buildings_json(mydata.building_data)
+    # make_buildings_json(mydata.building_data)
     # make_person_json(mydata.person_data)
-    # make_device_json(mydata.device_trackers_data)
+    make_device_json(mydata.device_trackers_data)
     # pass
 
 

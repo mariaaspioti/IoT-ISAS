@@ -16,7 +16,7 @@ const ClickLogger = () => {
 // "lat": 53.37575635880662,
 // "lng": -6.5230679512023935
 
-const Map = ({ locations }) => {
+const Map = ({ data }) => {
     return (
         <MapContainer center={[53.37575635880662, -6.5230679512023935]} zoom={13} className="leaflet-container">
             <TileLayer
@@ -24,8 +24,8 @@ const Map = ({ locations }) => {
                 attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
             />
             <ClickLogger /> {/* Add click listener */}
-            {locations.map((loc, index) => (
-                <CircleMarkerPopup key={index} location={loc} />
+             {data.map((mdata, index) => (
+                <CircleMarkerPopup key={index} data={mdata} />
             ))}
         </MapContainer>
     );

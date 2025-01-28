@@ -1,6 +1,7 @@
 import fs from 'fs';
 import axios from 'axios';
 // import express from 'express';
+import * as turf from '@turf/turf';
 
 // Orion Context Broker URL
 const orionUrl = 'http://150.140.186.118:1026/v2/entities';
@@ -68,6 +69,56 @@ let getAllData = (req, res) => {
     })
 }
 
+let getDeviceLocationData = (req, res) => {
+    // get the coordinates from the Orion Context Broker for a specific device
+    const device_id = req.params.id;
+    let deviceCoords = `/${device_id}/attrs/location`;
+    let deviceUrl = orionUrl + deviceCoords;
+    axios.get(deviceUrl, {
+        headers: getHeaders
+    })
+    .then((response) => {
+        let coord = response.data.value.coordinates;
+        
+        let responseObject = {
+            data: [{
+                lat: coord[1],
+                lng: coord[0],
+                msg: device_id,
+            }],
+            message: 'Hello from the server!',
+        };
+
+        res.json(responseObject);
+    })
+}
+
+let getAllDevicesLocationData = (req, res) => {
+    // get the coordinates from the Orion Context Broker for all devices
+    let allDevices = `?type=Device`;
+    let allDevicesUrl = orionUrl + allDevices;
+    axios.get(allDevicesUrl, {
+        headers: getHeaders
+    })
+    .then((response) => {
+        let responseObject = {
+            data: [],
+            message: 'Hello from the server!',
+        };
+        for (let i = 0; i < response.data.length; i++) {
+            let coord = response.data[i].location.value.coordinates;
+            let dataPoint = {
+                lat: coord[1],
+                lng: coord[0],
+                msg: response.data[i].id,
+            };
+            responseObject.data.push(dataPoint);
+        }
+
+        res.json(responseObject);
+    })
+}
+
 let saveCoordinates = (req, res) => {
     const newCoord = req.body; // Expect { lat: number, lng: number }
 
@@ -94,4 +145,92 @@ let saveCoordinates = (req, res) => {
     });
 };
 
-export { getData, getAllData, saveCoordinates };
+let getFacilities = (req, res) => {
+    // get the coordinates from the Orion Context Broker for all facilities
+    let allFacilities = `?type=Facility`;
+    let allFacilitiesUrl = orionUrl + allFacilities;
+    axios.get(allFacilitiesUrl, {
+        headers: getHeaders
+    })
+    .then((response) => {
+        let facilities = response.data;
+        res.json({ data: facilities });
+    })
+}
+
+// Helper function for array comparison
+function arraysEqual(a, b) {
+    return a.length === b.length && a.every((val, i) => val === b[i]);
+}
+
+const findFacilityContainingPoint = (point, facilities) => {
+    try {
+        return facilities.find(f => {
+            const coords = f.bounds;
+            // Add validation
+            if (!coords || coords.length < 3) {
+                console.warn('Invalid polygon for facility:', f.name);
+                return false;
+            }
+            
+            // Convert coordinates and close polygon
+            const formattedCoords = coords.map(coord => [coord[0], coord[1]]);
+            // console.log('Formatted coordinates:', formattedCoords);
+            if (!arraysEqual(formattedCoords[0], formattedCoords[formattedCoords.length-1])) {
+                formattedCoords.push(formattedCoords[0]);
+            }
+            
+            const polygon = turf.polygon([formattedCoords]);
+            const isInPolygon = turf.booleanPointInPolygon(point, polygon);
+            
+            // Optional: Uncomment for debugging
+            // console.log(`Checking facility ${f.name}:`, isInPolygon);
+            
+            return isInPolygon;
+        });
+    } catch (error) {
+        console.error('Error finding facility:', error);
+        return null;
+    }
+};
+
+let findCurrentFacilities = async (req, res) => {
+    try {
+        const { coordinates } = req.body;
+        
+        if (!coordinates?.length) {
+            return res.status(400).json({ error: 'Invalid coordinates data' });
+        }
+
+        // Get facilities
+        const response = await axios.get(`${orionUrl}?type=Building`, {
+            headers: getHeaders
+        });
+        
+        // Map to proper structure
+        const facilities = response.data.map(f => ({
+            id: f.id,
+            name: f.name.value,
+            bounds: f.location.value.coordinates[0]
+        }));
+
+        // Process all coordinates in parallel
+        const enrichedCoordinates = await Promise.all(coordinates.map(async (loc) => {
+            const point = turf.point([loc.lng, loc.lat]);
+            const facility = findFacilityContainingPoint(point, facilities);
+            return {
+                name: facility?.name || 'Outside',
+                id: facility?.id || 'Outside',
+            };
+        }));
+
+        res.json({ data: enrichedCoordinates });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: 'Server error' });
+    }
+};
+
+export { getData, getAllData, getDeviceLocationData, getAllDevicesLocationData, saveCoordinates,
+    getFacilities, findCurrentFacilities
+ };
