@@ -1,7 +1,8 @@
 import fs from 'fs';
 import axios from 'axios';
 // import express from 'express';
-import * as turf from '@turf/turf';
+// import * as turf from '@turf/turf';
+import * as stateController from '../controllers/stateController.mjs';
 
 // Orion Context Broker URL
 const orionUrl = 'http://150.140.186.118:1026/v2/entities';
@@ -143,7 +144,7 @@ let getAllDevicesControlledAssets = async (req, res) => {
                 person_id: personResponse.data.id,
                 person_name: personResponse.data.name.value,
             };
-            console.log('Data point:', dataPoint);
+
             responseObject.data.push(dataPoint);
         });
 
@@ -184,90 +185,53 @@ let saveCoordinates = (req, res) => {
     });
 };
 
-let getFacilities = (req, res) => {
-    // get the coordinates from the Orion Context Broker for all facilities
-    let allFacilities = `?type=Facility`;
-    let allFacilitiesUrl = orionUrl + allFacilities;
-    axios.get(allFacilitiesUrl, {
-        headers: getHeaders
-    })
-    .then((response) => {
-        let facilities = response.data;
-        res.json({ data: facilities });
-    })
-}
-
-// Helper function for array comparison
-function arraysEqual(a, b) {
-    return a.length === b.length && a.every((val, i) => val === b[i]);
-}
-
-const findFacilityContainingPoint = (point, facilities) => {
-    try {
-        return facilities.find(f => {
-            const coords = f.bounds;
-            // Add validation
-            if (!coords || coords.length < 3) {
-                console.warn('Invalid polygon for facility:', f.name);
-                return false;
-            }
-            
-            // Convert coordinates and close polygon
-            const formattedCoords = coords.map(coord => [coord[0], coord[1]]);
-            // console.log('Formatted coordinates:', formattedCoords);
-            if (!arraysEqual(formattedCoords[0], formattedCoords[formattedCoords.length-1])) {
-                formattedCoords.push(formattedCoords[0]);
-            }
-            
-            const polygon = turf.polygon([formattedCoords]);
-            const isInPolygon = turf.booleanPointInPolygon(point, polygon);
-            
-            // Optional: Uncomment for debugging
-            // console.log(`Checking facility ${f.name}:`, isInPolygon);
-            
-            return isInPolygon;
-        });
-    } catch (error) {
-        console.error('Error finding facility:', error);
-        return null;
-    }
+let getFacilities = async (req, res) => {
+  try {
+    const response = await axios.get(`${orionUrl}?type=Facility`, {
+      headers: getHeaders
+    });
+    res.json({ data: response.data });
+  } catch (error) {
+    console.error('Facilities error:', error);
+    res.status(500).json({ error: 'Failed to fetch facilities' });
+  }
 };
 
 let findCurrentFacilities = async (req, res) => {
-    try {
-        const { coordinates } = req.body;
-        
-        if (!coordinates?.length) {
-            return res.status(400).json({ error: 'Invalid coordinates data' });
-        }
-
-        // Get facilities
-        const response = await axios.get(`${orionUrl}?type=Building`, {
-            headers: getHeaders
-        });
-        
-        // Map to proper structure
-        const facilities = response.data.map(f => ({
-            id: f.id,
-            name: f.name.value,
-            bounds: f.location.value.coordinates[0]
-        }));
-
-        // Process all coordinates in parallel
-        const enrichedCoordinates = await Promise.all(coordinates.map(async (loc) => {
-            const point = turf.point([loc.lng, loc.lat]);
-            const facility = findFacilityContainingPoint(point, facilities);
-            return {
-                name: facility?.name || 'Outside',
-                id: facility?.id || 'Outside',
-            };
-        }));
-
-        res.json({ data: enrichedCoordinates });
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ error: 'Server error' });
+  try {
+    const { coordinates } = req.body;
+    
+    if (!coordinates?.length) {
+      return res.status(400).json({ error: 'Invalid coordinates data' });
     }
+
+    const facilityResponse = await axios.get(`${orionUrl}?type=Building`, {
+      headers: getHeaders
+    });
+    
+    const enriched = await stateController.processFacilities(coordinates, facilityResponse.data);
+    res.json({ data: enriched });
+    // console.log('Enriched:', enriched);
+
+    // as a secondary task, update the persons' currentFacility attribute
+    // rename the enriched data to match the expected structure
+    await stateController.updateCurrentFacilityForPersons(enriched.map(data => ({
+      lat: data.lat,
+      lng: data.lng,
+      facility_id: data.id,
+      facility_name: data.name
+    })));
+
+    // validate the correct update of the persons' currentFacility attribute
+    const persons = await axios.get(`${orionUrl}?type=Person`, {
+      headers: getHeaders
+    });
+    // console.log('Persons:', persons.data);
+    
+  } catch (error) {
+    console.error('Location error:', error);
+    res.status(500).json({ error: 'Facility lookup failed' });
+  }
 };
 
 export { getData, getAllData, getDeviceLocationData, getAllDevicesLocationData, 

@@ -207,10 +207,64 @@ def make_device_json(data):
     with open("devices_trackers.json", "w") as f:
         json.dump(entities, f, indent=2)
 
+def generate_door_entities(data):
+    '''Generate Door entities based on the Door Smart Data Model
+    https://github.com/smart-data-models/dataModel.OCF/blob/master/Door/doc/spec.md
+    Required fields:
+    - id: unique identifier
+    - type: entity type
+
+    Purpose: to generate Door entities for the semiconductor manufacturing site,
+        representing the doors of the buildings controlled by Smart Locks'''
+    
+    entities = []
+    for door in data:
+        entity = {
+            "id": f"{door['id']}",
+            "type": "Door",
+            "description": {
+                "type": "Text",
+                "value": door['description']
+            },
+            "location": {
+                "type": "geo:json",
+                "value": {
+                    "type": "Point",
+                    "coordinates": door['coordinates']
+                }
+            },
+            "areaServed": {
+                "type": "Text",
+                "value": door['areaServed']
+            },
+            "openState": {
+                "type": "Text",
+                "value": door['openState']
+            },
+            "openDuration": {
+                "type": "string",
+                "value": door['openDuration']
+            },
+            "controlledBuildings": {
+                "type": "Relationship",
+                "value": door['controlledBuildings']
+            }
+        }
+        entities.append(entity)
+    return entities
+
+def make_doors_json(data):
+    '''Generate Door entities based on the Door Smart Data Model'''
+
+    entities = generate_door_entities(data)
+    with open("doors.json", "w") as f:
+        json.dump(entities, f, indent=2)
+
 def main():
     # make_buildings_json(mydata.building_data)
     # make_person_json(mydata.person_data)
-    make_device_json(mydata.device_trackers_data)
+    # make_device_json(mydata.device_trackers_data)
+    make_doors_json(mydata.door_data)
     # pass
 
 

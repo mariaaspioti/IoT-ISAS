@@ -919,3 +919,246 @@ device_trackers_data = [
         "dateLastValueReported": fk.date_time_this_month().isoformat()
     }
 ]
+
+door_data = [
+    {
+        "id": "urn:ngsi-ld:Door:0",
+        "type": "Door",
+        "areaServed": "Fab 1 Facility",
+        "description": "Entrance to the Fab 1 facility",
+        "openState": "closed",
+        "openDuration": 0,
+        "coordinates": [-6.524827480316163, 53.37636733795882],
+        "controlledBuildings": ["urn:ngsi-ld:Building:0"]
+    },
+    {
+        "id": "urn:ngsi-ld:Door:1",
+        "type": "Door",
+        "areaServed": "Fab 1 Facility, Fab 10 Facility",
+        "description": "Door connecting Fab 1 with Fab 10",
+        "openState": "closed",
+        "openDuration": 0,
+        "coordinates": [-6.522874832153321, 53.37601512933655],
+        "controlledBuildings": ["urn:ngsi-ld:Building:0", "urn:ngsi-ld:Building:1"]
+    },
+    {
+        "id": "urn:ngsi-ld:Door:2",
+        "type": "Door",
+        "areaServed": "Fab 2 Facility",
+        "description": "Entrance to the Fab 2 facility",
+        "openState": "closed",
+        "openDuration": 0,
+        "coordinates": [-6.527380943298341, 53.37627768513132],
+        "controlledBuildings": ["urn:ngsi-ld:Building:2"]
+    },
+    {
+        "id": "urn:ngsi-ld:Door:3",
+        "type": "Door",
+        "areaServed": "Cleanroom 2",
+        "description": "Entry into the Cleanroom 2",
+        "openState": "closed",
+        "openDuration": 0,
+        "coordinates": [-6.526683568954469, 53.37734710298634],
+        "controlledBuildings": ["urn:ngsi-ld:Building:3"]
+    },
+    {
+        "id": "urn:ngsi-ld:Door:4",
+        "type": "Door",
+        "areaServed": "Cleanroom 1",
+        "description": "Entry into the Cleanroom 1",
+        "openState": "closed",
+        "openDuration": 0,
+        "coordinates": [-6.526007652282716, 53.376994902466876],
+        "controlledBuildings": ["urn:ngsi-ld:Building:1"]
+    },
+    {
+        "id": "urn:ngsi-ld:Door:5",
+        "type": "Door",
+        "areaServed": "IR2 Office Facility",
+        "description": "Entry into the IR2 office building",
+        "openState": "closed",
+        "openDuration": 0,
+        "coordinates": [-6.523604393005372, 53.37501612176052],
+        "controlledBuildings": ["urn:ngsi-ld:Building:12"]
+    },
+    {
+        "id": "urn:ngsi-ld:Door:6",
+        "type": "Door",
+        "areaServed": "IR2 Office Facility, Fab 14 Facility",
+        "description": "Door connecting IR2 with Fab 14",
+        "openState": "closed",
+        "openDuration": 0,
+        "coordinates": [-6.5216195583343515, 53.374574245550356],
+        "controlledBuildings": ["urn:ngsi-ld:Building:12", "urn:ngsi-ld:Building:6"]
+    }, #=======================================
+    {
+        "id": "urn:ngsi-ld:Door:7",
+        "type": "Door",
+        "areaServed": "IR2 Office Facility, Fab 10 Facility",
+        "description": "Door connecting IR2 with Fab 10",
+        "openState": "closed",
+        "openDuration": 0,
+        "coordinates": [-6.521984338760376, 53.37488163818186],
+        "controlledBuildings": ["urn:ngsi-ld:Building:12", "urn:ngsi-ld:Building:4"]
+    },
+    {
+        "id": "urn:ngsi-ld:Door:8",
+        "type": "Door",
+        "areaServed": "Cleanroom 3",
+        "description": "Entry into the Cleanroom 3",
+        "openState": "closed",
+        "openDuration": 0,
+        "coordinates": [-6.522338390350343, 53.375163614334994],
+        "controlledBuildings": ["urn:ngsi-ld:Building:5"]
+    },
+    {
+        "id": "urn:ngsi-ld:Door:9",
+        "type": "Door",
+        "areaServed": "Fab 14 Facility",
+        "description": "Entrance to the Fab 14 facility",
+        "openState": "closed",
+        "openDuration": 0,
+        "coordinates": [-6.521083116531373, 53.37426705222773],
+        "controlledBuildings": ["urn:ngsi-ld:Building:6"]
+    },
+    {
+        "id": "urn:ngsi-ld:Door:10",
+        "type": "Door",
+        "areaServed": "Fab 14 Facility",
+        "description": "Side entrance and exit to the Fab 14 facility",
+        "openState": "closed",
+        "openDuration": 0,
+        "coordinates": [-6.521093845367432, 53.3749458795584],
+        "controlledBuildings": ["urn:ngsi-ld:Building:6"]
+    },
+    {
+        "id": "urn:ngsi-ld:Door:11",
+        "type": "Door",
+        "areaServed": "Fab 14 Facility",
+        "description": "Exit corridor from the Fab 14 facility",
+        "openState": "closed",
+        "openDuration": 0,
+        "coordinates": [-6.519141197204591, 53.374491194523905],
+        "controlledBuildings": ["urn:ngsi-ld:Building:6"]
+    },
+    {
+        "id": "urn:ngsi-ld:Door:12",
+        "type": "Door",
+        "areaServed": "Cleanroom 4",
+        "description": "Entrance to the Cleanroom 4",
+        "openState": "closed",
+        "openDuration": 0,
+        "coordinates": [-6.519334316253663, 53.37472814366869],
+        "controlledBuildings": ["urn:ngsi-ld:Building:7"]
+    }, #=======================================
+    {
+        "id": "urn:ngsi-ld:Door:13",
+        "type": "Door",
+        "areaServed": "Cleanroom 4",
+        "description": "Back exit from the Cleanroom 4",
+        "openState": "closed",
+        "openDuration": 0,
+        "coordinates": [-6.519763469696045, 53.37550302220792],
+        "controlledBuildings": ["urn:ngsi-ld:Building:7"]
+    },
+    {
+        "id": "urn:ngsi-ld:Door:14",
+        "type": "Door",
+        "areaServed": "IR5 Office Facility",
+        "description": "Entrance into the IR5 office building",
+        "openState": "closed",
+        "openDuration": 0,
+        "coordinates": [-6.524634361267091, 53.37521484588535],
+        "controlledBuildings": ["urn:ngsi-ld:Building:11"]
+    },
+    {
+        "id": "urn:ngsi-ld:Door:15",
+        "type": "Door",
+        "areaServed": "R&D Lab",
+        "description": "Front entrance to the R&D Lab",
+        "openState": "closed",
+        "openDuration": 0,
+        "coordinates": [-6.525557041168214, 53.37498430342339],
+        "controlledBuildings": ["urn:ngsi-ld:Building:10"]
+    },
+    {
+        "id": "urn:ngsi-ld:Door:16",
+        "type": "Door",
+        "areaServed": "R&D Lab",
+        "description": "Back entrance to the R&D Lab",
+        "openState": "closed",
+        "openDuration": 0,
+        "coordinates": [-6.52590036392212, 53.375515829999216],
+        "controlledBuildings": ["urn:ngsi-ld:Building:10"]
+    },
+    {
+        "id": "urn:ngsi-ld:Door:17",
+        "type": "Door",
+        "areaServed": "R&D Lab",
+        "description": "Innovation Lab entrance",
+        "openState": "closed",
+        "openDuration": 0,
+        "coordinates": [-6.526694297790528, 53.37475375971348],
+        "controlledBuildings": ["urn:ngsi-ld:Building:10"]
+    },
+    {
+        "id": "urn:ngsi-ld:Door:18",
+        "type": "Door",
+        "areaServed": "Fab 10 Energy Centre",
+        "description": "Entrance and exit to the Fab 10 Energy Centre",
+        "openState": "closed",
+        "openDuration": 0,
+        "coordinates": [-6.5210187435150155, 53.37586163890846],
+        "controlledBuildings": ["urn:ngsi-ld:Building:8"]
+    }, #=======================================
+    {
+        "id": "urn:ngsi-ld:Door:19",
+        "type": "Door",
+        "areaServed": "Fab 14 Energy Centre",
+        "description": "Entrance and exit to the Fab 14 Energy Centre",
+        "openState": "closed",
+        "openDuration": 0,
+        "coordinates": [-6.520332098007203, 53.37574636958403],
+        "controlledBuildings": ["urn:ngsi-ld:Building:9"]
+    },
+    {
+        "id": "urn:ngsi-ld:Door:20",
+        "type": "Door",
+        "areaServed": "RODI Plant",
+        "description": "Entrance and exit to the RODI, or Reverse Osmosis Deionized, Plant",
+        "openState": "closed",
+        "openDuration": 0,
+        "coordinates": [-6.5218448638916025, 53.37659167071829],
+        "controlledBuildings": ["urn:ngsi-ld:Building:13"]
+    },
+    {
+        "id": "urn:ngsi-ld:Door:21",
+        "type": "Door",
+        "areaServed": "Ryebrook 110kV Substation",
+        "description": "Entrance and exit to the Ryebrook 110kV Substation",
+        "openState": "closed",
+        "openDuration": 0,
+        "coordinates": [-6.5227675437927255, 53.377726867088725],
+        "controlledBuildings": ["urn:ngsi-ld:Building:15"]
+    },
+    {
+        "id": "urn:ngsi-ld:Door:22",
+        "type": "Door",
+        "areaServed": "Water Treatment Building",
+        "description": "Entrance and exit to the Water Treatment Building",
+        "openState": "closed",
+        "openDuration": 0,
+        "coordinates": [-6.523625850677491, 53.37837838348491],
+        "controlledBuildings": ["urn:ngsi-ld:Building:17"]
+    },
+    {
+        "id": "urn:ngsi-ld:Door:23",
+        "type": "Door",
+        "areaServed": "Waste Water Treatment Building",
+        "description": "Entrance and exit to the Waste Water Treatment Building",
+        "openState": "closed",
+        "openDuration": 0,
+        "coordinates": [-6.528314352035523, 53.37816066514359],
+        "controlledBuildings": ["urn:ngsi-ld:Building:16"]
+    }
+]

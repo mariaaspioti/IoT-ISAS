@@ -17,7 +17,7 @@ const CircleMarkerPopup = ({ data }) => {
                 <br />
                 <strong>Current Facility:</strong> {data.facility_name}
                 <br />
-                <strong>Message:</strong> {data.id || 'No message'}
+                <strong>Message:</strong> {data.message || 'No message'}
             </Popup>
         </CircleMarker>
     );

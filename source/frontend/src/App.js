@@ -39,14 +39,14 @@ function App() {
                 const mapData = data.map((loc, index) => {
                     const person = controlledAssetsMap[loc.id];
                     const facility = facilities[index]; // Ensure order preservation!
-                  
+                    const personInitials = person?.person_name?.split(' ').map(name => name[0]).join('') || 'N/A';
                     return {
                       lat: loc.lat,
                       lng: loc.lng,
                       facility_name: facility?.name || 'Unknown',
                       facility_id: facility?.id || 'Unknown',
                       ...(person || {}),
-                      message: `Device: ${loc.id}, Facility: ${facility?.name}, Person: ${person?.person_name || 'None'}`
+                      message: `Device: ${loc.id.slice(-1)}, Facility: ${facility?.name}, Person: ${personInitials || 'None'}`
                     };
                 });
                 console.log("mapData:", mapData);
@@ -65,7 +65,7 @@ function App() {
     return (
         <div>
             <h1>React + Node.js</h1>
-            <h3>Updates every 5 seconds, with data retrieved from the Node server.</h3>
+            <h3>Updates every 2 seconds, with data retrieved from the Node server.</h3>
             <p>Click on the markers to see their coordinates and message/id.</p>
             {loading ? <p>Loading...</p> : <Map data = {mapData} />}
         </div>
