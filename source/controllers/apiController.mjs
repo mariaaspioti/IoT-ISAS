@@ -84,7 +84,7 @@ let getDeviceLocationData = (req, res) => {
             data: [{
                 lat: coord[1],
                 lng: coord[0],
-                msg: device_id,
+                id: device_id,
             }],
             message: 'Hello from the server!',
         };
@@ -110,7 +110,7 @@ let getAllDevicesLocationData = (req, res) => {
             let dataPoint = {
                 lat: coord[1],
                 lng: coord[0],
-                msg: response.data[i].id,
+                id: response.data[i].id,
             };
             responseObject.data.push(dataPoint);
         }
@@ -138,16 +138,13 @@ let getAllDevicesControlledAssets = async (req, res) => {
             let personUrl = orionUrl + `/${controlledAsset[0]}`;
             const personResponse = await axios.get(personUrl, { headers: getHeaders });
 
-            // Validate that the person `hasDevices` the device
-            let hasDevices = personResponse.data.hasDevices.value;
-            if (hasDevices.includes(device.id)) {
-                let dataPoint = {
-                    person_name: personResponse.data.name.value,
-                    person_id: personResponse.data.id,
-                    device_id: device.id,
-                };
-                responseObject.data.push(dataPoint);
-            }
+            let dataPoint = {
+                device_id: device.id,
+                person_id: personResponse.data.id,
+                person_name: personResponse.data.name.value,
+            };
+            console.log('Data point:', dataPoint);
+            responseObject.data.push(dataPoint);
         });
 
         // Wait for all person-related promises to complete

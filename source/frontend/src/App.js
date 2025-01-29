@@ -24,6 +24,11 @@ function App() {
                 console.log('Controlled assets data:', controlledAssets);
                 setPeople(controlledAssets);
 
+                const controlledAssetsMap = controlledAssets.reduce((acc, person) => ({
+                    ...acc,
+                    [person.device_id]: person
+                  }), {});
+
         
                 // Determine the Facility in which the device is located
                 const facilities = await APICall.findCurrentFacilities(data);
@@ -32,15 +37,16 @@ function App() {
 
                 // Set the map data
                 const mapData = data.map((loc, index) => {
-                    const facility = facilities[index];
-                    const person = controlledAssets[index];
+                    const person = controlledAssetsMap[loc.id];
+                    const facility = facilities[index]; // Ensure order preservation!
+                  
                     return {
-                        lat: loc.lat,
-                        lng: loc.lng,
-                        message: `Device ID: ${loc.id}, Facility: ${facility?.name || 'Unknown'}, Person: ${person?.name || 'Unknown'}`,
-                        facility_name: facility?.name || 'Unknown',
-                        facility_id: facility?.id || 'Unknown',
-                        ...person,
+                      lat: loc.lat,
+                      lng: loc.lng,
+                      facility_name: facility?.name || 'Unknown',
+                      facility_id: facility?.id || 'Unknown',
+                      ...(person || {}),
+                      message: `Device: ${loc.id}, Facility: ${facility?.name}, Person: ${person?.person_name || 'None'}`
                     };
                 });
                 console.log("mapData:", mapData);

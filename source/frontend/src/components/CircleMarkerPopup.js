@@ -15,9 +15,9 @@ const CircleMarkerPopup = ({ data }) => {
                 <br />
                 <strong>Belongs To:</strong> {data.person_name}
                 <br />
-                <strong>Current Facility:</strong> {data.facility}
+                <strong>Current Facility:</strong> {data.facility_name}
                 <br />
-                <strong>Message:</strong> {data.msg || 'No message'}
+                <strong>Message:</strong> {data.id || 'No message'}
             </Popup>
         </CircleMarker>
     );
