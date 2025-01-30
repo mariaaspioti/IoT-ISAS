@@ -29,13 +29,14 @@ export const fetchTrackingData = async () => {
             const person = controlledAssetsMap[loc.id];
             const facility = facilities[index]; // Ensure order preservation!
             const personInitials = person?.person_name?.split(' ').map(name => name[0]).join('') || 'N/A';
+            const device_num = loc.id.split('Device:')[1];
             return {
               lat: loc.lat,
               lng: loc.lng,
               facility_name: facility?.name || 'Unknown',
               facility_id: facility?.id || 'Unknown',
               ...(person || {}),
-              message: `Device: ${loc.id.slice(-1)}, Facility: ${facility?.name}, Person: ${personInitials || 'None'}`
+              message: `Device: ${device_num} | Facility: ${facility?.name}, Person: ${personInitials || 'None'}`
             };
         });
         console.log("mapData:", mapData);
