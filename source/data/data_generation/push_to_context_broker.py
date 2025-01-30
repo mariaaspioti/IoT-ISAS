@@ -157,6 +157,7 @@ def main():
     post_person_entities()
     post_device_trackers_entities()
     post_door_entities()
+    post_nfc_reader_entities()
     userin = input("Press Enter to delete entities in the test path or type 'q' to exit: ")
     if userin == "q":
         return
