@@ -260,6 +260,76 @@ def make_doors_json(data):
     with open("doors.json", "w") as f:
         json.dump(entities, f, indent=2)
 
+def generate_nfc_reader_entities(data):
+    '''Generate NFC Reader entities based on the Device Smart Data Model
+    https://github.com/smart-data-models/dataModel.Device/blob/master/Device/doc/spec.md
+    Required fields:
+    - id: unique identifier
+    - type: entity type
+    - controlledProperty: the property or 'reading' that the device controls
+
+    Purpose: to generate Device entities for the semiconductor manufacturing site,
+     representing the environmental sensors, cameras, tracking devices, RFID/NFC tags, SOS buttons for each worker.'''
+    entities = []
+    for device in data:
+        entity = {
+            "id": f"{device['id']}",
+            "type": "Device",
+            "name": {
+                "type": "Text",
+                "value": device['name']
+            },
+            "deviceCategory": {
+                "type": "StructuredValue",
+                "value": device['deviceCategory']
+            },
+            "controlledProperty": {
+                "type": "StructuredValue",
+                "value": device['controlledProperty']
+            },
+            "controlledAsset": {
+                "type": "StructuredValue",
+                "value": device['controlledAsset']
+            },
+            "areaServed": {
+                "type": "Text",
+                "value": device['areaServed']
+            },
+            "supportedProtocol": { 
+                "type": "StructuredValue",
+                "value": device['supportedProtocol']
+            },
+            "location": {
+                "type": "geo:json",
+                "value": {
+                    "type": "Point",
+                    "coordinates": device['location']
+                }
+            },
+            "dateLastValueReported": {
+                "type": "DateTime",
+                "value": device['dateLastValueReported']
+            },
+            "value": {
+                "type": "string",
+                "value": device['value']
+            },
+            "direction": {
+                "type": "string",
+                "value": device['direction']
+            }
+            
+        }
+        entities.append(entity)
+    return entities
+
+def make_nfc_readers_json(data):
+    '''Generate NFC Reader entities based on the Device Smart Data Model'''
+    
+    entities = generate_nfc_reader_entities(data)
+    with open("nfc_readers.json", "w") as f:
+        json.dump(entities, f, indent=2)
+
 def main():
     # make_buildings_json(mydata.building_data)
     # make_person_json(mydata.person_data)
