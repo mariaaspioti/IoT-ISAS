@@ -1,4 +1,4 @@
-import random
+import datetime
 import json
 import datetime
 import paho.mqtt.client as mqtt
@@ -7,7 +7,10 @@ import requests
 # MQTT broker details
 mqtt_broker = '150.140.186.118'
 mqtt_port = 1883
-client_id = "ISAS-BTtrackerSubscriber"
+# client id is the base plus timestamp of execution
+timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+client_id = f"ISAS-BTtrackerSubscriber-{timestamp}"
+print(f"Client ID: {client_id}")
 mqtt_base_topic = "ISAS/devices/BT/#"  # Subscribe to all topics
 
 # Orion Context Broker details

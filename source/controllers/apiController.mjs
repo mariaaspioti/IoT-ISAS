@@ -187,8 +187,11 @@ let saveCoordinates = (req, res) => {
 
 let getFacilities = async (req, res) => {
   try {
-    const response = await axios.get(`${orionUrl}?type=Facility`, {
-      headers: getHeaders
+    const response = await axios.get(`${orionUrl}?type=Building`, {
+      headers: getHeaders,
+      params: {
+        attrs: 'name,location'
+        }
     });
     res.json({ data: response.data });
   } catch (error) {
@@ -234,6 +237,22 @@ let findCurrentFacilities = async (req, res) => {
   }
 };
 
+let getDoorsLocations = async (req, res) => {
+    try {
+        const response = await axios.get(`${orionUrl}?type=Door`, {
+        headers: getHeaders,
+        params: {
+            attrs: 'location'
+            }
+        });
+        res.json({ data: response.data });
+    } catch (error) {
+        console.error('Doors error:', error);
+        res.status(500).json({ error: 'Failed to fetch doors' });
+    }
+    }
+
 export { getData, getAllData, getDeviceLocationData, getAllDevicesLocationData, 
-    getAllDevicesControlledAssets, saveCoordinates, getFacilities, findCurrentFacilities
+    getAllDevicesControlledAssets, saveCoordinates, getFacilities, findCurrentFacilities,
+    getDoorsLocations
  };

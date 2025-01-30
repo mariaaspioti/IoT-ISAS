@@ -17,6 +17,7 @@ const ClickLogger = () => {
 // "lng": -6.5230679512023935
 
 const Map = ({ data }) => {
+    
     return (
         <MapContainer center={[53.37575635880662, -6.5230679512023935]} zoom={13} className="leaflet-container">
             <TileLayer

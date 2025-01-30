@@ -56,6 +56,7 @@ Second
 '''
 
 import time
+import datetime
 import json
 import numpy as np
 import paho.mqtt.client as mqtt
@@ -63,7 +64,10 @@ import threading
 
 broker = '150.140.186.118'
 port = 1883
-client_id = "ISAS-BTtrackerPublisher"
+# client id is the base plus timestamp of execution
+timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+client_id = f"ISAS-BTtrackerPublisher-{timestamp}"
+print(f"Client ID: {client_id}")
 base_topic = "ISAS/devices/BT"
 
 def get_parameters():
