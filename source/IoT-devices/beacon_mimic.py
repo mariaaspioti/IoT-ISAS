@@ -56,6 +56,7 @@ Second
 '''
 
 import time
+import datetime
 import json
 import numpy as np
 import paho.mqtt.client as mqtt
@@ -63,8 +64,12 @@ import threading
 
 broker = '150.140.186.118'
 port = 1883
-client_id = "ISAS-BTtrackerPublisher"
-base_topic = "ISAS/devices/BT"
+# client id is the base plus timestamp of execution
+timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+client_id = f"ISAS-BTtrackerPublisher-{timestamp}"
+print(f"Client ID: {client_id}")
+base_bt_topic = "ISAS/devices/BT"
+base_gps_topic = "ISAS/devices/GPS"
 
 def get_parameters():
     route_1 = np.array([ [-6.528346538543702, 53.376431064762556],
@@ -97,34 +102,26 @@ def get_parameters():
     routes = [route_1, route_2]
     speeds = [speed_1, speed_2]
     return routes, speeds
-    
 
-def mimic_beacon(mqtt_client, route, speed, device_id):
+def mimic_beacon(mqtt_client, route, speed, device_id, base_topic):
     start_time = time.time()
-    direction = 1  # 1 for forward, -1 for reverse
     current_index = 0
     while True:
         current_time = time.time()
         elapsed_time = current_time - start_time
 
-        # Calculate the total distance traveled
         total_distance = speed * elapsed_time
-
-        # Calculate the distance between waypoints
         distances = np.linalg.norm(np.diff(route, axis=0), axis=1)
         cumulative_distances = np.cumsum(distances)
 
-        # Find the current segment
         while current_index < len(cumulative_distances) and total_distance > cumulative_distances[current_index]:
             current_index += 1
 
         if current_index == len(cumulative_distances):
-            direction *= -1
             current_index = 0
             start_time = current_time
             continue
 
-        # Calculate the position between waypoints
         if current_index == 0:
             segment_start = route[0]
             segment_end = route[1]
@@ -139,44 +136,55 @@ def mimic_beacon(mqtt_client, route, speed, device_id):
 
         position = segment_start + segment_ratio * (segment_end - segment_start)
 
-        # Publish the position to the MQTT broker
         payload = {"device_id": device_id, "lat": position[1], "lng": position[0]}
         topic = f"{base_topic}/{device_id}"
         mqtt_client.publish(topic, json.dumps(payload))
-        print(f"{device_id} published: {payload}")
+        print(f"{device_id} published to {topic}: {payload}")
 
         time.sleep(1)
 
 def main():
-    bt_routes, speeds = get_parameters()
+    routes, speeds = get_parameters()
 
     client = mqtt.Client(client_id)
     client.connect(broker, port)
     print("Connected to MQTT broker")
 
-    num_bt_devices = 2
-    if len(bt_routes) < num_bt_devices:
-        print(f"Number of routes ({len(bt_routes)}) is less than the number of devices ({num_bt_devices})")
-        num_bt_devices = len(bt_routes)
     clients = []
     threads = []
 
-    for i in range(num_bt_devices):
-        device_id = f"BluetoothTracker-{i}"
-        unique_client_id = f"{client_id}-{i}"
-        client = mqtt.Client(unique_client_id)
-        client.connect(broker, port)
-        client.loop_start()  # Start MQTT network loop
-        clients.append(client)
-        thread = threading.Thread(target=mimic_beacon, args=(client, bt_routes[i], speeds[i], device_id))
-        thread.daemon = True  # Thread exits when main thread exits
-        threads.append(thread)
-        thread.start()
-        # delay between starting each thread
-        time.sleep(1+np.random.rand())
+    for i in range(len(routes)):
+        route = routes[i]
+        speed = speeds[i]
+
+        # Bluetooth device setup
+        bt_device_id = f"BluetoothTracker-{i}"
+        bt_unique_client_id = f"{client_id}-BT-{i}"
+        bt_client = mqtt.Client(bt_unique_client_id)
+        bt_client.connect(broker, port)
+        bt_client.loop_start()
+        clients.append(bt_client)
+        bt_thread = threading.Thread(target=mimic_beacon, args=(bt_client, route, speed, bt_device_id, base_bt_topic))
+        bt_thread.daemon = True
+        threads.append(bt_thread)
+        bt_thread.start()
+        time.sleep(1 + np.random.rand())
+
+        # GPS device setup
+        gps_device_id = f"GPSTracker-{i}"
+        gps_unique_client_id = f"{client_id}-GPS-{i}"
+        gps_client = mqtt.Client(gps_unique_client_id)
+        gps_client.connect(broker, port)
+        gps_client.loop_start()
+        clients.append(gps_client)
+        gps_thread = threading.Thread(target=mimic_beacon, args=(gps_client, route, speed, gps_device_id, base_gps_topic))
+        gps_thread.daemon = True
+        threads.append(gps_thread)
+        gps_thread.start()
+        time.sleep(1 + np.random.rand())
 
     try:
-        while True:  # Keep main thread alive
+        while True:
             time.sleep(1)
     except KeyboardInterrupt:
         print("Shutting down...")
@@ -184,7 +192,6 @@ def main():
             client.loop_stop()
             client.disconnect()
         print("Disconnected all clients.")
-
 
 if __name__=="__main__":
     main()

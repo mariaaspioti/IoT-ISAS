@@ -1,4 +1,4 @@
-import random
+import datetime
 import json
 import datetime
 import paho.mqtt.client as mqtt
@@ -7,8 +7,11 @@ import requests
 # MQTT broker details
 mqtt_broker = '150.140.186.118'
 mqtt_port = 1883
-client_id = "ISAS-BTtrackerSubscriber"
-mqtt_base_topic = "ISAS/devices/BT/#"  # Subscribe to all topics
+# client id is the base plus timestamp of execution
+timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+client_id = f"ISAS-BTtrackerSubscriber-{timestamp}"
+print(f"Client ID: {client_id}")
+mqtt_base_topic = "ISAS/devices/+/#"  # Listen to both BT and GPS topics
 
 # Orion Context Broker details
 orion_url = "http://150.140.186.118:1026/v2/entities"
@@ -41,10 +44,10 @@ def query_device_id(device_id):
 
 def patch_data_to_cb(data, cb_device_id):
     """
-    Patch the location data to the Context Broker.
+    Patch location data for both BT and GPS devices.
     """
-    if cb_device_id is None:
-        print(f"Device ID not found in Context Broker for: {data['device_id']}")
+    if not cb_device_id:
+        print(f"Device {data['device_id']} not found in Context Broker")
         return
 
     payload = {
@@ -61,51 +64,42 @@ def patch_data_to_cb(data, cb_device_id):
         }
     }
 
-    url = f"{orion_url}/{cb_device_id}/attrs"
-    response = requests.patch(url, headers=pp_headers, json=payload)
-    if response.status_code == 204:
-        print(f"Data patched successfully for device ID: {cb_device_id}")
-    else:
-        print(f"Failed to patch data for device ID: {cb_device_id}. Response: {response.status_code}")
+    response = requests.patch(
+        f"{orion_url}/{cb_device_id}/attrs",
+        headers=pp_headers,
+        json=payload
+    )
+    print(f"PATCH status: {response.status_code} for {cb_device_id}")
 
 def on_message(client, userdata, message):
     """
-    Callback function for MQTT. Processes incoming messages.
+    Handle incoming messages from both BT and GPS topics.
     """
     try:
         data = json.loads(message.payload.decode())
-        print(f"Received data: {data}")
-        # Query the device ID in the Context Broker
+        print(f"Received from {message.topic}: {data}")
         cb_device_id = query_device_id(data["device_id"])
-        # Patch the data to the Context Broker
         patch_data_to_cb(data, cb_device_id)
 
-        # DEBUG: Print the data
-        # print(f"Device ID: {data['device_id']}, Latitude: {data['lat']}, Longitude: {data['lng']}")
-
-    except json.JSONDecodeError as e:
-        print(f"Failed to decode JSON message: {e}")
+        # Debug: print the device ID from the Context Broker
+        # print(f"Patched data for Device ID: {cb_device_id}, Latitude: {data['lat']}, Longitude: {data['lng']}")
     except Exception as e:
-        print(f"Error processing message: {e}")
+        print(f"Error: {str(e)}")
 
 def read_data_from_mqtt():
-    """
-    Read data from the MQTT broker and process messages.
-    """
-    print("Starting MQTT client...")
     client = mqtt.Client(client_id)
     client.connect(mqtt_broker, mqtt_port)
     client.on_message = on_message
     client.subscribe(mqtt_base_topic)
-    print(f"Subscribed to topic: {mqtt_base_topic}")
+    print(f"Subscribed to {mqtt_base_topic}")
     client.loop_forever()
 
 def main():
     try:
-        print("Initializing IoT Agent - Trackers...")
+        print("Starting IoT Agent for BT/GPS trackers...")
         read_data_from_mqtt()
     except KeyboardInterrupt:
-        print("Shutting down IoT Agent - Trackers.")
+        print("Shutting down")
 
 if __name__ == "__main__":
     main()

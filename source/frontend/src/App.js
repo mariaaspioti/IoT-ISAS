@@ -1,66 +1,54 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Map from './components/Map';
-import * as APICall from './services/api';
+// import * as APICall from './services/api';
+import * as editMap from './services/editMap';
 
 function App() {
-    const [coordinates, setCoordinates] = useState([]);
+    // const [coordinates, setCoordinates] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [currentLocations, setCurrentLocations] = useState([]);
-    const [people, setPeople] = useState([]);
+    // const [currentLocations, setCurrentLocations] = useState([]);
+    // const [people, setPeople] = useState([]);
     const [mapData, setMapData] = useState([]);
 
+    const fetchData = async () => {
+        try {
+            const { mapData, facilities, controlledAssets, data } = await editMap.fetchTrackingData();
+            // console.log("Data:", mapData, facilities, controlledAssets, data);
+            
+            setMapData(mapData);
+            // setCurrentLocations(facilities);
+            // setPeople(controlledAssets);
+            // setCoordinates(data);
+            setLoading(false);
+
+            // ==== Debugging ====
+            // const mapData1 = await editMap.showDoors();
+            // const mapData2 = await editMap.showBuildings();
+
+            //combine the two objects
+            // const mapData = [ ...mapData1, ...mapData2 ];
+
+            // console.log("components", mapData1, mapData2);
+            // setMapData(mapData);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                // Fetch all devices' locations
-                const data = await APICall.fetchAllDevicesLocations();
-                console.log('Device data:', data);
-                setCoordinates(data);
-                setLoading(false);
+        fetchData();
 
-                // Fetch all devices' controlledAssets i.e. people being tracked
-                const controlledAssets = await APICall.fetchAllDevicesControlledAssets();
-                console.log('Controlled assets data:', controlledAssets);
-                setPeople(controlledAssets);
-
-                const controlledAssetsMap = controlledAssets.reduce((acc, person) => ({
-                    ...acc,
-                    [person.device_id]: person
-                  }), {});
-
-        
-                // Determine the Facility in which the device is located
-                const facilities = await APICall.findCurrentFacilities(data);
-                console.log('Facilities data:', facilities);
-                setCurrentLocations(facilities);
-
-                // Set the map data
-                const mapData = data.map((loc, index) => {
-                    const person = controlledAssetsMap[loc.id];
-                    const facility = facilities[index]; // Ensure order preservation!
-                    const personInitials = person?.person_name?.split(' ').map(name => name[0]).join('') || 'N/A';
-                    return {
-                      lat: loc.lat,
-                      lng: loc.lng,
-                      facility_name: facility?.name || 'Unknown',
-                      facility_id: facility?.id || 'Unknown',
-                      ...(person || {}),
-                      message: `Device: ${loc.id.slice(-1)}, Facility: ${facility?.name}, Person: ${personInitials || 'None'}`
-                    };
-                });
-                console.log("mapData:", mapData);
-                setMapData(mapData);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-
-        fetchData(); // Initial fetch
         const interval = setInterval(fetchData, 2000); // Fetch every 2 seconds
+        setLoading(false);
 
         return () => clearInterval(interval); // Cleanup on unmount
     }, []);
+
+    if (loading) {
+        return <p>Loading...</p>;
+    }
 
     return (
         <div>

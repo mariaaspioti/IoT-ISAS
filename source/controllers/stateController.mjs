@@ -95,7 +95,8 @@ export const processFacilities = async (coordinates, rawFacilities) => {
 
   return Promise.all(coordinates.map(loc => {
     const point = turf.point([loc.lng, loc.lat]);
-    const facility = findFacilityContainingPoint(point, facilities);
+    let facility = findFacilityContainingPoint(point, facilities);
+
     return {
       lat: loc.lat,
       lng: loc.lng,
@@ -104,3 +105,45 @@ export const processFacilities = async (coordinates, rawFacilities) => {
     };
   }));
 };
+
+export const updateIsIndoorsPersonAttribute = async (indicesOutside) => {
+  try {
+    const response = await axios.get(orionUrl + '/?type=Person', { headers: getHeaders });
+    const persons = response.data;
+
+    for (let i = 0; i < persons.length; i++) {
+      const person = persons[i];
+      const personData = {
+        isIndoors: {
+          type: 'Boolean',
+          value: !indicesOutside.includes(i),
+        },
+      };
+      const personUrl = `${orionUrl}/${person.id}/attrs`;
+      await axios.post(personUrl, personData, { headers: postPatchHeaders });
+    }
+  } catch (error) {
+    console.error('Error updating isIndoors for persons:', error);
+    throw error;
+  }
+}
+
+export const determineInsideOutsideFacilities = async (data) => {
+  try {
+    // Run through the data and determine the facility for each point
+    let indicesOutside=[];
+    for (let i = 0; i < data.length; i++) {
+      const hasFoundFacility = data[i].id !== undefined;
+      if (!hasFoundFacility) {
+        indicesOutside.push(i);
+      }        
+    }
+
+    // Patch the attribute isIndoors for all the persons
+    await updateIsIndoorsPersonAttribute(indicesOutside);
+  
+  } catch (error) {
+    console.error('Error processing facilities:', error);
+    throw error;
+  }
+}

@@ -99,3 +99,28 @@ export const findCurrentFacilities = async (coordinates) => {
         throw error;
     }
 };
+
+// Fetch facilities-buildings coordinates
+export const fetchBuildingsLocations = async () => {
+    try {
+        const response = await fetch('/api/facilities');
+        const json = await response.json();
+        return json.data;
+    } catch (error) {
+        console.error('Error fetching facilities data:', error);
+        throw error;
+    }
+};
+
+
+// Fetch doors locations
+export const fetchDoorsLocations = async () => {
+    try {
+        const response = await fetch('/api/doors/location');
+        const json = await response.json();
+        return json.data;
+    } catch (error) {
+        console.error('Error fetching doors data:', error);
+        throw error;
+    }
+};
