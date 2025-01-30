@@ -73,19 +73,25 @@ let getAllData = (req, res) => {
 let getDeviceLocationData = (req, res) => {
     // get the coordinates from the Orion Context Broker for a specific device
     const device_id = req.params.id;
-    let deviceCoords = `/${device_id}/attrs/location`;
-    let deviceUrl = orionUrl + deviceCoords;
+    // let deviceCoords = `/${device_id}/attrs/location`;
+    let deviceUrl = orionUrl;
     axios.get(deviceUrl, {
-        headers: getHeaders
+        headers: getHeaders,
+        params: {
+            id: device_id,
+            attrs: 'location, name'
+        }
     })
     .then((response) => {
         let coord = response.data.value.coordinates;
+        let device_name = response.data.name.value;
         
         let responseObject = {
             data: [{
                 lat: coord[1],
                 lng: coord[0],
                 id: device_id,
+                name: device_name,
             }],
             message: 'Hello from the server!',
         };
@@ -96,10 +102,12 @@ let getDeviceLocationData = (req, res) => {
 
 let getAllDevicesLocationData = (req, res) => {
     // get the coordinates from the Orion Context Broker for all devices
-    let allDevices = `?type=Device`;
-    let allDevicesUrl = orionUrl + allDevices;
+    // get the location and the name of the devices
+    const allDevices = `?type=Device`;
+    const locationAndName = `&attrs=location,name,controlledAsset`;
+    const allDevicesUrl = orionUrl + allDevices + locationAndName;
     axios.get(allDevicesUrl, {
-        headers: getHeaders
+        headers: getHeaders,
     })
     .then((response) => {
         let responseObject = {
@@ -108,10 +116,15 @@ let getAllDevicesLocationData = (req, res) => {
         };
         for (let i = 0; i < response.data.length; i++) {
             let coord = response.data[i].location.value.coordinates;
+            let device_id = response.data[i].id;
+            let device_name = response.data[i]?.name.value;
+            let device_controlledAsset = response.data[i].controlledAsset.value;
             let dataPoint = {
                 lat: coord[1],
                 lng: coord[0],
-                id: response.data[i].id,
+                id: device_id,
+                name: device_name,
+                controlledAsset: device_controlledAsset,
             };
             responseObject.data.push(dataPoint);
         }
@@ -143,6 +156,7 @@ let getAllDevicesControlledAssets = async (req, res) => {
                 device_id: device.id,
                 person_id: personResponse.data.id,
                 person_name: personResponse.data.name.value,
+                isIndoors: personResponse.data.isIndoors.value,
             };
 
             responseObject.data.push(dataPoint);
@@ -212,9 +226,13 @@ let findCurrentFacilities = async (req, res) => {
       headers: getHeaders
     });
     
-    const enriched = await stateController.processFacilities(coordinates, facilityResponse.data);
+    const inOrderIndexesCurrentFacilities = await stateController.processFacilities(
+        coordinates, facilityResponse.data);
+    await stateController.determineInsideOutsideFacilities(inOrderIndexesCurrentFacilities);
+    const enriched = inOrderIndexesCurrentFacilities;
+
     res.json({ data: enriched });
-    // console.log('Enriched:', enriched);
+    
 
     // as a secondary task, update the persons' currentFacility attribute
     // rename the enriched data to match the expected structure
@@ -225,11 +243,20 @@ let findCurrentFacilities = async (req, res) => {
       facility_name: data.name
     })));
 
-    // validate the correct update of the persons' currentFacility attribute
-    const persons = await axios.get(`${orionUrl}?type=Person`, {
-      headers: getHeaders
-    });
-    // console.log('Persons:', persons.data);
+    // console.log('Was a facility id found?\n=======');
+    // enriched.forEach((facility) => {
+    //     if (facility.id) {
+    //         console.log('Yes:', facility.id);
+    //     } else {
+    //         console.log('No:', facility.id);
+    //     }
+    //     });
+    // console.log('=======\n');
+    // // validate the correct update of the persons' currentFacility attribute
+    // const persons = await axios.get(`${orionUrl}?type=Person`, {
+    //   headers: getHeaders
+    // });
+    // // console.log('Persons:', persons.data);
     
   } catch (error) {
     console.error('Location error:', error);

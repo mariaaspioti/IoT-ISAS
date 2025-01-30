@@ -14,7 +14,7 @@ function App() {
     const fetchData = async () => {
         try {
             const { mapData, facilities, controlledAssets, data } = await editMap.fetchTrackingData();
-            console.log("Data:", mapData, facilities, controlledAssets, data);
+            // console.log("Data:", mapData, facilities, controlledAssets, data);
             
             setMapData(mapData);
             // setCurrentLocations(facilities);

@@ -17,6 +17,8 @@ const CircleMarkerPopup = ({ data }) => {
                 <br />
                 <strong>Current Facility:</strong> {data.facility_name}
                 <br />
+                <strong>Tracking Method:</strong> {data.tracking_type}
+                <br />
                 <strong>Message:</strong> {data.message || 'No message'}
             </Popup>
         </CircleMarker>
