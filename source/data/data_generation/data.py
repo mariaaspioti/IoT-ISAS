@@ -1836,3 +1836,5 @@ device_nfc_reader_data = [
         "value": fk.hexify(text="^^^^^^^^")
     },
 ]
+
+
