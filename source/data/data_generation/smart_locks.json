@@ -1,0 +1,91 @@
+[
+  {
+    "id": "urn:ngsi-ld:Device:69",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "SmartLock-0"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "actuator"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "gateOpening"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Door:0"
+      ]
+    },
+    "areaServed": {
+      "type": "Text",
+      "value": "Fab 1 Facility"
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "http"
+      ]
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Point",
+        "coordinates": [
+          -6.524827480316163,
+          53.37636733795882
+        ]
+      }
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2025-01-24T15:13:45"
+    },
+    "value": {
+      "type": "Text",
+      "value": "1"
+    },
+    "directions": {
+      "type": "StructuredValue",
+      "value": [
+        "Entry",
+        "Exit"
+      ]
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 0.91
+    },
+    "dateFirstUsed": {
+      "type": "DateTime",
+      "value": "2025-01-07T08:13:15"
+    },
+    "dateInstalled": {
+      "type": "DateTime",
+      "value": "2025-01-03T14:44:40"
+    },
+    "deviceState": {
+      "type": "Text",
+      "value": "locked"
+    },
+    "firmwareVersion": {
+      "type": "Text",
+      "value": "199175"
+    },
+    "hardwareVersion": {
+      "type": "Text",
+      "value": "522"
+    },
+    "serialNumber": {
+      "type": "serialNumber",
+      "value": 98078270462
+    }
+  }
+]

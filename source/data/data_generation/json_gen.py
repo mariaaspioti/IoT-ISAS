@@ -311,11 +311,11 @@ def generate_nfc_reader_entities(data):
                 "value": device['dateLastValueReported']
             },
             "value": {
-                "type": "string",
+                "type": "Text",
                 "value": device['value']
             },
             "direction": {
-                "type": "string",
+                "type": "Text",
                 "value": device['direction']
             }
             
@@ -330,9 +330,103 @@ def make_nfc_readers_json(data):
     with open("nfc_readers.json", "w") as f:
         json.dump(entities, f, indent=2)
 
+def generate_smart_lock_entities(data):
+    '''Generate Smart Lock entities based on the Device Smart Data Model'''
+
+    entities = []
+    for device in data:
+        entity = {
+            "id": f"{device['id']}",
+            "type": "Device",
+            "name": {
+                "type": "Text",
+                "value": device['name']
+            },
+            "deviceCategory": {
+                "type": "StructuredValue",
+                "value": device['deviceCategory']
+            },
+            "controlledProperty": {
+                "type": "StructuredValue",
+                "value": device['controlledProperty']
+            },
+            "controlledAsset": {
+                "type": "StructuredValue",
+                "value": device['controlledAsset']
+            },
+            "areaServed": {
+                "type": "Text",
+                "value": device['areaServed']
+            },
+            "supportedProtocol": { 
+                "type": "StructuredValue",
+                "value": device['supportedProtocol']
+            },
+            "location": {
+                "type": "geo:json",
+                "value": {
+                    "type": "Point",
+                    "coordinates": device['location']
+                }
+            },
+            "dateLastValueReported": {
+                "type": "DateTime",
+                "value": device['dateLastValueReported']
+            },
+            "value": {
+                "type": "Text",
+                "value": device['value']
+            },
+            "directions": {
+                "type": "StructuredValue",
+                "value": device['directions']
+            },
+            "batteryLevel": {
+                "type": "Number",
+                "value": device['batteryLevel']
+            },
+            "dateFirstUsed": {
+                "type": "DateTime",
+                "value": device['dateFirstUsed']
+            },
+            "dateInstalled": {
+                "type": "DateTime",
+                "value": device['dateInstalled']
+            },
+            "deviceState": {  
+                "type": "Text",  
+                "value": device['deviceState']
+            },
+            "firmwareVersion": {
+                "type": "Text",
+                "value": device['firmwareVersion']
+            },
+            "hardwareVersion": {
+                "type": "Text",
+                "value": device['hardwareVersion']
+            },
+            "serialNumber": {
+                "type": "serialNumber",
+                "value": device['serialNumber']
+            }
+
+
+        }
+        entities.append(entity)
+        return entities
+
+
+def make_smart_locks_json(data):
+    '''Generate Smart Lock entities based on the Device Smart Data Model'''
+    
+    entities = generate_smart_lock_entities(data)
+    with open("smart_locks.json", "w") as f:
+        json.dump(entities, f, indent=2)
+
 def main():
     # make_buildings_json(mydata.building_data)
     make_nfc_readers_json(mydata.device_nfc_reader_data)
+    make_smart_locks_json(mydata.device_smart_lock_data)
     # make_person_json(mydata.person_data)
     # make_device_json(mydata.device_trackers_data)
     # make_doors_json(mydata.door_data)
