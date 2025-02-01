@@ -140,6 +140,7 @@ let getAllDevicesControlledAssets = async (req, res) => {
 
     try {
         const deviceResponse = await axios.get(allDevicesUrl, { headers: getHeaders });
+        
         let responseObject = {
             data: [],
             message: 'Hello from the server!',
@@ -148,18 +149,20 @@ let getAllDevicesControlledAssets = async (req, res) => {
         // Collect promises for fetching person data
         let promises = deviceResponse.data.map(async (device) => {
             let controlledAsset = device.controlledAsset.value;
-            // Fetch person details for the first controlled asset
-            let personUrl = orionUrl + `/${controlledAsset[0]}`;
-            const personResponse = await axios.get(personUrl, { headers: getHeaders });
+            let controlledAssetUrl = orionUrl + `/${controlledAsset[0]}`;
+            const controlledAssetResponse = await axios.get(controlledAssetUrl, { headers: getHeaders });
 
-            let dataPoint = {
-                device_id: device.id,
-                person_id: personResponse.data.id,
-                person_name: personResponse.data.name.value,
-                isIndoors: personResponse.data.isIndoors.value,
-            };
+            // Check if the controlled asset is a person
+            if (controlledAssetResponse.data.type === 'Person') {
+                let dataPoint = {
+                    device_id: device.id,
+                    person_id: controlledAssetResponse.data.id,
+                    person_name: controlledAssetResponse.data.name.value,
+                    isIndoors: controlledAssetResponse.data.isIndoors ? controlledAssetResponse.data.isIndoors.value : null,
+                };
 
-            responseObject.data.push(dataPoint);
+                responseObject.data.push(dataPoint);
+            }
         });
 
         // Wait for all person-related promises to complete

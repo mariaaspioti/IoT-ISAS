@@ -11,7 +11,9 @@ mqtt_port = 1883
 timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
 client_id = f"ISAS-BTtrackerSubscriber-{timestamp}"
 print(f"Client ID: {client_id}")
-mqtt_base_topic = "ISAS/devices/+/#"  # Listen to both BT and GPS topics
+
+mqtt_bt_topic = "ISAS/devices/BT/#" # Listen to BT topic
+mqtt_gps_topic = "ISAS/devices/GPS/#" # Listen to GPS topic
 
 # Orion Context Broker details
 orion_url = "http://150.140.186.118:1026/v2/entities"
@@ -90,8 +92,12 @@ def read_data_from_mqtt():
     client = mqtt.Client(client_id)
     client.connect(mqtt_broker, mqtt_port)
     client.on_message = on_message
-    client.subscribe(mqtt_base_topic)
-    print(f"Subscribed to {mqtt_base_topic}")
+    
+    client.subscribe(mqtt_gps_topic)
+    print(f"Subscribed to {mqtt_gps_topic}")
+    client.subscribe(mqtt_bt_topic)
+    print(f"Subscribed to {mqtt_bt_topic}")
+    
     client.loop_forever()
 
 def main():
