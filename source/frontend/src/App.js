@@ -27,10 +27,10 @@ function App() {
             // const mapData2 = await editMap.showBuildings();
 
             //combine the two objects
-            // const mapData = [ ...mapData1, ...mapData2 ];
+            // const mapData0 = [ ...mapData1, ...mapData2 ];
 
             // console.log("components", mapData1, mapData2);
-            // setMapData(mapData);
+            // setMapData(mapData0);
         } catch (error) {
             console.error('Error fetching data:', error);
             setLoading(false);
