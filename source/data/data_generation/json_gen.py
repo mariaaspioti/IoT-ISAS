@@ -137,7 +137,7 @@ def make_person_json(data):
         json.dump(entities, f, indent=2)
 
 
-def generate_device_entities(data):
+def generate_tracker_entities(data):
     '''Generate Device entities based on the Device Smart Data Model
     https://github.com/smart-data-models/dataModel.Device/blob/master/Device/doc/spec.md
     Required fields:
@@ -200,10 +200,10 @@ def generate_device_entities(data):
         entities.append(entity)
     return entities
 
-def make_device_json(data):
+def make_trackers_json(data):
     '''Generate Device entities based on the Device Smart Data Model'''
     
-    entities = generate_device_entities(data)
+    entities = generate_tracker_entities(data)
     with open("devices_trackers.json", "w") as f:
         json.dump(entities, f, indent=2)
 
@@ -413,8 +413,7 @@ def generate_smart_lock_entities(data):
 
         }
         entities.append(entity)
-        return entities
-
+    return entities
 
 def make_smart_locks_json(data):
     '''Generate Smart Lock entities based on the Device Smart Data Model'''
@@ -423,13 +422,65 @@ def make_smart_locks_json(data):
     with open("smart_locks.json", "w") as f:
         json.dump(entities, f, indent=2)
 
+def generate_SOSbutton_entities(data):
+    '''Generate SOS Button entities based on the Device Smart Data Model'''
+
+    entities = []
+    for device in data:
+        entity = {
+            "id": f"{device['id']}",
+            "type": "Device",
+            "name": {
+                "type": "Text",
+                "value": device['name']
+            },
+            "deviceCategory": {
+                "type": "StructuredValue",
+                "value": device['deviceCategory']
+            },
+            "controlledAsset": {
+                "type": "StructuredValue",
+                "value": device['controlledAsset']
+            },
+            "value": {
+                "type": "Text",
+                "value": device['value']
+            },
+            "dateLastValueReported": {
+                "type": "DateTime",
+                "value": device['dateLastValueReported']
+            },
+            "deviceState": {  
+                "type": "Text",  
+                "value": device['deviceState']
+            },
+            "batteryLevel": {
+                "type": "Number",
+                "value": device['batteryLevel']
+            },
+            "supportedProtocol": { 
+                "type": "StructuredValue",
+                "value": device['supportedProtocol']
+            }
+        }
+        entities.append(entity)
+    return entities
+    
+def make_SOSbuttons_json(data):
+    '''Generate SOS Button entities based on the Device Smart Data Model'''
+    
+    entities = generate_SOSbutton_entities(data)
+    with open("SOSbuttons.json", "w") as f:
+        json.dump(entities, f, indent=2)
+
 def main():
     # make_buildings_json(mydata.building_data)
-    make_nfc_readers_json(mydata.device_nfc_reader_data)
-    make_smart_locks_json(mydata.device_smart_lock_data)
     # make_person_json(mydata.person_data)
-    # make_device_json(mydata.device_trackers_data)
+    # make_trackers_json(mydata.device_trackers_data)
     # make_doors_json(mydata.door_data)
+    make_nfc_readers_json(mydata.device_nfc_reader_data)
+    make_SOSbuttons_json(mydata.device_sos_button_data)
+    make_smart_locks_json(mydata.device_smart_lock_data)
     # pass
 
 

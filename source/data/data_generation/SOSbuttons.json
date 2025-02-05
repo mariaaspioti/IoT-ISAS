@@ -1,0 +1,464 @@
+[
+  {
+    "id": "urn:ngsi-ld:Device:69",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "SOSButton-0"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "beacon"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:0"
+      ]
+    },
+    "value": {
+      "type": "Text",
+      "value": "normal"
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2025-02-02T13:44:03"
+    },
+    "deviceState": {
+      "type": "Text",
+      "value": "active"
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 26
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "lora"
+      ]
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:70",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "SOSButton-1"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "beacon"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:1"
+      ]
+    },
+    "value": {
+      "type": "Text",
+      "value": "normal"
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2025-02-04T19:15:35"
+    },
+    "deviceState": {
+      "type": "Text",
+      "value": "active"
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 46
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "lora"
+      ]
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:71",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "SOSButton-2"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "beacon"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:2"
+      ]
+    },
+    "value": {
+      "type": "Text",
+      "value": "normal"
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2025-02-04T18:32:31"
+    },
+    "deviceState": {
+      "type": "Text",
+      "value": "active"
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 40
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "lora"
+      ]
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:72",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "SOSButton-3"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "beacon"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:3"
+      ]
+    },
+    "value": {
+      "type": "Text",
+      "value": "normal"
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2025-02-03T10:16:43"
+    },
+    "deviceState": {
+      "type": "Text",
+      "value": "active"
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 88
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "lora"
+      ]
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:73",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "SOSButton-4"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "beacon"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:4"
+      ]
+    },
+    "value": {
+      "type": "Text",
+      "value": "normal"
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2025-02-04T21:29:29"
+    },
+    "deviceState": {
+      "type": "Text",
+      "value": "active"
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 44
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "lora"
+      ]
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:74",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "SOSButton-5"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "beacon"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:5"
+      ]
+    },
+    "value": {
+      "type": "Text",
+      "value": "normal"
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2025-02-02T12:58:32"
+    },
+    "deviceState": {
+      "type": "Text",
+      "value": "active"
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 45
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "lora"
+      ]
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:75",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "SOSButton-6"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "beacon"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:6"
+      ]
+    },
+    "value": {
+      "type": "Text",
+      "value": "normal"
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2025-02-02T08:32:04"
+    },
+    "deviceState": {
+      "type": "Text",
+      "value": "active"
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 63
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "lora"
+      ]
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:76",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "SOSButton-7"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "beacon"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:7"
+      ]
+    },
+    "value": {
+      "type": "Text",
+      "value": "normal"
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2025-02-01T04:53:27"
+    },
+    "deviceState": {
+      "type": "Text",
+      "value": "active"
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 19
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "lora"
+      ]
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:77",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "SOSButton-8"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "beacon"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:8"
+      ]
+    },
+    "value": {
+      "type": "Text",
+      "value": "normal"
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2025-02-01T20:20:45"
+    },
+    "deviceState": {
+      "type": "Text",
+      "value": "active"
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 95
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "lora"
+      ]
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:78",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "SOSButton-9"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "beacon"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:9"
+      ]
+    },
+    "value": {
+      "type": "Text",
+      "value": "normal"
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2025-02-04T09:05:13"
+    },
+    "deviceState": {
+      "type": "Text",
+      "value": "active"
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 59
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "lora"
+      ]
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:79",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "SOSButton-10"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "beacon"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:10"
+      ]
+    },
+    "value": {
+      "type": "Text",
+      "value": "normal"
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2025-02-04T05:13:58"
+    },
+    "deviceState": {
+      "type": "Text",
+      "value": "active"
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": 61
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "lora"
+      ]
+    }
+  }
+]

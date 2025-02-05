@@ -152,6 +152,27 @@ def post_smart_lock_entities():
     else:
         print("Failed to retrieve entities")
 
+def post_sos_button_entities():
+    '''Post SOS Button entities to the Context Broker'''
+    with open("SOSbuttons.json") as f:
+        entities = json.load(f)
+        for entity in entities:
+            response = requests.post(orion_url, headers=post_headers, json=entity)
+            if response.status_code == 201:
+                print(f"Entity {entity['id']} created successfully")
+            elif response.status_code == 422:
+                print(f"Entity {entity['id']} already exists")
+            else:
+                print(f"Failed to create entity {entity['id']} with status code {response.status_code}, response: {response.text}")
+
+    # test validity
+    response = requests.get(orion_url, headers=gd_headers)
+    if response.status_code == 200:
+        print("Entities retrieved successfully")
+        print(response.json())
+    else:
+        print("Failed to retrieve entities")
+
 def delete_in_path():
     '''Delete all entities in the given path'''
     print(f"About to delete all entities in path: {fiware_service_path}. Are you sure? (y/n)")
@@ -179,6 +200,7 @@ def main():
     post_device_trackers_entities()
     post_door_entities()
     post_nfc_reader_entities()
+    post_sos_button_entities()
     post_smart_lock_entities()
     userin = input("Press Enter to delete entities in the test path or type 'q' to exit: ")
     if userin == "q":
