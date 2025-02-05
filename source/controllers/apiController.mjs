@@ -280,9 +280,38 @@ let getDoorsLocations = async (req, res) => {
         console.error('Doors error:', error);
         res.status(500).json({ error: 'Failed to fetch doors' });
     }
+}
+
+let handleSOSAlert = (req, res) => {
+    try {
+        console.log('SOS Alert received:', req.body);
+        res.json({ message: 'SOS Alert received' });
+
+        // record it in a file
+        const filePath = '../sos-alerts.json';
+        const alert = req.body;
+        fs.readFile(filePath, 'utf8', (err, data) => {
+            if (err && err.code !== 'ENOENT') {
+                console.error('Error reading SOS alerts file:', err);
+                return;
+            }
+
+            const alerts = data ? JSON.parse(data) : [];
+            alerts.push(alert);
+
+            fs.writeFile(filePath, JSON.stringify(alerts, null, 2), (writeErr) => {
+                if (writeErr) {
+                    console.error('Error writing to SOS alerts file:', writeErr);
+                }
+            });
+        });
+    } catch (error) {
+        console.error('SOS Alert error:', error);
+        res.status(500).json({ error: 'Failed to handle SOS alert' });
     }
+};
 
 export { getData, getAllData, getDeviceLocationData, getAllDevicesLocationData, 
     getAllDevicesControlledAssets, saveCoordinates, getFacilities, findCurrentFacilities,
-    getDoorsLocations
+    getDoorsLocations, handleSOSAlert
  };

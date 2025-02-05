@@ -17,5 +17,7 @@ router.post('/facilities/find', apiController.findCurrentFacilities);
 
 router.get('/doors/location', apiController.getDoorsLocations);
 
+// router.post('/alert/sos', apiController.handleSOSAlert); // For Orion subscription
+router.get('/alert/sos', apiController.handleSOSAlert); // For polling
 
 export {router as apiRoutes};

@@ -66,7 +66,7 @@ broker = '150.140.186.118'
 port = 1883
 # client id is the base plus timestamp of execution
 timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-client_id = f"ISAS-BTtrackerPublisher-{timestamp}"
+client_id = f"ISAS-BTGPStrackerPublisher-{timestamp}"
 print(f"Client ID: {client_id}")
 base_bt_topic = "ISAS/devices/BT"
 base_gps_topic = "ISAS/devices/GPS"

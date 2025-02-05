@@ -1,5 +1,9 @@
 import requests
 import json
+import os
+
+# Base path for the JSON files, "data_generation" is the folder containing the JSON files
+base_path = os.path.join(os.path.dirname(__file__), "data_generation")
 
 # Orion Context Broker URL
 orion_url = "http://150.140.186.118:1026/v2/entities"
@@ -19,7 +23,7 @@ gd_headers = {
 
 def post_building_entities():
     '''Post Building entities to the Context Broker'''
-    with open("buildings.json") as f:
+    with open(os.path.join(base_path, "buildings.json")) as f:
         entities = json.load(f) 
         for entity in entities:
             if entity["name"]["value"] == "Waste Water Treatment Building":
@@ -48,7 +52,7 @@ def post_building_entities():
 
 def post_person_entities():
     '''Post Person entities to the Context Broker'''
-    with open("people.json") as f:
+    with open(os.path.join(base_path, "people.json")) as f:
         entities = json.load(f)
         for entity in entities:
             response = requests.post(orion_url, headers=post_headers, json=entity)
@@ -69,7 +73,7 @@ def post_person_entities():
 
 def post_device_trackers_entities():
     '''Post Device entities to the Context Broker'''
-    with open("devices_trackers.json") as f:
+    with open(os.path.join(base_path, "devices_trackers.json")) as f:
         entities = json.load(f)
         for entity in entities:
             response = requests.post(orion_url, headers=post_headers, json=entity)
@@ -90,7 +94,7 @@ def post_device_trackers_entities():
 
 def post_door_entities():
     '''Post Door entities to the Context Broker'''
-    with open("doors.json") as f:
+    with open(os.path.join(base_path, "doors.json")) as f:
         entities = json.load(f)
         for entity in entities:
             response = requests.post(orion_url, headers=post_headers, json=entity)
@@ -112,7 +116,7 @@ def post_door_entities():
 
 def post_nfc_reader_entities():
     '''Post NFC Reader entities to the Context Broker'''
-    with open("nfc_readers.json") as f:
+    with open(os.path.join(base_path, "nfc_readers.json")) as f:
         entities = json.load(f)
         for entity in entities:
             response = requests.post(orion_url, headers=post_headers, json=entity)
@@ -133,7 +137,7 @@ def post_nfc_reader_entities():
 
 def post_smart_lock_entities():
     '''Post Smart Lock entities to the Context Broker'''
-    with open("smart_locks.json") as f:
+    with open(os.path.join(base_path, "smart_locks.json")) as f:
         entities = json.load(f)
         for entity in entities:
             response = requests.post(orion_url, headers=post_headers, json=entity)
@@ -154,7 +158,7 @@ def post_smart_lock_entities():
 
 def post_sos_button_entities():
     '''Post SOS Button entities to the Context Broker'''
-    with open("SOSbuttons.json") as f:
+    with open(os.path.join(base_path, "SOSbuttons.json")) as f:
         entities = json.load(f)
         for entity in entities:
             response = requests.post(orion_url, headers=post_headers, json=entity)
@@ -182,7 +186,36 @@ def delete_in_path():
         return
     # get all entities in the given path
     limit = 1000
+    delete_alarms = False
     response = requests.get(orion_url + "?limit=" + str(limit), headers=gd_headers)
+    if response.status_code == 200:
+        entities = response.json()
+        for entity in entities:
+            if entity["type"] == "Alarm" and not delete_alarms:
+                print(f"Do you want to delete Alarm entities too? (y/n):")
+                userin = input()
+                if userin != "y":
+                    continue
+                else:
+                    delete_alarms = True
+            response = requests.delete(orion_url + "/" + entity["id"], headers=gd_headers)
+            if response.status_code == 204:
+                print(f"Entity {entity['id']} deleted successfully")
+            else:
+                print(f"Failed to delete entity {entity['id']}")
+    else:
+        print("Failed to retrieve entities")
+
+def delete_alert_entities():
+    '''Delete all Alert entities in the given path'''
+    print(f"About to delete all Alert entities in path: {fiware_service_path}. Are you sure? (y/n)")
+    userin = input()
+    if userin != "y":
+        print("Cancelled")
+        return
+    # get all entities in the given path
+    limit = 1000
+    response = requests.get(orion_url + "?type=Alert&limit=" + str(limit), headers=gd_headers)
     if response.status_code == 200:
         entities = response.json()
         for entity in entities:
@@ -202,8 +235,13 @@ def main():
     post_nfc_reader_entities()
     post_sos_button_entities()
     post_smart_lock_entities()
-    userin = input("Press Enter to delete entities in the test path or type 'q' to exit: ")
+    print("Press:") 
+    print("1. Enter to delete entities in the test path\n2. '1' to delete alert entities.\n3. Type 'q' to exit: ")
+    userin = input()
     if userin == "q":
+        return
+    if userin == "1":
+        delete_alert_entities()
         return
     delete_in_path()
 

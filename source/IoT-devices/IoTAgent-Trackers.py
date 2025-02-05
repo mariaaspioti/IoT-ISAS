@@ -9,7 +9,7 @@ mqtt_broker = '150.140.186.118'
 mqtt_port = 1883
 # client id is the base plus timestamp of execution
 timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-client_id = f"ISAS-BTtrackerSubscriber-{timestamp}"
+client_id = f"ISAS-BTGPStrackerSubscriber-{timestamp}"
 print(f"Client ID: {client_id}")
 
 mqtt_bt_topic = "ISAS/devices/BT/#" # Listen to BT topic

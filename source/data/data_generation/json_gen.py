@@ -442,6 +442,10 @@ def generate_SOSbutton_entities(data):
                 "type": "StructuredValue",
                 "value": device['controlledAsset']
             },
+            "controlledProperty": {
+                "type": "StructuredValue",
+                "value": device['controlledProperty']
+            },
             "value": {
                 "type": "Text",
                 "value": device['value']
@@ -478,9 +482,9 @@ def main():
     # make_person_json(mydata.person_data)
     # make_trackers_json(mydata.device_trackers_data)
     # make_doors_json(mydata.door_data)
-    make_nfc_readers_json(mydata.device_nfc_reader_data)
+    # make_nfc_readers_json(mydata.device_nfc_reader_data)
     make_SOSbuttons_json(mydata.device_sos_button_data)
-    make_smart_locks_json(mydata.device_smart_lock_data)
+    # make_smart_locks_json(mydata.device_smart_lock_data)
     # pass
 
 

@@ -1,4 +1,3 @@
-import datetime
 import json
 import uuid
 import paho.mqtt.client as mqtt
@@ -7,9 +6,10 @@ from datetime import datetime, timezone
 broker = '150.140.186.118'
 port = 1883
 # client id is the base plus timestamp of execution
-timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
 client_id = f"ISAS-SOSButtonPublisher-{timestamp}"
 print(f"Client ID: {client_id}")
+base_topic = "ISAS/devices/SOSButton"
 
 def generate_button_press_message(
     # Optionally pass a device profile dictionary
@@ -21,7 +21,7 @@ def generate_button_press_message(
     # applicationName="Buttons",
     deviceProfileId="c707a935-359c-4359-9186-53bccc74bcb5",
     deviceProfileName="MClimate Multipurpose Button",
-    deviceName="mclimate-multipurpose-button:1",
+    deviceName="mclimate-multipurpose-button:0",
     devEui="70b3d52dd6000065",
     tags=None,
     
@@ -86,7 +86,8 @@ def generate_button_press_message(
     
     # If no custom data payload is provided, use a placeholder value.
     if not data:
-        data = "Ae8AzgE="
+        # Base64-encoded "Hello, World!"
+        data = "SGVsbG8sIFdvcmxkIQ=="  # "Hello, World!"
 
     message = {
         "deduplicationId": deduplicationId,
@@ -138,7 +139,7 @@ def generate_button_press_message(
 
     return message
 
-def main():
+def generate_button_press_messages():
     # Define a default button_device dictionary
     default_button_device = {
         "tenantId": "063a0ecb-e8c2-4a13-975a-93d791e8d40c",
@@ -175,23 +176,23 @@ def main():
     )
     messages.append(msg1)
     
-    # Message 2: Custom device profile defined on the fly using button_device
-    custom_button_device = {
+    # Message 2:
+    button_device_button_2 = {
         "tenantId": "abc123-tenant",
         "applicationId": "app-456",
         "deviceProfileId": "profile-002",
         "deviceProfileName": "Example Button Model X",
-        "deviceName": "mclimate-multipurpose-button:2",
+        "deviceName": "mclimate-multipurpose-button:0",
         "devEui": "ABCDEF1234567890",
         "tags": {
-            "deviceId": "mclimate-multipurpose-button:2",
+            "deviceId": "mclimate-multipurpose-button:0",
             "model": "multipurpose-button",
             "apiKey": "custom-key-123",
             "manufacturer": "mclimate"
         }
     }
     msg2 = generate_button_press_message(
-        button_device=custom_button_device,
+        button_device=button_device_button_2,
         temperature=19.9,
         pressEvent="01",
         batteryVoltage=3.6,
@@ -206,27 +207,52 @@ def main():
     
     # Message 3: Using individual parameters (without button_device)
     # This will use the function's default device info
-    msg3 = generate_button_press_message(
-        temperature=18.8,
-        pressEvent="01",
-        batteryVoltage=3.2,
-        rssi=-113,
-        snr=-7.5,
-        channel=3,
-        frequency=867100000,
-        spreadingFactor=10,
-        fCnt=8
-    )
-    messages.append(msg3)
+    # msg3 = generate_button_press_message(
+    #     temperature=18.8,
+    #     pressEvent="01",
+    #     batteryVoltage=3.2,
+    #     rssi=-113,
+    #     snr=-7.5,
+    #     channel=3,
+    #     frequency=867100000,
+    #     spreadingFactor=10,
+    #     fCnt=8
+    # )
+    # messages.append(msg3)
     
-    # Print the generated messages as pretty-printed JSON
-    # print(json.dumps(messages, indent=4))
+    return messages
 
-    print(json.dumps(msg1, indent=4))
-    input("Press Enter to continue...")
-    print(json.dumps(msg2, indent=4))
-    input("Press Enter to continue...")
-    print(json.dumps(msg3, indent=4))
+def transmit_messages(client, messages):
+    '''Transmit the SOS button messages to the MQTT broker every time
+    the user presses Enter.'''
+
+    # Publish each message to the MQTT broker
+    for i, message in enumerate(messages, start=1):
+        # Wait for user input before sending the message
+        userin = input("Press Enter to send the next SOS button message or 'q' to quit: ")
+        if userin.lower() == 'q':
+            break
+        topic = f"{base_topic}/{message['deviceInfo']['deviceName']}"
+        payload = json.dumps(message)
+        client.publish(topic, payload)
+        print(f"Published message {i} to topic {topic}")
+        print(payload)
+        print()
+
+def main():
+    # Create an MQTT client
+    client = mqtt.Client(client_id)
+    client.connect(broker, port)
+    print("Connected to MQTT broker")
+    
+    # Generate button press messages
+    messages = generate_button_press_messages()
+    
+    transmit_messages(client, messages)
+    
+    # Disconnect the client
+    client.disconnect()
+    print("Disconnected from MQTT broker")
 
 
 if __name__ == "__main__":
