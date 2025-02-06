@@ -44,9 +44,10 @@ def compile_alert_data(data):
             if len(res) > 0:
                 return res[0]["id"]
             else:
-                return "urn:ngsi-ld:Alert:0" # else start from 0
+                return False
             
-    alert_id = query_id()
+    last_id = query_id()
+    alert_id = f"urn:ngsi-ld:Alert:{int(last_id.split(':')[-1]) + 1}" if last_id else "urn:ngsi-ld:Alert:0"
     
     alert_data = {
         "id": alert_id,
@@ -56,7 +57,7 @@ def compile_alert_data(data):
         "subCategory": "suspiciousAction",
         "severity": "high",
         "name": "SOS Button Press Event",
-        "description": "SOS button pressed by the user",
+        "description": "SOS button pressed by the worker",
         "status": "active"
     }
         

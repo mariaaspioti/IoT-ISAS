@@ -1,7 +1,8 @@
 import express from 'express';
 import axios from 'axios';
-
+import http from 'http';
 import cors from 'cors';
+import {Server as SocketIOServer} from 'socket.io';
 
 // 
 const app = express();
@@ -9,6 +10,7 @@ const app = express();
 // Routers
 const indexRouter = express.Router();
 import { apiRoutes } from './routes/apiRoutes.js';
+import { startAlertPolling } from './util/orionPolling.js';
 
 
 // Orion Context Broker URL
@@ -60,4 +62,35 @@ app.use((req, res) => {
     res.status(404).send('404: Page not Found');
 });
 
-export {app as application};
+// ------------------------------
+//  Orion Polling
+// ------------------------------
+
+// Create an HTTP server from the Express app
+const server = http.createServer(app);
+
+// Create a Socket.IO server and attach it to the HTTP server
+const io = new SocketIOServer(server, {
+  cors: {
+    origin: 'http://localhost:3000',
+    methods: ["GET", "POST"]
+  }
+});
+
+// When a client connects via Socket.IO
+io.on('connection', (socket) => {
+  console.log('A client connected:', socket.id);
+  
+  socket.on('disconnect', () => {
+    console.log('Client disconnected:', socket.id);
+  });
+});
+
+// Start polling Orion for alert data and emit new alerts via Socket.IO
+startAlertPolling(io, 3000);
+
+// ---
+// Export the HTTP server for use in index.mjs
+// ---
+
+export { server as application};
