@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { MapContainer, TileLayer, useMapEvent, Polygon, Popup } from 'react-leaflet';
 import CircleMarkerPopup from './CircleMarkerPopup';
 import 'leaflet/dist/leaflet.css';
-import { saveCoordinates } from '../services/api';
+import { saveCoordinates } from '../../services/api';
 
 const ClickLogger = () => {
   useMapEvent('click', (e) => {
