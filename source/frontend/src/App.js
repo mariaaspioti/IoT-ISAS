@@ -1,63 +1,104 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
 import Map from './components/Map';
-// import * as APICall from './services/api';
 import * as editMap from './services/editMap';
 
+// View types enumeration for better type safety
+const VIEW_TYPES = {
+  BUILDINGS: 'buildings',
+  DOORS: 'doors',
+  PEOPLE: 'people'
+};
+
 function App() {
-    // const [coordinates, setCoordinates] = useState([]);
-    const [loading, setLoading] = useState(true);
-    // const [currentLocations, setCurrentLocations] = useState([]);
-    // const [people, setPeople] = useState([]);
-    const [mapData, setMapData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [activeView, setActiveView] = useState(VIEW_TYPES.BUILDINGS);
+  const [mapData, setMapData] = useState({
+    [VIEW_TYPES.BUILDINGS]: [],
+    [VIEW_TYPES.DOORS]: [],
+    [VIEW_TYPES.PEOPLE]: []
+  });
 
-    const fetchData = async () => {
-        try {
-            const { mapData, facilities, controlledAssets, data } = await editMap.fetchTrackingData();
-            // console.log("Data:", mapData, facilities, controlledAssets, data);
-            
-            setMapData(mapData);
-            // setCurrentLocations(facilities);
-            // setPeople(controlledAssets);
-            // setCoordinates(data);
-            setLoading(false);
-
-            // ==== Debugging ====
-            // const mapData1 = await editMap.showDoors();
-            // const mapData2 = await editMap.showBuildings();
-
-            //combine the two objects
-            // const mapData0 = [ ...mapData1, ...mapData2 ];
-
-            // console.log("components", mapData1, mapData2);
-            // setMapData(mapData0);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        fetchData();
-
-        const interval = setInterval(fetchData, 2000); // Fetch every 2 seconds
-        setLoading(false);
-
-        return () => clearInterval(interval); // Cleanup on unmount
-    }, []);
-
-    if (loading) {
-        return <p>Loading...</p>;
+  // Memoized fetch function to prevent unnecessary re-renders
+  const fetchData = useCallback(async () => {
+    try {
+      const { mapData, ...rest } = await editMap.fetchTrackingData();
+      const doors = await editMap.showDoors();
+      const buildings = await editMap.showBuildings();
+    //   console.log("Building Data:", buildings);
+    //   console.log("Building Data", JSON.stringify(buildings, null, 2));
+      const people = mapData;
+    //   console.log("Data:", mapData, facilities, controlledAssets, data);
+    //   console.log("Doors:", doors);
+    //   console.log("Buildings:", buildings);
+      
+      setMapData(prev => ({
+        [VIEW_TYPES.BUILDINGS]: buildings || prev[VIEW_TYPES.BUILDINGS],
+        [VIEW_TYPES.DOORS]: doors || prev[VIEW_TYPES.DOORS],
+        [VIEW_TYPES.PEOPLE]: people || prev[VIEW_TYPES.PEOPLE]
+      }));
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setLoading(false);
     }
+  }, []);
 
-    return (
-        <div>
-            <h1>React + Node.js</h1>
-            <h3>Updates every 2 seconds, with data retrieved from the Node server.</h3>
-            <p>Click on the markers to see their coordinates and message/id.</p>
-            {loading ? <p>Loading...</p> : <Map data = {mapData} />}
+  useEffect(() => {
+    fetchData();
+    const interval = setInterval(fetchData, 2000);
+    return () => clearInterval(interval);
+  }, [fetchData]);
+
+  const getButtonStyle = (viewType) => ({
+    margin: '0 10px',
+    padding: '10px 20px',
+    backgroundColor: activeView === viewType ? '#007bff' : '#6c757d',
+    color: 'white',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s'
+  });
+
+  return (
+    <div className="app-container">
+      <h1>Industrial Spatial Authorization System</h1>
+      <div className="controls">
+        <button 
+          style={getButtonStyle(VIEW_TYPES.BUILDINGS)}
+          onClick={() => setActiveView(VIEW_TYPES.BUILDINGS)}
+        >
+          Show Buildings
+        </button>
+        <button
+          style={getButtonStyle(VIEW_TYPES.DOORS)}
+          onClick={() => setActiveView(VIEW_TYPES.DOORS)}
+        >
+          Show Doors
+        </button>
+        <button
+          style={getButtonStyle(VIEW_TYPES.PEOPLE)}
+          onClick={() => setActiveView(VIEW_TYPES.PEOPLE)}
+        >
+          Show People
+        </button>
+      </div>
+
+      {loading ? (
+        <div className="loading-container">
+          <p>Loading map data...</p>
         </div>
-    );
+      ) : (
+        <div className="map-container">
+          <Map data={mapData[activeView]} viewType={activeView} />
+          <div className="update-notice">
+            Data updates every 2 seconds. Last update: {new Date().toLocaleTimeString()}
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default App;

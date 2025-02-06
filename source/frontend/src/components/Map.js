@@ -1,35 +1,93 @@
-import React from 'react';
-import { MapContainer, TileLayer, useMapEvent } from 'react-leaflet';
+import React, { useMemo } from 'react';
+import { MapContainer, TileLayer, useMapEvent, Polygon, Popup } from 'react-leaflet';
 import CircleMarkerPopup from './CircleMarkerPopup';
 import 'leaflet/dist/leaflet.css';
 import { saveCoordinates } from '../services/api';
 
 const ClickLogger = () => {
-    useMapEvent('click', (e) => {
-        const { lat, lng } = e.latlng;
-        console.log(`Clicked at latitude: ${lat}, longitude: ${lng}`);
-        saveCoordinates({ lat, lng }); // Send to backend
-    });
-    return null;
+  useMapEvent('click', (e) => {
+    const { lat, lng } = e.latlng;
+    console.log(`Clicked at latitude: ${lat}, longitude: ${lng}`);
+    saveCoordinates({ lat, lng }); // Send to backend
+  });
+  return null;
 };
 
-// "lat": 53.37575635880662,
-// "lng": -6.5230679512023935
+const MARKER_COLORS = {
+  doors: 'green',
+  people: 'blue'
+};
 
-const Map = ({ data }) => {
+const Map = ({ data, viewType }) => {
+  // Use memoization for markers or polygons to optimize rendering.
+  const renderedElements = useMemo(() => {
+    if (viewType === 'buildings') {
+      // Group building data by building id extracted from the message.
+      const buildingGroups = {};
+      data.forEach((item) => {
+        // Assuming messages are of the form: "Building: urn:ngsi-ld:Building:<id>"
+        const parts = item.message.split(':');
+        const buildingId = parts[parts.length - 1].trim();
+        if (!buildingGroups[buildingId]) {
+          buildingGroups[buildingId] = [];
+        }
+        // Each building group gets an array of coordinate pairs and name.
+        buildingGroups[buildingId].push([item.lng, item.lat, item.name]);
+      });
 
-    return (
-        <MapContainer center={[53.37575635880662, -6.5230679512023935]} zoom={16} className="leaflet-container">
-            <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
-            />
-            <ClickLogger /> {/* Add click listener */}
-             {data.map((mdata, index) => (
-                <CircleMarkerPopup key={index} data={mdata} />
-            ))}
-        </MapContainer>
-    );
+      // Create a polygon for each building group.
+      return Object.entries(buildingGroups).map(([buildingId, positions]) => {
+        const name = positions[0][2];
+        const coordinates = positions.map(([lng, lat]) => [lat, lng]);
+        return <Polygon key={buildingId} positions={coordinates} color="red">
+          <Popup>
+            <strong>Building:</strong> {name}
+          </Popup>
+        </Polygon>
+        });
+    } else if (viewType === 'doors') {
+      // For doors or people, render individual markers.
+      return data.map((mdata, index) => (
+        <CircleMarkerPopup
+          key={index}
+          type={'door'}
+          data={mdata}
+          color={MARKER_COLORS[viewType] || 'green'}
+          fillColor={MARKER_COLORS[viewType] || 'green'}
+          radius={5}
+          fillOpacity={1}
+        />
+      ));
+    } else if (viewType === 'people') {
+      // For doors or people, render individual markers.
+      return data.map((mdata, index) => (
+        <CircleMarkerPopup
+          key={index}
+          type={'person'}
+          data={mdata}
+          color={MARKER_COLORS[viewType] || 'blue'}
+          fillColor={MARKER_COLORS[viewType] || 'blue'}
+          radius={8}
+          fillOpacity={0.6}
+        />
+      ));
+    }
+  }, [data, viewType]);
+
+  return (
+    <MapContainer
+      center={[53.37575635880662, -6.5230679512023935]}
+      zoom={16}
+      className="leaflet-container"
+    >
+      <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
+      />
+      <ClickLogger />
+      {renderedElements}
+    </MapContainer>
+  );
 };
 
 export default Map;
