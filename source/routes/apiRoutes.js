@@ -8,16 +8,22 @@ router.get('/data', apiController.getData);
 router.get('/all-data', apiController.getAllData);
 router.post('/save-coordinates', apiController.saveCoordinates);
 
+router.get('/devices/controlledAssets', apiController.getAllDevicesControlledAssets);
 router.get('/devices/location', apiController.getAllDevicesLocationData);
 router.get('/devices/:id/location', apiController.getDeviceLocationData);
-router.get('/devices/controlledAssets', apiController.getAllDevicesControlledAssets);
+router.get('/devices/:id', apiController.getDeviceData);
+router.get('/devices/name/:name', apiController.getDeviceDataFromName);
+
 
 router.get('/facilities', apiController.getFacilities);
 router.post('/facilities/find', apiController.findCurrentFacilities);
 
 router.get('/doors/location', apiController.getDoorsLocations);
 
+router.get('/people/:id', apiController.getPersonData);
+router.get('/people', apiController.getAllPeopleData);
+
 // router.post('/alert/sos', apiController.handleSOSAlert); // For Orion subscription
-router.get('/alert/sos', apiController.handleSOSAlert); // For polling
+// router.get('/alert/sos', apiController.handleSOSAlert); // For polling
 
 export {router as apiRoutes};

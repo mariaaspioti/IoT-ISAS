@@ -7,19 +7,44 @@ import AlertsList from './components/Alerts/AlertsList';
 import Map from './components/Map/Map';
 import './App.css';
 
+import { fetchFormatAlertData } from './services/editDashboardData';
+
 function App() {
   const [activeView, setActiveView] = useState(VIEW_TYPES.BUILDINGS);
   const [alerts, setAlerts] = useState([]);
   const { loading, mapData } = useMapData();
 
-  const handleNewAlert = useCallback((alert) => {
-    setAlerts(prevAlerts => {
-      const newAlert = {
-        ...alert,
-        frontend_timestamp: new Date().toLocaleTimeString()
-      };
-      return [newAlert, ...prevAlerts].slice(0, MAX_ALERTS);
-    });
+  // const handleNewAlert = useCallback((alert) => {
+  //   setAlerts(prevAlerts => { 
+  //     // const newAlert = {
+  //     //   ...alert,
+  //     //   frontend_timestamp: new Date().toLocaleTimeString()
+  //     // };
+  //     const newAlert = fetchFormatAlertData(alert);
+  //     return [newAlert, ...prevAlerts].slice(0, MAX_ALERTS);
+  //   });
+  // }, []);
+  const handleNewAlert = useCallback(async (alert) => {
+    try {
+      // Process alert asynchronously first
+      const formattedAlert = await fetchFormatAlertData(alert);
+      
+      // Then update state with processed alert
+      setAlerts(prev => {
+        const newAlert = {
+          ...formattedAlert,
+          frontend_timestamp: new Date().toLocaleTimeString()
+        };
+        
+        // Maintain temporal order while limiting count
+        const updated = [newAlert, ...prev];
+        return updated.length > MAX_ALERTS 
+          ? updated.slice(0, MAX_ALERTS)
+          : updated;
+      });
+    } catch (error) {
+      console.error('Error processing alert:', error);
+    }
   }, []);
 
   useWebSocket(handleNewAlert);

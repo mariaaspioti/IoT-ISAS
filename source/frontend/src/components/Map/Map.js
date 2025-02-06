@@ -14,6 +14,7 @@ const ClickLogger = () => {
 };
 
 const MARKER_COLORS = {
+  buildings: 'red',
   doors: 'green',
   people: 'blue'
 };
@@ -39,7 +40,7 @@ const Map = ({ data, viewType }) => {
       return Object.entries(buildingGroups).map(([buildingId, positions]) => {
         const name = positions[0][2];
         const coordinates = positions.map(([lng, lat]) => [lat, lng]);
-        return <Polygon key={buildingId} positions={coordinates} color="red">
+        return <Polygon key={buildingId} positions={coordinates} color={MARKER_COLORS[viewType] || 'red'}>
           <Popup>
             <strong>Building:</strong> {name}
           </Popup>

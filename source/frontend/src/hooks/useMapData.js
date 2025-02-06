@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import * as editMap from '../services/editMap';
+import * as editMap from '../services/editDashboardData';
 import { VIEW_TYPES } from '../constants';
 
 const useMapData = () => {

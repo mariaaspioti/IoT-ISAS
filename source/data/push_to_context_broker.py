@@ -224,14 +224,25 @@ def delete_alert_entities():
                 print(f"Entity {entity['id']} deleted successfully")
             else:
                 print(f"Failed to delete entity {entity['id']}")
+            
+
     else:
         print("Failed to retrieve entities")
 
 def main():
     print("Press:") 
-    print("1. To create all entities\n2. To delete alert entities.\n3. To To delete entities in the test path\n4. Type 'q' to exit: ")
+    print("0. To retrieve all entities\n1. To create all entities\n2. To delete alert entities.\n3. \
+To delete entities in the test path\n4. Type 'q' to exit: ")
     userin = input()
     if userin == "q":
+        return
+    if userin == "0":
+        response = requests.get(orion_url + "?limit=200", headers=gd_headers)
+        if response.status_code == 200:
+            print("Entities retrieved successfully")
+            print(response.json())
+        else:
+            print("Failed to retrieve entities")
         return
     if userin == "1":
         post_building_entities()
@@ -241,6 +252,7 @@ def main():
         post_nfc_reader_entities()
         post_sos_button_entities()
         post_smart_lock_entities()
+        print("\n=======\nDon't forget to assign devices!")
         return
     if userin == "2":
         delete_alert_entities()

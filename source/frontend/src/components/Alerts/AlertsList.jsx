@@ -14,8 +14,15 @@ const AlertsList = ({ alerts }) => (
             <span className="alert-time">{alert.frontend_timestamp}</span>
           </div>
           <div className="alert-body">
-            <span className="alert-severity">{alert.severity.value}</span>
-            <p className="alert-description">{alert.description.value}</p>
+            <span className="alert-severity">{alert.severity}</span>
+            <p className="alert-description">{alert.description}</p>
+            <div className="alert-meta">
+                  <span className="alert-person">Owner: {alert.personName}</span>
+                  <span className="alert-location">
+                    Current Location: {alert.personCurrentLocation}, {alert.personCurrentFacility}
+                  </span>
+                  <span className="alert-status">Status: {alert.status}</span>
+                </div>
           </div>
         </div>
       ))}

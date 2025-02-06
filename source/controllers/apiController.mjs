@@ -70,6 +70,51 @@ let getAllData = (req, res) => {
     })
 }
 
+let getDeviceData = (req, res) => {
+    // get the Entity data from the Orion Context Broker for a specific device given an :id
+    const deviceId = req.params.id;
+    axios.get(orionUrl + `/${deviceId}`, {
+        headers: getHeaders
+    })
+    .then((response) => {
+        console.log("Response Data:", response.data, "in getDeviceData");
+        res.json({
+            success: true,
+            data: response.data
+        });
+    })
+    .catch((error) => {
+        console.error('Error fetching device data in getDeviceData:');
+        res.status(500).json({ error: 'Failed to fetch device data' });
+    });
+}
+
+let getDeviceDataFromName = (req, res) => {
+    // get the Entity data from the Orion Context Broker for a specific device given a :name
+    const deviceName = req.params.name;
+    console.log("Device Name:", deviceName, "in getDeviceDataFromName");
+    const queryParams = {
+        type: 'Device',
+        q: `name==${deviceName}`,
+    };
+    console.log("Query Params:", queryParams, "in getDeviceDataFromName");
+    axios.get(orionUrl, {
+        headers: getHeaders,
+        params: queryParams
+    })
+    .then((response) => {
+        console.log("Response Data:", response.data, "in getDeviceDataFromName");
+        res.json({
+            success: true,
+            data: response.data
+        });
+    })
+    .catch((error) => {
+        console.error('Error fetching device data in getDeviceDataFromName:', error);
+        res.status(500).json({ error: 'Failed to fetch device data' });
+    });
+}
+
 let getDeviceLocationData = (req, res) => {
     // get the coordinates from the Orion Context Broker for a specific device
     const device_id = req.params.id;
@@ -282,6 +327,31 @@ let getDoorsLocations = async (req, res) => {
     }
 }
 
+let getPersonData = async (req, res) => {
+    try {
+        const personId = req.params.id;
+        const response = await axios.get(`${orionUrl}/${personId}`, {
+            headers: getHeaders
+        });
+        res.json({ data: response.data });
+    } catch (error) {
+        console.error('Person error:', error);
+        res.status(500).json({ error: 'Failed to fetch person data' });
+    }
+}
+
+let getAllPeopleData = async (req, res) => {
+    try {
+        const response = await axios.get(`${orionUrl}?type=Person`, {
+            headers: getHeaders
+        });
+        res.json({ data: response.data });
+    } catch (error) {
+        console.error('People error:', error);
+        res.status(500).json({ error: 'Failed to fetch people' });
+    }
+}
+
 let handleSOSAlert = (req, res) => {
     try {
         console.log('SOS Alert received:', req.body);
@@ -311,7 +381,7 @@ let handleSOSAlert = (req, res) => {
     }
 };
 
-export { getData, getAllData, getDeviceLocationData, getAllDevicesLocationData, 
+export { getData, getAllData, getDeviceData, getDeviceDataFromName, getDeviceLocationData, getAllDevicesLocationData, 
     getAllDevicesControlledAssets, saveCoordinates, getFacilities, findCurrentFacilities,
-    getDoorsLocations, handleSOSAlert
+    getDoorsLocations, getPersonData, getAllPeopleData, handleSOSAlert
  };

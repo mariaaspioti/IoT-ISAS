@@ -4,7 +4,7 @@ export const fetchTrackingData = async () => {
     try {
         // Fetch all devices' locations
         const data = await APICall.fetchAllDevicesLocations();
-        // console.log('Device data:', data);
+        console.log('Device data:', data);
 
 
         // Fetch all devices' controlledAssets i.e. people being tracked
@@ -140,4 +140,62 @@ export const showBuildings = async () => {
     });
 
     return mapData;
+}
+
+export const fetchFormatAlertData = async (alertData) => {
+    // // Given an alert, fetch the device data that caused it with known name
+    const deviceName = alertData.alertSource.value[0];
+    // console.log("Device Name:", deviceName, "in fetchFormatAlertData");
+    const arr = await APICall.fetchDeviceDataGivenName(deviceName);
+    const deviceData = arr[0];
+    // console.log("Device Data:", deviceData, "in fetchFormatAlertData");
+    // Extract the controlled asset (person id) from the device data
+    const personId = deviceData.controlledAsset.value;
+    // Fetch the person data
+    const personData = await APICall.fetchPersonData(personId);
+    
+    // given the person data, recover their devices with 'hasDevices' relationship
+    console.log("personData:", personData, "in fetchFormatAlertData");
+    // console.log("personData.hasDevices:", personData.hasDevices, "in fetchFormatAlertData");
+    const deviceIds = personData.hasDevices.value;
+    console.log("deviceIds:", deviceIds, "in fetchFormatAlertData");
+    // Fetch the device data
+    // console.log("deviceIds:", deviceIds);
+    const devicesData = await Promise.all(deviceIds.map(deviceId => APICall.fetchDeviceData(deviceId)));
+    console.log("devicesData:", devicesData);
+
+    // If the person is indoors, keep the location indicated by the device with name starting with 'BluetoothTracker'
+    // Otherwise, keep the location indicated by the device with name starting with 'GPS'
+    let deviceLocation;
+    if (personData.isIndoors.value) {
+        deviceLocation = devicesData.find(device => 
+            device.name.value.startsWith('BluetoothTracker')).location.value.coordinates;
+    } else {
+        deviceLocation = devicesData.find(device => 
+            device.name.value.startsWith('GPS')).location.value.coordinates;
+    }
+    console.log("deviceLocation:", deviceLocation, "in fetchFormatAlertData");
+    // Find the facility in which the device is located
+    const locationData = { lat: deviceLocation[1], lng: deviceLocation[0] };
+    const facilities = await APICall.findCurrentFacilities([locationData]);
+    const facility = facilities[0];
+    console.log("facility:", facility, "in fetchFormatAlertData");
+
+    // Format the alert data
+    const formattedData = {
+        id: alertData.id,
+        description: alertData.description.value,
+        severity: alertData.severity.value,
+        status: alertData.status.value,
+        frontend_timestamp: new Date().toLocaleString(),
+        personName: personData.name.value,
+        personId: personData.id,
+        // personIsIndoors: personData.isIndoors.value,
+        personCurrentLocation: deviceLocation,
+        personCurrentFacility: facility.name
+    };
+
+    console.log('Formatted alert data:', formattedData);
+    return formattedData;
+    // return alertData;
 }

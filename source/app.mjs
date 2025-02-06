@@ -10,7 +10,7 @@ const app = express();
 // Routers
 const indexRouter = express.Router();
 import { apiRoutes } from './routes/apiRoutes.js';
-import { startAlertPolling } from './util/orionPolling.js';
+import { startAlertPolling } from './utils/orionPolling.js';
 
 
 // Orion Context Broker URL

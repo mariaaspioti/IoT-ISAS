@@ -22,6 +22,30 @@ export const fetchAllLocations = async () => {
     }
 };
 
+// Fetch device data
+export const fetchDeviceData = async (device_id) => {
+    try {
+        const response = await fetch(`/api/devices/${device_id}`);
+        const json = await response.json();
+        return json.data;
+    } catch (error) {
+        console.error('Error fetching device data in fetchDeviceData:', error);
+        throw error;
+    }
+};
+
+// Fetch device data given a name
+export const fetchDeviceDataGivenName = async (device_name) => {
+    try {
+        const response = await fetch(`/api/devices/name/${device_name}`);
+        const json = await response.json();
+        return json.data;
+    } catch (error) {
+        console.error('Error fetching device data in fetchDeviceDataGivenName:', error);
+        throw error;
+    }
+};
+
 // Fetch device location data
 export const fetchDeviceLocation = async (device_id) => {
     try {
@@ -29,7 +53,7 @@ export const fetchDeviceLocation = async (device_id) => {
         const json = await response.json();
         return json.data;
     } catch (error) {
-        console.error('Error fetching device data:', error);
+        console.error('Error fetching device data in fetchDeviceLocation:', error);
         throw error;
     }
 };
@@ -121,6 +145,18 @@ export const fetchDoorsLocations = async () => {
         return json.data;
     } catch (error) {
         console.error('Error fetching doors data:', error);
+        throw error;
+    }
+};
+
+// Fetch person data
+export const fetchPersonData = async (person_id) => {
+    try {
+        const response = await fetch(`/api/people/${person_id}`);
+        const json = await response.json();
+        return json.data;
+    } catch (error) {
+        console.error('Error fetching person data:', error);
         throw error;
     }
 };
