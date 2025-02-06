@@ -1,5 +1,6 @@
 import axios from 'axios';
 import fs from 'fs';
+import path from 'path';
 
 // Orion Context Broker URL
 const orionUrl = 'http://150.140.186.118:1026/v2/entities';
@@ -9,6 +10,12 @@ const getHeaders = {
     'Fiware-Service': fiwareService,
     'Fiware-ServicePath': fiwareServicePath,
 };
+
+const logDir = './logs';
+const logFile = path.join(logDir, 'alertData.log');
+if (!fs.existsSync(logDir)) {
+    fs.mkdirSync(logDir);
+    }
 
 // A set to store processed alerts by ID
 let processedAlerts = new Set();
@@ -37,16 +44,6 @@ export const startAlertPolling = (socket, intervalMs = 2000) => {
       if (!alertData.length) {
         return;
       }
-      // Log the alert data to a file
-      fs.appendFile(
-        './logs/alertData.log',
-        JSON.stringify(alertData, null, 2) + "\n",
-        (err) => {
-          if (err) {
-            console.error('Error writing alert data to file:', err);
-          }
-        }
-      );
 
       // Iterate over each alert and emit if it hasn't been processed before
       alertData.forEach((alert) => {
@@ -54,6 +51,13 @@ export const startAlertPolling = (socket, intervalMs = 2000) => {
           processedAlerts.add(alert.id);
           socket.emit('alertSOSbutton', alert);
           console.log('Emitted new alert:', alert);
+
+          // Log the new alert data to a file
+          fs.appendFile(logFile, JSON.stringify(alert, null, 2) + "\n", (err) => {
+            if (err) {
+              console.error('Error writing alert data to file:', err);
+            }
+          });
         }
       });
     } catch (error) {

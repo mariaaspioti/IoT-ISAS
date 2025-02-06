@@ -10,6 +10,7 @@ const AlertsList = ({ alerts }) => (
         <div key={alert.id} className="alert-item">
           <div className="alert-header">
             <span className="alert-id">Alert #{alert.id}</span>
+            {/* <span className="alert-time">{alert.dateIssued.value}</span> */}
             <span className="alert-time">{alert.frontend_timestamp}</span>
           </div>
           <div className="alert-body">
