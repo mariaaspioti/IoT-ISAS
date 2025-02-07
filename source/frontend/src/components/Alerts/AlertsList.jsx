@@ -19,7 +19,9 @@ const AlertsList = ({ alerts }) => (
             <div className="alert-meta">
                   <span className="alert-person">Owner: {alert.personName}</span>
                   <span className="alert-location">
-                    Current Location: {alert.personCurrentLocation}, {alert.personCurrentFacility}
+                    Current Location: {alert.personCurrentFacility}
+                    <br />
+                    Coordinates: {alert.personCurrentLocation[0]}, {alert.personCurrentLocation[1]}
                   </span>
                   <span className="alert-status">Status: {alert.status}</span>
                 </div>
