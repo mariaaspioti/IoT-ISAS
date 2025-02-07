@@ -148,9 +148,10 @@ let getDeviceLocationData = (req, res) => {
 let getAllDevicesLocationData = (req, res) => {
     // get the coordinates from the Orion Context Broker for all devices
     // get the location and the name of the devices
-    const allDevices = `?type=Device`;
+    const allDevices = `?type=Device&q=deviceCategory==meter`;
     const locationAndName = `&attrs=location,name,controlledAsset`;
-    const allDevicesUrl = orionUrl + allDevices + locationAndName;
+    const queryLimit = `&limit=1000`;
+    const allDevicesUrl = orionUrl + allDevices + locationAndName + queryLimit;
     axios.get(allDevicesUrl, {
         headers: getHeaders,
     })

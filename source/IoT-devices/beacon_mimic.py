@@ -226,7 +226,10 @@ def get_parameters():
               [-6.525555305373526, 53.375184686683816],
               [-6.525442625986566, 53.37530309630266]
           ])
-    
+    route_11 = np.array([ [-6.520684304835045, 53.375098279456914],
+                         [-6.5203838264698355, 53.375463108778035], # End of route
+                         [-6.520684304835045, 53.375098279456914] ]) # Retrace
+                  
 
     total_time_1 = 90
     total_time_2 = 120
@@ -238,6 +241,7 @@ def get_parameters():
     total_time_8 = 220
     total_time_9 = 250
     total_time_10 = 180
+    total_time_11 = 60
 
     speed_1 = np.sum(np.linalg.norm(np.diff(route_1, axis=0), axis=1)) / total_time_1
     speed_2 = np.sum(np.linalg.norm(np.diff(route_2, axis=0), axis=1)) / total_time_2
@@ -249,9 +253,10 @@ def get_parameters():
     speed_8 = np.sum(np.linalg.norm(np.diff(route_8, axis=0), axis=1)) / total_time_8
     speed_9 = np.sum(np.linalg.norm(np.diff(route_9, axis=0), axis=1)) / total_time_9
     speed_10 = np.sum(np.linalg.norm(np.diff(route_10, axis=0), axis=1)) / total_time_10
+    speed_11 = np.sum(np.linalg.norm(np.diff(route_11, axis=0), axis=1)) / total_time_11
 
-    routes = [route_1, route_2, route_3, route_4, route_5, route_6, route_7, route_8, route_9, route_10]
-    speeds = [speed_1, speed_2, speed_3, speed_4, speed_5, speed_6, speed_7, speed_8, speed_9, speed_10]
+    routes = [route_1, route_2, route_3, route_4, route_5, route_6, route_7, route_8, route_9, route_10, route_11]
+    speeds = [speed_1, speed_2, speed_3, speed_4, speed_5, speed_6, speed_7, speed_8, speed_9, speed_10, speed_11]
     return routes, speeds
 
 def mimic_beacon(mqtt_client, route, speed, device_id, base_topic):
@@ -827,6 +832,18 @@ Tenth
   {
     "lat": 53.37564872249634,
     "lng": -6.524830937885974
+  }
+  - Retrace and repeat
+
+Eleventh
+  Start
+  {
+    "lat": 53.375098279456914,
+    "lng": -6.520684304835045
+  },
+  {
+    "lat": 53.375463108778035,
+    "lng": -6.5203838264698355
   }
   - Retrace and repeat
 '''

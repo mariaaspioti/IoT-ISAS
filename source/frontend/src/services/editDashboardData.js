@@ -4,12 +4,12 @@ export const fetchTrackingData = async () => {
     try {
         // Fetch all devices' locations
         const data = await APICall.fetchAllDevicesLocations();
-        console.log('Device data:', data);
+        // console.log('Device data:', data);
 
 
         // Fetch all devices' controlledAssets i.e. people being tracked
         const controlledAssets = await APICall.fetchAllDevicesControlledAssets();
-        console.log('Controlled assets data:', controlledAssets);
+        // console.log('Controlled assets data:', controlledAssets);
         // setPeople(controlledAssets);
 
         // const controlledAssetsMap = controlledAssets.reduce((acc, person) => ({
@@ -48,12 +48,12 @@ export const fetchTrackingData = async () => {
 
         // 3. Build mapData based on people and their indoor/outdoor status
         let mapData = controlledAssets.map(person => {
-            console.log("person:", person);
+            // console.log("person:", person);
             const devices = personDevicesMap[person.person_id]|| {};
-            console.log("devices:", devices);
+            // console.log("devices:", devices);
             const isIndoors = person.isIndoors;
             const selectedDevice = isIndoors ? devices.bt : devices.gps;
-            console.log("selectedDevice:", selectedDevice);
+            // console.log("selectedDevice:", selectedDevice);
             
             if (!selectedDevice) {
                 console.warn(`No device found for person ${person.person_id}`);
@@ -78,13 +78,6 @@ export const fetchTrackingData = async () => {
                 message: `Device: ${selectedDeviceNum} | Facility: ${facility?.name || 'Outside'}, Person: ${initials}`
             };
         }).filter(Boolean);
-        // DEBUG: accept first the persons with urn:ngsi-ld:Person:0, 1, 2
-        mapData = mapData.filter(person => person.person_id === 'urn:ngsi-ld:Person:0' || person.person_id === 'urn:ngsi-ld:Person:1'
-            || person.person_id === 'urn:ngsi-ld:Person:2' || person.person_id === 'urn:ngsi-ld:Person:3'
-            || person.person_id === 'urn:ngsi-ld:Person:4' || person.person_id === 'urn:ngsi-ld:Person:5'
-            || person.person_id === 'urn:ngsi-ld:Person:6' || person.person_id === 'urn:ngsi-ld:Person:7'
-            || person.person_id === 'urn:ngsi-ld:Person:8' || person.person_id === 'urn:ngsi-ld:Person:9' 
-        );
         
         return { mapData, facilities, controlledAssets, data };
     } catch (error) {
