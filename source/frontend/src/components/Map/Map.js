@@ -48,9 +48,9 @@ const Map = ({ data, viewType }) => {
         });
     } else if (viewType === 'doors') {
       // For doors or people, render individual markers.
-      return data.map((mdata, index) => (
+      return data.map((mdata) => (
         <CircleMarkerPopup
-          key={index}
+          key={mdata.message.split('Door: ')[1]}
           type={'door'}
           data={mdata}
           color={MARKER_COLORS[viewType] || 'green'}
@@ -61,9 +61,9 @@ const Map = ({ data, viewType }) => {
       ));
     } else if (viewType === 'people') {
       // For doors or people, render individual markers.
-      return data.map((mdata, index) => (
+      return data.map((mdata) => (
         <CircleMarkerPopup
-          key={index}
+          key={mdata.person_id}
           type={'person'}
           data={mdata}
           color={MARKER_COLORS[viewType] || 'blue'}

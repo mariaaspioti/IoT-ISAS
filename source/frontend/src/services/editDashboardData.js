@@ -78,28 +78,10 @@ export const fetchTrackingData = async () => {
                 message: `Device: ${selectedDeviceNum} | Facility: ${facility?.name || 'Outside'}, Person: ${initials}`
             };
         }).filter(Boolean);
-        // DEBUG: accept first the persons with urn:ngsi-ld:Person:0 and urn:ngsi-ld:Person:1
-        mapData = mapData.filter(person => person.person_id === 'urn:ngsi-ld:Person:0' || person.person_id === 'urn:ngsi-ld:Person:1');
-
-        // console.log("mapData:", JSON.stringify(mapData, null, 2));
-        // console.log("mapData:", mapData);
-
-        // // Set the map data
-        // const mapData = data.map((loc, index) => {
-        //     const person = controlledAssetsMap[loc.id];
-        //     const facility = facilities[index]; // Ensure order preservation!
-        //     const personInitials = person?.person_name?.split(' ').map(name => name[0]).join('') || 'N/A';
-        //     const device_num = loc.id.split('Device:')[1];
-        //     return {
-        //       lat: loc.lat,
-        //       lng: loc.lng,
-        //       facility_name: facility?.name || 'Unknown',
-        //       facility_id: facility?.id || 'Unknown',
-        //       ...(person || {}),
-        //       message: `Device: ${device_num} | Facility: ${facility?.name}, Person: ${personInitials || 'None'}`
-        //     };
-        // });
-        // console.log("mapData:", mapData);
+        // DEBUG: accept first the persons with urn:ngsi-ld:Person:0, 1, 2
+        mapData = mapData.filter(person => person.person_id === 'urn:ngsi-ld:Person:0' || person.person_id === 'urn:ngsi-ld:Person:1'
+            || person.person_id === 'urn:ngsi-ld:Person:2' 
+        );
         
         return { mapData, facilities, controlledAssets, data };
     } catch (error) {

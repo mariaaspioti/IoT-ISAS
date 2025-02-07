@@ -79,7 +79,7 @@ def on_message(client, userdata, message):
     """
     try:
         data = json.loads(message.payload.decode())
-        print(f"Received from {message.topic}: {data}")
+        print(f"Received from {message.topic}")#: {data}")
         cb_device_id = query_device_id(data["device_id"])
         patch_data_to_cb(data, cb_device_id)
 
