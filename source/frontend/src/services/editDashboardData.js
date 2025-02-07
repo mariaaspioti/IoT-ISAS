@@ -170,7 +170,7 @@ export const fetchFormatAlertData = async (alertData) => {
         personId: personData.id,
         // personIsIndoors: personData.isIndoors.value,
         personCurrentLocation: deviceLocation,
-        personCurrentFacility: facility.name
+        personCurrentFacility: facility.name ? facility.name : 'Outside'
     };
 
     console.log('Formatted alert data:', formattedData);

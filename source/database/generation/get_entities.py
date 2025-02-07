@@ -79,5 +79,6 @@ def main():
     save_entities_to_json(entities, output_dir)
 
     print(f'Entities have been saved in {output_dir} directory.')
+    
 if __name__ == "__main__":
     main()
