@@ -4,6 +4,10 @@
 
 ![Map and dashboard with active alerts](images/activeAlertsWaypoint.png)
 
+## Architecture
+---
+![System architecture](images/implementationArchitecture.png)
+
 ## Run worker routes simulation
 ---
 - Go to IoT-devices
