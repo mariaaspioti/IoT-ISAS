@@ -51,6 +51,24 @@ const CircleMarkerPopup = ({ type, data, color, fillColor, radius, fillOpacity }
         <strong>Message:</strong> {data.message || 'No message'}
       </>
     );
+  } else if (type === 'alert') {
+    // console.log("data in CircleMarkerPopup type alert:", data);
+    const coordinates = data.personCurrentLocation && Array.isArray(data.personCurrentLocation)
+      ? `${data.personCurrentLocation[0]}, ${data.personCurrentLocation[1]}`
+      : `${data.lat}, ${data.lng}`;
+    popupContent = (
+      <>
+        <strong>Alert:</strong> {data.description || 'No message'}
+        <br />
+        <strong>Time:</strong> {data.frontend_timestamp}
+        <br />
+        <strong>Status:</strong> {data.status}
+        <br />
+        <strong>Owner:</strong> {data.personName}
+        <br />
+        <strong>Coordinates:</strong> {coordinates}
+      </>
+    );
   } else {
     popupContent = (
       <>

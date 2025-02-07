@@ -55,7 +55,7 @@ function App() {
       ) : (
         <div className="main-content">
           <div className="map-container">
-            <Map data={mapData[activeView]} viewType={activeView} />
+            <Map data={mapData[activeView]} alerts={alerts} viewType={activeView} />
             <div className="update-notice">
               Data updates every 2 seconds. Last update: {new Date().toLocaleTimeString()}
             </div>

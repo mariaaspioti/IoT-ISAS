@@ -1,4 +1,8 @@
 # IoT-ISAS
+---
+![Dashboard with buildings defined](images/earlyDashboard3.png)
+
+![Map and dashboard with active alerts](images/activeAlertsWaypoint.png)
 
 ## Run worker routes simulation
 ---

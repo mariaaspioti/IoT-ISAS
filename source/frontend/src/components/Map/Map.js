@@ -14,12 +14,13 @@ const ClickLogger = () => {
 };
 
 const MARKER_COLORS = {
-  buildings: 'red',
+  buildings: 'darkred',
   doors: 'green',
-  people: 'blue'
+  people: 'blue',
+  alert: 'red',
 };
 
-const Map = ({ data, viewType }) => {
+const Map = ({ data, viewType, alerts }) => {
   // Use memoization for markers or polygons to optimize rendering.
   const renderedElements = useMemo(() => {
     if (viewType === 'buildings') {
@@ -75,6 +76,28 @@ const Map = ({ data, viewType }) => {
     }
   }, [data, viewType]);
 
+   const alertMarkers = useMemo(() => {
+    return alerts.map(alert => {
+      // Update .personCurrentLocation to .lat and .lng
+      if (alert.personCurrentLocation && Array.isArray(alert.personCurrentLocation)) {
+        alert.lat = alert.personCurrentLocation[1];
+        alert.lng = alert.personCurrentLocation[0];
+      }
+
+      return (
+        <CircleMarkerPopup
+          key={alert.id}
+          type="alert"
+          data={alert}
+          color={MARKER_COLORS.alert}
+          fillColor={MARKER_COLORS.alert}
+          radius={10}
+          fillOpacity={0.2}
+        />
+      );
+    });
+  }, [alerts]);
+
   return (
     <MapContainer
       center={[53.37575635880662, -6.5230679512023935]}
@@ -87,6 +110,7 @@ const Map = ({ data, viewType }) => {
       />
       <ClickLogger />
       {renderedElements}
+      {alertMarkers}
     </MapContainer>
   );
 };
