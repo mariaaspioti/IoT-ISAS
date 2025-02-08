@@ -1,12 +1,12 @@
 currentFacility,hasDevices,id,isIndoors,name,role,type
-urn:ngsi-ld:Building:2,urn:ngsi-ld:Device:0;urn:ngsi-ld:Device:11;urn:ngsi-ld:Device:69,urn:ngsi-ld:Person:0,True,Elizabeth Franklin,Engineer,Person
-urn:ngsi-ld:Building:0,urn:ngsi-ld:Device:1;urn:ngsi-ld:Device:12;urn:ngsi-ld:Device:70,urn:ngsi-ld:Person:1,True,Scott Reynolds,Janitor,Person
-urn:ngsi-ld:Building:15,urn:ngsi-ld:Device:2;urn:ngsi-ld:Device:13;urn:ngsi-ld:Device:71,urn:ngsi-ld:Person:2,False,Michael Stewart,Technician,Person
-urn:ngsi-ld:Building:6,urn:ngsi-ld:Device:3;urn:ngsi-ld:Device:14;urn:ngsi-ld:Device:72,urn:ngsi-ld:Person:3,True,Wanda Brandt,Cleanroom Operator,Person
-urn:ngsi-ld:Building:13,urn:ngsi-ld:Device:4;urn:ngsi-ld:Device:15;urn:ngsi-ld:Device:73,urn:ngsi-ld:Person:4,True,Angelica Smith,Technician,Person
-urn:ngsi-ld:Building:10,urn:ngsi-ld:Device:5;urn:ngsi-ld:Device:16;urn:ngsi-ld:Device:74,urn:ngsi-ld:Person:5,True,Lauren Riley,Engineer,Person
-urn:ngsi-ld:Building:0,urn:ngsi-ld:Device:6;urn:ngsi-ld:Device:17;urn:ngsi-ld:Device:75,urn:ngsi-ld:Person:6,True,Christine Herman MD,Cleanroom Operator,Person
-urn:ngsi-ld:Building:4,urn:ngsi-ld:Device:7;urn:ngsi-ld:Device:18;urn:ngsi-ld:Device:76,urn:ngsi-ld:Person:7,True,Julian Jordan,Cleanroom Operator,Person
-urn:ngsi-ld:Building:16,urn:ngsi-ld:Device:8;urn:ngsi-ld:Device:19;urn:ngsi-ld:Device:77,urn:ngsi-ld:Person:8,False,Devin Martinez,Technician,Person
-urn:ngsi-ld:Building:11,urn:ngsi-ld:Device:9;urn:ngsi-ld:Device:20;urn:ngsi-ld:Device:78,urn:ngsi-ld:Person:9,True,Kevin Williams,Engineer,Person
-urn:ngsi-ld:Building:6,urn:ngsi-ld:Device:10;urn:ngsi-ld:Device:21;urn:ngsi-ld:Device:79,urn:ngsi-ld:Person:10,True,Rebecca Glenn,Cleanroom Operator,Person
+urn:ngsi-ld:Building:2,urn:ngsi-ld:Device:0;urn:ngsi-ld:Device:11;urn:ngsi-ld:Device:80;urn:ngsi-ld:Device:69,urn:ngsi-ld:Person:0,True,Michael Smith,Engineer,Person
+urn:ngsi-ld:Building:0,urn:ngsi-ld:Device:1;urn:ngsi-ld:Device:12;urn:ngsi-ld:Device:81;urn:ngsi-ld:Device:70,urn:ngsi-ld:Person:1,True,Heather Ellis,Janitor,Person
+urn:ngsi-ld:Building:15,urn:ngsi-ld:Device:2;urn:ngsi-ld:Device:13;urn:ngsi-ld:Device:82;urn:ngsi-ld:Device:71,urn:ngsi-ld:Person:2,False,Taylor Cook,Technician,Person
+urn:ngsi-ld:Building:6,urn:ngsi-ld:Device:3;urn:ngsi-ld:Device:14;urn:ngsi-ld:Device:83;urn:ngsi-ld:Device:72,urn:ngsi-ld:Person:3,False,Aaron Daniel,Cleanroom Operator,Person
+urn:ngsi-ld:Building:0,urn:ngsi-ld:Device:4;urn:ngsi-ld:Device:15;urn:ngsi-ld:Device:84;urn:ngsi-ld:Device:73,urn:ngsi-ld:Person:4,True,William Wood,Technician,Person
+urn:ngsi-ld:Building:10,urn:ngsi-ld:Device:5;urn:ngsi-ld:Device:16;urn:ngsi-ld:Device:85;urn:ngsi-ld:Device:74,urn:ngsi-ld:Person:5,True,Jonathan May Jr.,Engineer,Person
+urn:ngsi-ld:Building:0,urn:ngsi-ld:Device:6;urn:ngsi-ld:Device:17;urn:ngsi-ld:Device:86;urn:ngsi-ld:Device:75,urn:ngsi-ld:Person:6,True,Maria Cooke,Cleanroom Operator,Person
+urn:ngsi-ld:Building:4,urn:ngsi-ld:Device:7;urn:ngsi-ld:Device:18;urn:ngsi-ld:Device:87;urn:ngsi-ld:Device:76,urn:ngsi-ld:Person:7,True,Lance Brooks,Cleanroom Operator,Person
+urn:ngsi-ld:Building:17,urn:ngsi-ld:Device:8;urn:ngsi-ld:Device:19;urn:ngsi-ld:Device:88;urn:ngsi-ld:Device:77,urn:ngsi-ld:Person:8,False,Christopher Bell,Technician,Person
+urn:ngsi-ld:Building:11,urn:ngsi-ld:Device:9;urn:ngsi-ld:Device:20;urn:ngsi-ld:Device:89;urn:ngsi-ld:Device:78,urn:ngsi-ld:Person:9,True,Todd Webb,Engineer,Person
+urn:ngsi-ld:Building:6,urn:ngsi-ld:Device:10;urn:ngsi-ld:Device:21;urn:ngsi-ld:Device:90;urn:ngsi-ld:Device:79,urn:ngsi-ld:Person:10,True,Tyler Johnson,Cleanroom Operator,Person

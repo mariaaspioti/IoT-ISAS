@@ -37,7 +37,9 @@ def create_device_table(cursor):
             location_coordinates TEXT,
             direction TEXT,
             directions TEXT,
-            value TEXT
+            value TEXT,
+            entry TEXT,
+            exit TEXT
         )
     ''')
     return cursor
@@ -187,9 +189,9 @@ def import_devices(cursor):
             row['id'], row['name'], row['description'], 
             row['supportedProtocol'], row['deviceCategory'], 
             row['location_coordinates'], row['direction'], row['directions'], 
-            row['value']) 
+            row['value'], row['entry'], row['exit'])
             for row in reader]
-        cursor.executemany('''INSERT INTO Device (context_broker_id, name, description, supportedProtocol, deviceCategory, location_coordinates, direction, directions, value) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)''', devices)
+        cursor.executemany('''INSERT INTO Device (context_broker_id, name, description, supportedProtocol, deviceCategory, location_coordinates, direction, directions, value, entry, exit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', devices)
 
     return cursor
 
@@ -228,21 +230,38 @@ def import_has_assigned_device(cursor):
     return cursor
 
 def import_concerns(cursor):
+    '''For each device, check if it has attributes "entry" and "exit". If it does, find
+    their id in the Device table through the context_broker_id and take the value of "entry" and "exit" 
+    which contain the context_broker_ids of the corresponding facilities. Together with the device id
+    insert the device_id and facility_id into the Concerns table'''
     # read the device csv file
-    # device_csv_file = os.path.join(os.path.dirname(__file__), "..", "entities_csv", "Device.csv")
-    # with open(device_csv_file, mode='r', newline='') as file:
-    #     # For all device context_broker_ids in 'concerns' attribute, find the device_id and facility_id
-    #     reader = csv.DictReader(file)
-    #     for row in reader:
-    #         if row['concerns']:
-    #             cursor.execute('''SELECT device_id FROM Device WHERE context_broker_id = ?''', (row['id'],))
-    #             device_id = cursor.fetchone()[0]
-    #             facilities = row['concerns'].split(";")
-    #             for facility in facilities:
-    #                 cursor.execute('''SELECT facility_id FROM Facility WHERE context_broker_id = ?''', (facility,))
-    #                 facility_id = cursor.fetchone()[0]
-    #                 cursor.execute('''INSERT INTO Concerns (device_id, facility_id) VALUES (?, ?)''', (device_id, facility_id))
-    ...
+    device_csv_file = os.path.join(os.path.dirname(__file__), "..", "entities_csv", "Device.csv")
+    with open(device_csv_file, mode='r', newline='') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            if row['entry'] and row['exit']:
+                cursor.execute('''SELECT device_id FROM Device WHERE context_broker_id = ?''', (row['id'],))
+                device_id = cursor.fetchone()[0]
+                cursor.execute('''SELECT facility_id FROM Facility WHERE context_broker_id = ?''', (row['entry'],))
+                entry_facility_id = cursor.fetchone()[0]
+                cursor.execute('''SELECT facility_id FROM Facility WHERE context_broker_id = ?''', (row['exit'],))
+                exit_facility_id = cursor.fetchone()[0]
+                cursor.execute('''INSERT INTO Concerns (device_id, facility_id) VALUES (?, ?)''', (device_id, entry_facility_id))
+                cursor.execute('''INSERT INTO Concerns (device_id, facility_id) VALUES (?, ?)''', (device_id, exit_facility_id))
+            elif row['entry']:
+                cursor.execute('''SELECT device_id FROM Device WHERE context_broker_id = ?''', (row['id'],))
+                device_id = cursor.fetchone()[0]
+                cursor.execute('''SELECT facility_id FROM Facility WHERE context_broker_id = ?''', (row['entry'],))
+                entry_facility_id = cursor.fetchone()[0]
+                cursor.execute('''INSERT INTO Concerns (device_id, facility_id) VALUES (?, ?)''', (device_id, entry_facility_id))
+            elif row['exit']:
+                cursor.execute('''SELECT device_id FROM Device WHERE context_broker_id = ?''', (row['id'],))
+                device_id = cursor.fetchone()[0]
+                cursor.execute('''SELECT facility_id FROM Facility WHERE context_broker_id = ?''', (row['exit'],))
+                exit_facility_id = cursor.fetchone()[0]
+                cursor.execute('''INSERT INTO Concerns (device_id, facility_id) VALUES (?, ?)''', (device_id, exit_facility_id))
+            else:
+                pass
     return cursor
 
 def insert_has_access(cursor):

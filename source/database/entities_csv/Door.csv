@@ -1,17 +1,17 @@
 areaServed,controlledBuildings,description,id,location_coordinates,location_type,openDuration,openState,type
 Fab 1 Facility,urn:ngsi-ld:Building:0,Entrance to the Fab 1 facility,urn:ngsi-ld:Door:0,"[-6.52482748, 53.376367338]",Point,0,closed,Door
-"Fab 1 Facility, Fab 10 Facility",urn:ngsi-ld:Building:0;urn:ngsi-ld:Building:1,Door connecting Fab 1 with Fab 10,urn:ngsi-ld:Door:1,"[-6.522874832, 53.376015129]",Point,0,closed,Door
+"Fab 1 Facility, Fab 10 Facility",urn:ngsi-ld:Building:0;urn:ngsi-ld:Building:4,Door connecting Fab 1 with Fab 10,urn:ngsi-ld:Door:1,"[-6.522874832, 53.376015129]",Point,0,closed,Door
 Fab 2 Facility,urn:ngsi-ld:Building:2,Entrance to the Fab 2 facility,urn:ngsi-ld:Door:2,"[-6.527380943, 53.376277685]",Point,0,closed,Door
-Cleanroom 2,urn:ngsi-ld:Building:3,Entry into the Cleanroom 2,urn:ngsi-ld:Door:3,"[-6.526683569, 53.377347103]",Point,0,closed,Door
-Cleanroom 1,urn:ngsi-ld:Building:1,Entry into the Cleanroom 1,urn:ngsi-ld:Door:4,"[-6.526007652, 53.376994902]",Point,0,closed,Door
+Cleanroom 2,urn:ngsi-ld:Building:3;urn:ngsi-ld:Building:2,Entry into the Cleanroom 2,urn:ngsi-ld:Door:3,"[-6.526683569, 53.377347103]",Point,0,closed,Door
+Cleanroom 1,urn:ngsi-ld:Building:1;urn:ngsi-ld:Building:0,Entry into the Cleanroom 1,urn:ngsi-ld:Door:4,"[-6.526007652, 53.376994902]",Point,0,closed,Door
 IR2 Office Facility,urn:ngsi-ld:Building:12,Entry into the IR2 office building,urn:ngsi-ld:Door:5,"[-6.523604393, 53.375016122]",Point,0,closed,Door
 "IR2 Office Facility, Fab 14 Facility",urn:ngsi-ld:Building:12;urn:ngsi-ld:Building:6,Door connecting IR2 with Fab 14,urn:ngsi-ld:Door:6,"[-6.521619558, 53.374574246]",Point,0,closed,Door
 "IR2 Office Facility, Fab 10 Facility",urn:ngsi-ld:Building:12;urn:ngsi-ld:Building:4,Door connecting IR2 with Fab 10,urn:ngsi-ld:Door:7,"[-6.521984339, 53.374881638]",Point,0,closed,Door
-Cleanroom 3,urn:ngsi-ld:Building:5,Entry into the Cleanroom 3,urn:ngsi-ld:Door:8,"[-6.52233839, 53.375163614]",Point,0,closed,Door
+Cleanroom 3,urn:ngsi-ld:Building:5;urn:ngsi-ld:Building:4,Entry into the Cleanroom 3,urn:ngsi-ld:Door:8,"[-6.52233839, 53.375163614]",Point,0,closed,Door
 Fab 14 Facility,urn:ngsi-ld:Building:6,Entrance to the Fab 14 facility,urn:ngsi-ld:Door:9,"[-6.521083117, 53.374267052]",Point,0,closed,Door
 Fab 14 Facility,urn:ngsi-ld:Building:6,Side entrance and exit to the Fab 14 facility,urn:ngsi-ld:Door:10,"[-6.521093845, 53.37494588]",Point,0,closed,Door
 Fab 14 Facility,urn:ngsi-ld:Building:6,Exit corridor from the Fab 14 facility,urn:ngsi-ld:Door:11,"[-6.519141197, 53.374491195]",Point,0,closed,Door
-Cleanroom 4,urn:ngsi-ld:Building:7,Entrance to the Cleanroom 4,urn:ngsi-ld:Door:12,"[-6.519334316, 53.374728144]",Point,0,closed,Door
+Cleanroom 4,urn:ngsi-ld:Building:7;urn:ngsi-ld:Building:6,Entrance to the Cleanroom 4,urn:ngsi-ld:Door:12,"[-6.519334316, 53.374728144]",Point,0,closed,Door
 Cleanroom 4,urn:ngsi-ld:Building:7,Back exit from the Cleanroom 4,urn:ngsi-ld:Door:13,"[-6.51976347, 53.375503022]",Point,0,closed,Door
 IR5 Office Facility,urn:ngsi-ld:Building:11,Entrance into the IR5 office building,urn:ngsi-ld:Door:14,"[-6.524634361, 53.375214846]",Point,0,closed,Door
 R&D Lab,urn:ngsi-ld:Building:10,Front entrance to the R&D Lab,urn:ngsi-ld:Door:15,"[-6.525557041, 53.374984303]",Point,0,closed,Door

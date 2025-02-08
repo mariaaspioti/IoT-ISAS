@@ -40,9 +40,9 @@ Thumbs.db
 *.tar.gz
 
 # Ignore database files
-*.db
-*.sqlite
-*.sqlite3
+# *.db
+# *.sqlite
+# *.sqlite3
 
 # Ignore generated documentation
 /docs/
