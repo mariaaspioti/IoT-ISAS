@@ -330,6 +330,46 @@ def make_nfc_readers_json(data):
     with open("nfc_readers.json", "w") as f:
         json.dump(entities, f, indent=2)
 
+def generate_nfc_tag_entities(data):
+    '''Generate NFC Tag entities based on the Device Smart Data Model'''
+
+    entities = []
+    for device in data:
+        entity = {
+            "id": f"{device['id']}",
+            "type": "Device",
+            "name": {
+                "type": "Text",
+                "value": device['name']
+            },
+            "deviceCategory": {
+                "type": "StructuredValue",
+                "value": device['deviceCategory']
+            },
+            "controlledProperty": {
+                "type": "StructuredValue",
+                "value": device['controlledProperty']
+            },
+            "controlledAsset": {
+                "type": "StructuredValue",
+                "value": device['controlledAsset']
+            },
+           "serialNumber": {
+                "type": "Text",
+                "value": device['serialNumber']
+            },
+        }
+        entities.append(entity)
+    return entities
+
+def make_nfc_tags_json(data):
+    '''Generate NFC Tag entities based on the Device Smart Data Model'''
+
+    entities = generate_nfc_tag_entities(data)
+    with open("nfc_tags.json", "w") as f:
+        json.dump(entities, f, indent=2)
+
+
 def generate_smart_lock_entities(data):
     '''Generate Smart Lock entities based on the Device Smart Data Model'''
 
@@ -406,7 +446,7 @@ def generate_smart_lock_entities(data):
                 "value": device['hardwareVersion']
             },
             "serialNumber": {
-                "type": "serialNumber",
+                "type": "Text",
                 "value": device['serialNumber']
             }
 
@@ -482,9 +522,10 @@ def main():
     # make_person_json(mydata.person_data)
     # make_trackers_json(mydata.device_trackers_data)
     # make_doors_json(mydata.door_data)
-    # make_nfc_readers_json(mydata.device_nfc_reader_data)
-    make_SOSbuttons_json(mydata.device_sos_button_data)
-    # make_smart_locks_json(mydata.device_smart_lock_data)
+    make_nfc_readers_json(mydata.device_nfc_reader_data)
+    # make_SOSbuttons_json(mydata.device_sos_button_data)
+    make_nfc_tags_json(mydata.device_nfc_tag_data)
+    make_smart_locks_json(mydata.device_smart_lock_data)
     # pass
 
 

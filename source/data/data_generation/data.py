@@ -939,7 +939,7 @@ device_nfc_reader_data = [
         "id": "urn:ngsi-ld:Device:22",
         "type": "Device",
         "areaServed": "Fab 1 Facility",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -947,13 +947,13 @@ device_nfc_reader_data = [
         "location": [-6.524827480316163, 53.37636733795882],
         "name": "NFCReader-0",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:23",
         "type": "Device",
         "areaServed": "Fab 1 Facility",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -961,13 +961,13 @@ device_nfc_reader_data = [
         "location": [-6.524827480316163, 53.37636733795882],
         "name": "NFCReader-1",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:24",
         "type": "Device",
         "areaServed": "Fab 1 Facility, Fab 10 Facility",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -975,14 +975,14 @@ device_nfc_reader_data = [
         "location":[-6.522874832153321, 53.37601512933655],
         "name": "NFCReader-2",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
 
     },
     {
         "id": "urn:ngsi-ld:Device:25",
         "type": "Device",
         "areaServed": "Fab 1 Facility, Fab 10 Facility",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -990,13 +990,13 @@ device_nfc_reader_data = [
         "location":[-6.522874832153321, 53.37601512933655],
         "name": "NFCReader-3",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:26",
         "type": "Device",
         "areaServed": "Fab 2 Facility",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1004,13 +1004,13 @@ device_nfc_reader_data = [
         "location": [-6.527380943298341, 53.37627768513132],
         "name": "NFCReader-4",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:27",
         "type": "Device",
         "areaServed": "Fab 2 Facility",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1018,13 +1018,13 @@ device_nfc_reader_data = [
         "location": [-6.527380943298341, 53.37627768513132],
         "name": "NFCReader-5",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:28",
         "type": "Device",
         "areaServed": "Cleanroom 2",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1032,13 +1032,13 @@ device_nfc_reader_data = [
         "location": [-6.526683568954469, 53.37734710298634],
         "name": "NFCReader-6",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:29",
         "type": "Device",
         "areaServed": "Cleanroom 2",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1046,13 +1046,13 @@ device_nfc_reader_data = [
         "location": [-6.526683568954469, 53.37734710298634],
         "name": "NFCReader-7",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:30",
         "type": "Device",
         "areaServed": "Cleanroom 1",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1060,13 +1060,13 @@ device_nfc_reader_data = [
         "location": [-6.526007652282716, 53.376994902466876],
         "name": "NFCReader-8",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:31",
         "type": "Device",
         "areaServed": "Cleanroom 1",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1074,13 +1074,13 @@ device_nfc_reader_data = [
         "location": [-6.526007652282716, 53.376994902466876],
         "name": "NFCReader-9",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:32",
         "type": "Device",
         "areaServed": "IR2 Office Facility",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1088,13 +1088,13 @@ device_nfc_reader_data = [
         "location": [-6.523604393005372, 53.37501612176052],
         "name": "NFCReader-10",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:33",
         "type": "Device",
         "areaServed": "IR2 Office Facility",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1102,13 +1102,13 @@ device_nfc_reader_data = [
         "location": [-6.523604393005372, 53.37501612176052],
         "name": "NFCReader-11",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:34",
         "type": "Device",
         "areaServed": "IR2 Office Facility, Fab 14 Facility",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1116,13 +1116,13 @@ device_nfc_reader_data = [
         "location": [-6.5216195583343515, 53.374574245550356],
         "name": "NFCReader-12",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:35",
         "type": "Device",
         "areaServed": "IR2 Office Facility, Fab 14 Facility",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1130,13 +1130,13 @@ device_nfc_reader_data = [
         "location": [-6.5216195583343515, 53.374574245550356],
         "name": "NFCReader-13",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:36",
         "type": "Device",
         "areaServed": "IR2 Office Facility, Fab 10 Facility",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1144,13 +1144,13 @@ device_nfc_reader_data = [
         "location": [-6.521984338760376, 53.37488163818186],
         "name": "NFCReader-14",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:37",
         "type": "Device",
         "areaServed": "IR2 Office Facility, Fab 10 Facility",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1158,13 +1158,13 @@ device_nfc_reader_data = [
         "location": [-6.521984338760376, 53.37488163818186],
         "name": "NFCReader-15",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:38",
         "type": "Device",
         "areaServed": "Cleanroom 3",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1172,13 +1172,13 @@ device_nfc_reader_data = [
         "location": [-6.522338390350343, 53.375163614334994],
         "name": "NFCReader-16",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:39",
         "type": "Device",
         "areaServed": "Cleanroom 3",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1186,13 +1186,13 @@ device_nfc_reader_data = [
         "location": [-6.522338390350343, 53.375163614334994],
         "name": "NFCReader-17",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:40",
         "type": "Device",
         "areaServed": "Fab 14 Facility",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1200,13 +1200,13 @@ device_nfc_reader_data = [
         "location": [-6.521083116531373, 53.37426705222773],
         "name": "NFCReader-18",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:41",
         "type": "Device",
         "areaServed": "Fab 14 Facility",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1214,13 +1214,13 @@ device_nfc_reader_data = [
         "location": [-6.521083116531373, 53.37426705222773],
         "name": "NFCReader-19",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:42",
         "type": "Device",
         "areaServed": "Fab 14 Facility",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1228,13 +1228,13 @@ device_nfc_reader_data = [
         "location": [-6.521093845367432, 53.3749458795584],
         "name": "NFCReader-20",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:43",
         "type": "Device",
         "areaServed": "Fab 14 Facility",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1242,13 +1242,13 @@ device_nfc_reader_data = [
         "location": [-6.521093845367432, 53.3749458795584],
         "name": "NFCReader-21",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:44",
         "type": "Device",
         "areaServed": "Fab 14 Facility",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1256,13 +1256,13 @@ device_nfc_reader_data = [
         "location": [-6.519141197204591, 53.374491194523905],
         "name": "NFCReader-22",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:45",
         "type": "Device",
         "areaServed": "Fab 14 Facility",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1270,13 +1270,13 @@ device_nfc_reader_data = [
         "location": [-6.519141197204591, 53.374491194523905],
         "name": "NFCReader-23",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:46",
         "type": "Device",
         "areaServed": "Cleanroom 4",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1284,13 +1284,13 @@ device_nfc_reader_data = [
         "location": [-6.519334316253663, 53.37472814366869],
         "name": "NFCReader-25",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:47",
         "type": "Device",
         "areaServed": "Cleanroom 4",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1298,13 +1298,13 @@ device_nfc_reader_data = [
         "location": [-6.519334316253663, 53.37472814366869],
         "name": "NFCReader-26",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:48",
         "type": "Device",
         "areaServed": "Cleanroom 4",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1312,13 +1312,13 @@ device_nfc_reader_data = [
         "location": [-6.519763469696045, 53.37550302220792],
         "name": "NFCReader-27",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:49",
         "type": "Device",
         "areaServed": "IR5 Office Facility",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1326,13 +1326,13 @@ device_nfc_reader_data = [
         "location": [-6.524634361267091, 53.37521484588535],
         "name": "NFCReader-28",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:50",
         "type": "Device",
         "areaServed": "IR5 Office Facility",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1340,13 +1340,13 @@ device_nfc_reader_data = [
         "location": [-6.524634361267091, 53.37521484588535],
         "name": "NFCReader-29",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:51",
         "type": "Device",
         "areaServed": "R&D Lab",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1354,13 +1354,13 @@ device_nfc_reader_data = [
         "location": [-6.525557041168214, 53.37498430342339],
         "name": "NFCReader-30",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:52",
         "type": "Device",
         "areaServed": "R&D Lab",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1368,13 +1368,13 @@ device_nfc_reader_data = [
         "location": [-6.525557041168214, 53.37498430342339],
         "name": "NFCReader-31",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:53",
         "type": "Device",
         "areaServed": "R&D Lab",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1382,13 +1382,13 @@ device_nfc_reader_data = [
         "location": [-6.52590036392212, 53.375515829999216],
         "name": "NFCReader-32",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:54",
         "type": "Device",
         "areaServed": "R&D Lab",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1396,13 +1396,13 @@ device_nfc_reader_data = [
         "location": [-6.52590036392212, 53.375515829999216],
         "name": "NFCReader-33",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:55",
         "type": "Device",
         "areaServed": "R&D Lab",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1410,13 +1410,13 @@ device_nfc_reader_data = [
         "location": [-6.526694297790528, 53.37475375971348],
         "name": "NFCReader-34",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:56",
         "type": "Device",
         "areaServed": "R&D Lab",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1424,13 +1424,13 @@ device_nfc_reader_data = [
         "location": [-6.526694297790528, 53.37475375971348],
         "name": "NFCReader-35",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:57",
         "type": "Device",
         "areaServed": "Fab 10 Energy Centre",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1438,13 +1438,13 @@ device_nfc_reader_data = [
         "location": [-6.5210187435150155, 53.37586163890846],
         "name": "NFCReader-36",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:58",
         "type": "Device",
         "areaServed": "Fab 10 Energy Centre",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1452,13 +1452,13 @@ device_nfc_reader_data = [
         "location": [-6.5210187435150155, 53.37586163890846],
         "name": "NFCReader-37",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:59",
         "type": "Device",
         "areaServed": "Fab 14 Energy Centre",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1466,13 +1466,13 @@ device_nfc_reader_data = [
         "location": [-6.520332098007203, 53.37574636958403],
         "name": "NFCReader-38",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:60",
         "type": "Device",
         "areaServed": "Fab 14 Energy Centre",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1480,13 +1480,13 @@ device_nfc_reader_data = [
         "location": [-6.520332098007203, 53.37574636958403],
         "name": "NFCReader-39",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:61",
         "type": "Device",
         "areaServed": "RODI Plant",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1494,13 +1494,13 @@ device_nfc_reader_data = [
         "location": [-6.5218448638916025, 53.37659167071829],
         "name": "NFCReader-40",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:62",
         "type": "Device",
         "areaServed": "RODI Plant",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1508,13 +1508,13 @@ device_nfc_reader_data = [
         "location": [-6.5218448638916025, 53.37659167071829],
         "name": "NFCReader-41",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:63",
         "type": "Device",
         "areaServed": "Ryebrook 110kV Substation",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1522,13 +1522,13 @@ device_nfc_reader_data = [
         "location": [-6.5227675437927255, 53.377726867088725],
         "name": "NFCReader-42",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:64",
         "type": "Device",
         "areaServed": "Ryebrook 110kV Substation",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1536,13 +1536,13 @@ device_nfc_reader_data = [
         "location": [-6.5227675437927255, 53.377726867088725],
         "name": "NFCReader-43",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:65",
         "type": "Device",
         "areaServed": "Water Treatment Building",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1550,13 +1550,13 @@ device_nfc_reader_data = [
         "location": [-6.523625850677491, 53.37837838348491],
         "name": "NFCReader-44",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:66",
         "type": "Device",
         "areaServed": "Water Treatment Building",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1564,13 +1564,13 @@ device_nfc_reader_data = [
         "location": [-6.523625850677491, 53.37837838348491],
         "name": "NFCReader-45",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:67",
         "type": "Device",
         "areaServed": "Waste Water Treatment Building",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1578,13 +1578,13 @@ device_nfc_reader_data = [
         "location": [-6.528314352035523, 53.37816066514359],
         "name": "NFCReader-46",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
     {
         "id": "urn:ngsi-ld:Device:68",
         "type": "Device",
         "areaServed": "Waste Water Treatment Building",
-        "controlledAsset": ["urn:ngsi-ld:Device:80"],
+        "controlledAsset": ["urn:ngsi-ld:Device:91"],
         "controlledProperty":["gateOpening"],
         "dateLastValueReported": fk.date_time_this_month().isoformat(),
         "deviceCategory": ["sensor"],
@@ -1592,9 +1592,115 @@ device_nfc_reader_data = [
         "location": [-6.528314352035523, 53.37816066514359],
         "name": "NFCReader-47",
         "supportedProtocol": ["mqtt"],
-        "value": fk.hexify(text="^^^^^^^^")
+        "value": ""
     },
 ]
+
+
+
+# ---------- NFC Tag ----------
+device_nfc_tag_data = [
+    {
+        "id": "urn:ngsi-ld:Device:80",
+        "type": "Device",
+        "name": "NFC-Tag-0",
+        "controlledAsset": ["urn:ngsi-ld:Person:0"],
+        "controlledProperty": ["gateOpening"],
+        "deviceCategory": ["beacon"],
+        "serialNumber": "1C553B4F",
+    },
+    {
+        "id": "urn:ngsi-ld:Device:81",
+        "type": "Device",
+        "name": "NFC-Tag-1",
+        "controlledAsset": ["urn:ngsi-ld:Person:1"],
+        "controlledProperty": ["gateOpening"],
+        "deviceCategory": ["beacon"],
+        "serialNumber": "9C72324F",
+    },
+    {
+        "id": "urn:ngsi-ld:Device:82",
+        "type": "Device",
+        "name": "NFC-Tag-2",
+        "controlledAsset": ["urn:ngsi-ld:Person:2"],
+        "controlledProperty": ["gateOpening"],
+        "deviceCategory": ["beacon"],
+        "serialNumber": "8CCF454F",
+    },
+    {
+        "id": "urn:ngsi-ld:Device:83",
+        "type": "Device",
+        "name": "NFC-Tag-3",
+        "controlledAsset": ["urn:ngsi-ld:Person:3"],
+        "controlledProperty": ["gateOpening"],
+        "deviceCategory": ["beacon"],
+        "serialNumber": "C23D4D41",
+    },
+    {
+        "id": "urn:ngsi-ld:Device:84",
+        "type": "Device",
+        "name": "NFC-Tag-4",
+        "controlledAsset": ["urn:ngsi-ld:Person:4"],
+        "controlledProperty": ["gateOpening"],
+        "deviceCategory": ["beacon"],
+        "serialNumber": "182C6B80",
+    },
+    {
+        "id": "urn:ngsi-ld:Device:85",
+        "type": "Device",
+        "name": "NFC-Tag-5",
+        "controlledAsset": ["urn:ngsi-ld:Person:5"],
+        "controlledProperty": ["gateOpening"],
+        "deviceCategory": ["beacon"],
+        "serialNumber": "8E546381",
+    },
+    {
+        "id": "urn:ngsi-ld:Device:86",
+        "type": "Device",
+        "name": "NFC-Tag-6",
+        "controlledAsset": ["urn:ngsi-ld:Person:6"],
+        "controlledProperty": ["gateOpening"],
+        "deviceCategory": ["beacon"],
+        "serialNumber": "152C2382",
+    },
+    {
+        "id": "urn:ngsi-ld:Device:87",
+        "type": "Device",
+        "name": "NFC-Tag-7",
+        "controlledAsset": ["urn:ngsi-ld:Person:7"],
+        "controlledProperty": ["gateOpening"],
+        "deviceCategory": ["beacon"],
+        "serialNumber": "1E2C2783",
+    },
+    {
+        "id": "urn:ngsi-ld:Device:88",
+        "type": "Device",
+        "name": "NFC-Tag-8",
+        "controlledAsset": ["urn:ngsi-ld:Person:8"],
+        "controlledProperty": ["gateOpening"],
+        "deviceCategory": ["beacon"],
+        "serialNumber": "5AB82C84",
+    },
+    {
+        "id": "urn:ngsi-ld:Device:89",
+        "type": "Device",
+        "name": "NFC-Tag-9",
+        "controlledAsset": ["urn:ngsi-ld:Person:9"],
+        "controlledProperty": ["gateOpening"],
+        "deviceCategory": ["beacon"],
+        "serialNumber": "35BC2209",
+    },
+    {
+        "id": "urn:ngsi-ld:Device:90",
+        "type": "Device",
+        "name": "NFC-Tag-10",
+        "controlledAsset": ["urn:ngsi-ld:Person:10"],
+        "controlledProperty": ["gateOpening"],
+        "deviceCategory": ["beacon"],
+        "serialNumber": "1E2C6B80",
+    }
+]
+
 
 ## ---------- SOS Buttons ----------
 device_sos_button_data = [
@@ -1745,10 +1851,11 @@ device_sos_button_data = [
     ]
 
 
+
 ## ---------- Smart Lock ----------
 device_smart_lock_data = [
     {
-        "id": "urn:ngsi-ld:Device:80",
+        "id": "urn:ngsi-ld:Device:91",
         "type": "Device",
         "areaServed": "Fab 1 Facility",
         "batteryLevel": fk.random_int(min=0, max=100),
@@ -1770,6 +1877,7 @@ device_smart_lock_data = [
 
     }
 ]
+
 
 
 # =================== Door Data ===================
