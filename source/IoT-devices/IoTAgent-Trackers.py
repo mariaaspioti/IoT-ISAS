@@ -2,6 +2,14 @@ import datetime
 import json
 import paho.mqtt.client as mqtt
 import requests
+import threading
+import time
+import os
+import sys
+
+# Watchdog timer
+last_activity_time = time.time()
+watchdog_interval = 60  # 60 seconds
 
 # Create a persistent HTTP session for efficiency
 session = requests.Session()
@@ -49,7 +57,7 @@ def query_device_id(device_id):
 
     url = f"{orion_url}?q=name=={device_id}&attrs=id"
     try:
-        response = session.get(url)  # Reuse the session
+        response = session.get(url, timeout=10) # Timeout after 10 seconds
         if response.status_code == 200:
             res = response.json()
             if res and len(res) > 0:
@@ -84,7 +92,7 @@ def patch_data_to_cb(data, cb_device_id):
 
     try:
         patch_url = f"{orion_url}/{cb_device_id}/attrs"
-        response = session.patch(patch_url, headers=pp_headers, json=payload)
+        response = session.patch(patch_url, headers=pp_headers, json=payload, timeout=10)
         print(f"PATCH status: {response.status_code} for {cb_device_id}")
     except Exception as e:
         print(f"Error in patch_data_to_cb: {e}")
@@ -93,11 +101,13 @@ def on_message(client, userdata, message):
     """
     Handle incoming MQTT messages from BT and GPS topics.
     """
+    global last_activity_time
     try:
         data = json.loads(message.payload.decode())
         print(f"Received from {message.topic}")
         cb_device_id = query_device_id(data["device_id"])
         patch_data_to_cb(data, cb_device_id)
+        last_activity_time = time.time()  # Update the watchdog timer
     except Exception as e:
         print(f"Error in on_message: {str(e)}")
 
@@ -112,11 +122,26 @@ def read_data_from_mqtt():
     print(f"Subscribed to {mqtt_bt_topic}")
     
     client.loop_forever()
+    # client.loop_start() # Start the loop in a separate thread
+
+def watchdog():
+    global last_activity_time
+    while True:
+        time.sleep(watchdog_interval)
+        if time.time() - last_activity_time > watchdog_interval:
+            print("Watchdog: No activity detected, restarting script...")
+            # Log the watchdog event
+            with open("watchdog-trackers.log", "a") as log_file:
+                log_file.write(f"Watchdog triggered at {datetime.datetime.now()}\n")
+            os.execv(sys.executable, ['python', f'"{sys.argv[0]}"'] + sys.argv[1:])
 
 def main():
     try:
         print("Starting IoT Agent for BT/GPS trackers...")
+        threading.Thread(target=watchdog, daemon=True).start() # Start the watchdog thread
         read_data_from_mqtt()
+        while True:
+            pass # Keep the program running
     except KeyboardInterrupt:
         print("Shutting down")
 

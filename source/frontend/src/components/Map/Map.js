@@ -70,7 +70,7 @@ const Map = ({ data, viewType, alerts, onDismissAlert }) => {
           color={MARKER_COLORS[viewType] || 'blue'}
           fillColor={MARKER_COLORS[viewType] || 'blue'}
           radius={8}
-          fillOpacity={0.6}
+          fillOpacity={0.8}
         />
       ));
     }
@@ -107,7 +107,7 @@ const Map = ({ data, viewType, alerts, onDismissAlert }) => {
     >
       {/* Create a custom pane for alerts */}
       <Pane name="alertPane" style={{ zIndex: 650, pointerEvents: 'none' }} />
-      
+
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
