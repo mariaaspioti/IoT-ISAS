@@ -448,6 +448,14 @@ def generate_smart_lock_entities(data):
             "serialNumber": {
                 "type": "Text",
                 "value": device['serialNumber']
+            },
+            "entry": {
+                "type": "Relationship",
+                "value": device["entry"]
+            },
+            "exit": {
+                "type": "Relationship",
+                "value": device["exit"]
             }
 
 
@@ -518,12 +526,12 @@ def make_SOSbuttons_json(data):
         json.dump(entities, f, indent=2)
 
 def main():
-    # make_buildings_json(mydata.building_data)
-    # make_person_json(mydata.person_data)
-    # make_trackers_json(mydata.device_trackers_data)
-    # make_doors_json(mydata.door_data)
+    make_buildings_json(mydata.building_data)
+    make_person_json(mydata.person_data)
+    make_trackers_json(mydata.device_trackers_data)
+    make_doors_json(mydata.door_data)
     make_nfc_readers_json(mydata.device_nfc_reader_data)
-    # make_SOSbuttons_json(mydata.device_sos_button_data)
+    make_SOSbuttons_json(mydata.device_sos_button_data)
     make_nfc_tags_json(mydata.device_nfc_tag_data)
     make_smart_locks_json(mydata.device_smart_lock_data)
     # pass
