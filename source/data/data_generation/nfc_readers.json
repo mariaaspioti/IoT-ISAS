@@ -46,7 +46,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-03T14:37:01"
+      "value": "2025-02-03T15:21:36"
     },
     "value": {
       "type": "Text",
@@ -104,7 +104,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-03T23:34:15"
+      "value": "2025-02-01T16:29:47"
     },
     "value": {
       "type": "Text",
@@ -137,7 +137,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:92"
       ]
     },
     "areaServed": {
@@ -162,7 +162,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-01T16:37:54"
+      "value": "2025-02-06T14:04:29"
     },
     "value": {
       "type": "Text",
@@ -195,7 +195,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:92"
       ]
     },
     "areaServed": {
@@ -220,7 +220,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-08T00:43:07"
+      "value": "2025-02-07T15:41:25"
     },
     "value": {
       "type": "Text",
@@ -253,7 +253,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:93"
       ]
     },
     "areaServed": {
@@ -278,7 +278,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-04T15:28:48"
+      "value": "2025-02-04T04:48:36"
     },
     "value": {
       "type": "Text",
@@ -311,7 +311,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:93"
       ]
     },
     "areaServed": {
@@ -336,7 +336,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-06T18:29:10"
+      "value": "2025-02-06T03:27:42"
     },
     "value": {
       "type": "Text",
@@ -369,7 +369,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:94"
       ]
     },
     "areaServed": {
@@ -394,7 +394,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-05T00:30:10"
+      "value": "2025-02-05T22:33:38"
     },
     "value": {
       "type": "Text",
@@ -427,7 +427,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:94"
       ]
     },
     "areaServed": {
@@ -452,7 +452,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-01T14:41:47"
+      "value": "2025-02-06T14:49:35"
     },
     "value": {
       "type": "Text",
@@ -485,7 +485,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:95"
       ]
     },
     "areaServed": {
@@ -510,7 +510,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-06T18:33:43"
+      "value": "2025-02-04T15:58:42"
     },
     "value": {
       "type": "Text",
@@ -543,7 +543,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:95"
       ]
     },
     "areaServed": {
@@ -568,7 +568,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-06T05:29:20"
+      "value": "2025-02-07T01:41:06"
     },
     "value": {
       "type": "Text",
@@ -601,7 +601,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:96"
       ]
     },
     "areaServed": {
@@ -626,7 +626,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-01T05:22:06"
+      "value": "2025-02-01T16:39:22"
     },
     "value": {
       "type": "Text",
@@ -659,7 +659,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:96"
       ]
     },
     "areaServed": {
@@ -684,7 +684,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-04T18:41:54"
+      "value": "2025-02-05T21:24:08"
     },
     "value": {
       "type": "Text",
@@ -717,7 +717,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:97"
       ]
     },
     "areaServed": {
@@ -742,7 +742,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-04T19:01:09"
+      "value": "2025-02-01T02:03:33"
     },
     "value": {
       "type": "Text",
@@ -775,7 +775,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:97"
       ]
     },
     "areaServed": {
@@ -800,7 +800,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-08T11:05:03"
+      "value": "2025-02-05T00:07:53"
     },
     "value": {
       "type": "Text",
@@ -833,7 +833,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:98"
       ]
     },
     "areaServed": {
@@ -858,7 +858,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-06T18:32:14"
+      "value": "2025-02-04T13:18:32"
     },
     "value": {
       "type": "Text",
@@ -891,7 +891,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:98"
       ]
     },
     "areaServed": {
@@ -916,7 +916,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-05T20:49:59"
+      "value": "2025-02-06T04:28:23"
     },
     "value": {
       "type": "Text",
@@ -949,7 +949,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:99"
       ]
     },
     "areaServed": {
@@ -974,7 +974,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-02T20:56:21"
+      "value": "2025-02-06T23:00:08"
     },
     "value": {
       "type": "Text",
@@ -1007,7 +1007,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:99"
       ]
     },
     "areaServed": {
@@ -1032,7 +1032,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-07T06:24:27"
+      "value": "2025-02-04T22:08:37"
     },
     "value": {
       "type": "Text",
@@ -1065,7 +1065,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:100"
       ]
     },
     "areaServed": {
@@ -1090,7 +1090,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-07T08:58:29"
+      "value": "2025-02-07T04:16:42"
     },
     "value": {
       "type": "Text",
@@ -1123,7 +1123,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:100"
       ]
     },
     "areaServed": {
@@ -1148,7 +1148,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-03T14:48:18"
+      "value": "2025-02-04T12:06:22"
     },
     "value": {
       "type": "Text",
@@ -1181,7 +1181,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:101"
       ]
     },
     "areaServed": {
@@ -1206,7 +1206,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-01T05:47:01"
+      "value": "2025-02-03T17:29:59"
     },
     "value": {
       "type": "Text",
@@ -1239,7 +1239,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:101"
       ]
     },
     "areaServed": {
@@ -1264,7 +1264,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-04T00:58:53"
+      "value": "2025-02-01T17:47:05"
     },
     "value": {
       "type": "Text",
@@ -1297,7 +1297,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:102"
       ]
     },
     "areaServed": {
@@ -1322,7 +1322,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-07T07:11:05"
+      "value": "2025-02-01T04:55:57"
     },
     "value": {
       "type": "Text",
@@ -1355,7 +1355,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:102"
       ]
     },
     "areaServed": {
@@ -1380,7 +1380,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-08T13:11:59"
+      "value": "2025-02-04T10:04:52"
     },
     "value": {
       "type": "Text",
@@ -1393,6 +1393,64 @@
   },
   {
     "id": "urn:ngsi-ld:Device:46",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "NFCReader-24"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "sensor"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "gateOpening"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Device:103"
+      ]
+    },
+    "areaServed": {
+      "type": "Text",
+      "value": "Cleanroom 4"
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "mqtt"
+      ]
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Point",
+        "coordinates": [
+          -6.519334316253663,
+          53.37472814366869
+        ]
+      }
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2025-02-05T17:00:47"
+    },
+    "value": {
+      "type": "Text",
+      "value": ""
+    },
+    "direction": {
+      "type": "Text",
+      "value": "Entry"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:47",
     "type": "Device",
     "name": {
       "type": "Text",
@@ -1413,7 +1471,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:103"
       ]
     },
     "areaServed": {
@@ -1438,7 +1496,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-06T09:52:35"
+      "value": "2025-02-03T04:15:54"
     },
     "value": {
       "type": "Text",
@@ -1446,11 +1504,11 @@
     },
     "direction": {
       "type": "Text",
-      "value": "Entry"
+      "value": "Exit"
     }
   },
   {
-    "id": "urn:ngsi-ld:Device:47",
+    "id": "urn:ngsi-ld:Device:115",
     "type": "Device",
     "name": {
       "type": "Text",
@@ -1471,65 +1529,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
-      ]
-    },
-    "areaServed": {
-      "type": "Text",
-      "value": "Cleanroom 4"
-    },
-    "supportedProtocol": {
-      "type": "StructuredValue",
-      "value": [
-        "mqtt"
-      ]
-    },
-    "location": {
-      "type": "geo:json",
-      "value": {
-        "type": "Point",
-        "coordinates": [
-          -6.519334316253663,
-          53.37472814366869
-        ]
-      }
-    },
-    "dateLastValueReported": {
-      "type": "DateTime",
-      "value": "2025-02-06T02:58:18"
-    },
-    "value": {
-      "type": "Text",
-      "value": ""
-    },
-    "direction": {
-      "type": "Text",
-      "value": "Exit"
-    }
-  },
-  {
-    "id": "urn:ngsi-ld:Device:48",
-    "type": "Device",
-    "name": {
-      "type": "Text",
-      "value": "NFCReader-27"
-    },
-    "deviceCategory": {
-      "type": "StructuredValue",
-      "value": [
-        "sensor"
-      ]
-    },
-    "controlledProperty": {
-      "type": "StructuredValue",
-      "value": [
-        "gateOpening"
-      ]
-    },
-    "controlledAsset": {
-      "type": "StructuredValue",
-      "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:104"
       ]
     },
     "areaServed": {
@@ -1554,7 +1554,65 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-07T19:53:35"
+      "value": "2025-02-03T06:31:57"
+    },
+    "value": {
+      "type": "Text",
+      "value": ""
+    },
+    "direction": {
+      "type": "Text",
+      "value": "Entry"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:48",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "NFCReader-27"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "sensor"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "gateOpening"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Device:104"
+      ]
+    },
+    "areaServed": {
+      "type": "Text",
+      "value": "Cleanroom 4"
+    },
+    "supportedProtocol": {
+      "type": "StructuredValue",
+      "value": [
+        "mqtt"
+      ]
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Point",
+        "coordinates": [
+          -6.519763469696045,
+          53.37550302220792
+        ]
+      }
+    },
+    "dateLastValueReported": {
+      "type": "DateTime",
+      "value": "2025-02-04T18:49:50"
     },
     "value": {
       "type": "Text",
@@ -1587,7 +1645,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:105"
       ]
     },
     "areaServed": {
@@ -1612,7 +1670,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-06T03:40:21"
+      "value": "2025-02-06T21:12:03"
     },
     "value": {
       "type": "Text",
@@ -1645,7 +1703,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:105"
       ]
     },
     "areaServed": {
@@ -1670,7 +1728,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-06T08:57:19"
+      "value": "2025-02-02T19:15:24"
     },
     "value": {
       "type": "Text",
@@ -1703,7 +1761,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:106"
       ]
     },
     "areaServed": {
@@ -1728,7 +1786,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-01T10:45:39"
+      "value": "2025-02-02T03:53:11"
     },
     "value": {
       "type": "Text",
@@ -1761,7 +1819,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:106"
       ]
     },
     "areaServed": {
@@ -1786,7 +1844,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-07T13:56:51"
+      "value": "2025-02-05T22:16:56"
     },
     "value": {
       "type": "Text",
@@ -1819,7 +1877,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:107"
       ]
     },
     "areaServed": {
@@ -1844,7 +1902,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-03T22:04:42"
+      "value": "2025-02-02T18:10:29"
     },
     "value": {
       "type": "Text",
@@ -1877,7 +1935,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:107"
       ]
     },
     "areaServed": {
@@ -1902,7 +1960,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-03T20:21:40"
+      "value": "2025-02-02T18:20:19"
     },
     "value": {
       "type": "Text",
@@ -1935,7 +1993,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:108"
       ]
     },
     "areaServed": {
@@ -1960,7 +2018,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-08T01:00:27"
+      "value": "2025-02-05T12:47:29"
     },
     "value": {
       "type": "Text",
@@ -1993,7 +2051,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:108"
       ]
     },
     "areaServed": {
@@ -2018,7 +2076,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-02T03:40:53"
+      "value": "2025-02-02T22:34:49"
     },
     "value": {
       "type": "Text",
@@ -2051,7 +2109,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:109"
       ]
     },
     "areaServed": {
@@ -2076,7 +2134,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-04T12:28:16"
+      "value": "2025-02-06T01:04:57"
     },
     "value": {
       "type": "Text",
@@ -2109,7 +2167,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:109"
       ]
     },
     "areaServed": {
@@ -2134,7 +2192,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-03T19:27:58"
+      "value": "2025-02-02T12:36:31"
     },
     "value": {
       "type": "Text",
@@ -2167,7 +2225,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:110"
       ]
     },
     "areaServed": {
@@ -2192,7 +2250,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-01T00:42:19"
+      "value": "2025-02-02T17:40:11"
     },
     "value": {
       "type": "Text",
@@ -2225,7 +2283,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:110"
       ]
     },
     "areaServed": {
@@ -2250,7 +2308,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-07T18:12:08"
+      "value": "2025-02-07T04:28:55"
     },
     "value": {
       "type": "Text",
@@ -2283,7 +2341,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:111"
       ]
     },
     "areaServed": {
@@ -2308,7 +2366,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-03T17:24:48"
+      "value": "2025-02-08T09:00:10"
     },
     "value": {
       "type": "Text",
@@ -2341,7 +2399,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:111"
       ]
     },
     "areaServed": {
@@ -2366,7 +2424,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-07T04:07:10"
+      "value": "2025-02-05T19:51:47"
     },
     "value": {
       "type": "Text",
@@ -2399,7 +2457,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:112"
       ]
     },
     "areaServed": {
@@ -2424,7 +2482,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-05T17:55:12"
+      "value": "2025-02-04T02:43:32"
     },
     "value": {
       "type": "Text",
@@ -2457,7 +2515,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:112"
       ]
     },
     "areaServed": {
@@ -2482,7 +2540,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-05T21:25:58"
+      "value": "2025-02-02T13:37:57"
     },
     "value": {
       "type": "Text",
@@ -2515,7 +2573,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:113"
       ]
     },
     "areaServed": {
@@ -2540,7 +2598,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-06T16:33:20"
+      "value": "2025-02-05T12:54:10"
     },
     "value": {
       "type": "Text",
@@ -2573,7 +2631,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:113"
       ]
     },
     "areaServed": {
@@ -2598,7 +2656,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-03T07:55:52"
+      "value": "2025-02-05T20:10:12"
     },
     "value": {
       "type": "Text",
@@ -2631,7 +2689,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:114"
       ]
     },
     "areaServed": {
@@ -2656,7 +2714,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-04T19:48:39"
+      "value": "2025-02-03T12:42:32"
     },
     "value": {
       "type": "Text",
@@ -2689,7 +2747,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:91"
+        "urn:ngsi-ld:Device:114"
       ]
     },
     "areaServed": {
@@ -2714,7 +2772,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-02T06:35:15"
+      "value": "2025-02-07T11:47:16"
     },
     "value": {
       "type": "Text",
