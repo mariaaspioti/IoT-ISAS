@@ -1,0 +1,332 @@
+[
+  {
+    "id": "urn:ngsi-ld:Device:80",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "NFC-Tag-0"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "beacon"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "gateOpening"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:0"
+      ]
+    },
+    "serialNumber": {
+      "type": "Text",
+      "value": "1C553B4F"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:81",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "NFC-Tag-1"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "beacon"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "gateOpening"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:1"
+      ]
+    },
+    "serialNumber": {
+      "type": "Text",
+      "value": "9C72324F"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:82",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "NFC-Tag-2"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "beacon"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "gateOpening"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:2"
+      ]
+    },
+    "serialNumber": {
+      "type": "Text",
+      "value": "8CCF454F"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:83",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "NFC-Tag-3"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "beacon"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "gateOpening"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:3"
+      ]
+    },
+    "serialNumber": {
+      "type": "Text",
+      "value": "C23D4D41"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:84",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "NFC-Tag-4"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "beacon"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "gateOpening"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:4"
+      ]
+    },
+    "serialNumber": {
+      "type": "Text",
+      "value": "182C6B80"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:85",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "NFC-Tag-5"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "beacon"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "gateOpening"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:5"
+      ]
+    },
+    "serialNumber": {
+      "type": "Text",
+      "value": "8E546381"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:86",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "NFC-Tag-6"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "beacon"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "gateOpening"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:6"
+      ]
+    },
+    "serialNumber": {
+      "type": "Text",
+      "value": "152C2382"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:87",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "NFC-Tag-7"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "beacon"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "gateOpening"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:7"
+      ]
+    },
+    "serialNumber": {
+      "type": "Text",
+      "value": "1E2C2783"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:88",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "NFC-Tag-8"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "beacon"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "gateOpening"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:8"
+      ]
+    },
+    "serialNumber": {
+      "type": "Text",
+      "value": "5AB82C84"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:89",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "NFC-Tag-9"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "beacon"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "gateOpening"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:9"
+      ]
+    },
+    "serialNumber": {
+      "type": "Text",
+      "value": "35BC2209"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Device:90",
+    "type": "Device",
+    "name": {
+      "type": "Text",
+      "value": "NFC-Tag-10"
+    },
+    "deviceCategory": {
+      "type": "StructuredValue",
+      "value": [
+        "beacon"
+      ]
+    },
+    "controlledProperty": {
+      "type": "StructuredValue",
+      "value": [
+        "gateOpening"
+      ]
+    },
+    "controlledAsset": {
+      "type": "StructuredValue",
+      "value": [
+        "urn:ngsi-ld:Person:10"
+      ]
+    },
+    "serialNumber": {
+      "type": "Text",
+      "value": "1E2C6B80"
+    }
+  }
+]

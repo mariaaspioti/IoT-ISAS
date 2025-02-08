@@ -156,6 +156,27 @@ def post_smart_lock_entities():
     else:
         print("Failed to retrieve entities")
 
+def post_nfc_tags_entities():
+    '''Post NFC Tag entities to the Context Broker'''
+    with open(os.path.join(base_path, "nfc_tags.json")) as f:
+        entities = json.load(f)
+        for entity in entities:
+            response = requests.post(orion_url, headers=post_headers, json=entity)
+            if response.status_code == 201:
+                print(f"Entity {entity['id']} created successfully")
+            elif response.status_code == 422:
+                print(f"Entity {entity['id']} already exists")
+            else:
+                print(f"Failed to create entity {entity['id']} with status code {response.status_code}, response: {response.text}")
+
+    # test validity
+    response = requests.get(orion_url, headers=gd_headers)
+    if response.status_code == 200:
+        print("Entities retrieved successfully")
+        print(response.json())
+    else:
+        print("Failed to retrieve entities")
+
 def post_sos_button_entities():
     '''Post SOS Button entities to the Context Broker'''
     with open(os.path.join(base_path, "SOSbuttons.json")) as f:
@@ -206,6 +227,8 @@ def delete_in_path():
     else:
         print("Failed to retrieve entities")
 
+
+
 def delete_alert_entities():
     '''Delete all Alert entities in the given path'''
     print(f"About to delete all Alert entities in path: {fiware_service_path}. Are you sure? (y/n)")
@@ -250,6 +273,7 @@ To delete entities in the test path\n4. Type 'q' to exit: ")
         post_device_trackers_entities()
         post_door_entities()
         post_nfc_reader_entities()
+        post_nfc_tags_entities()
         post_sos_button_entities()
         post_smart_lock_entities()
         print("\n=======\nDon't forget to assign devices!")

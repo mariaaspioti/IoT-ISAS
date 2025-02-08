@@ -1,6 +1,6 @@
 [
   {
-    "id": "urn:ngsi-ld:Device:80",
+    "id": "urn:ngsi-ld:Device:91",
     "type": "Device",
     "name": {
       "type": "Text",
@@ -46,7 +46,7 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-01T16:11:37"
+      "value": "2025-02-01T04:13:17"
     },
     "value": {
       "type": "Text",
@@ -61,15 +61,15 @@
     },
     "batteryLevel": {
       "type": "Number",
-      "value": 100
+      "value": 71
     },
     "dateFirstUsed": {
       "type": "DateTime",
-      "value": "2025-02-02T00:50:06"
+      "value": "2025-02-01T07:40:06"
     },
     "dateInstalled": {
       "type": "DateTime",
-      "value": "2025-02-01T18:28:16"
+      "value": "2025-02-05T06:37:37"
     },
     "deviceState": {
       "type": "Text",
@@ -84,8 +84,8 @@
       "value": "522"
     },
     "serialNumber": {
-      "type": "serialNumber",
-      "value": 64658692788
+      "type": "Text",
+      "value": 53644695035
     }
   }
 ]

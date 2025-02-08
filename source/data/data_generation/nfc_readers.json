@@ -21,7 +21,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -46,11 +46,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-02T23:44:29"
+      "value": "2025-02-03T14:37:01"
     },
     "value": {
       "type": "Text",
-      "value": "027d3024"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -79,7 +79,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -104,11 +104,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-01T07:37:43"
+      "value": "2025-02-03T23:34:15"
     },
     "value": {
       "type": "Text",
-      "value": "d861d76b"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -137,7 +137,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -162,11 +162,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-02T04:01:53"
+      "value": "2025-02-01T16:37:54"
     },
     "value": {
       "type": "Text",
-      "value": "649e2293"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -195,7 +195,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -220,11 +220,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-04T12:13:37"
+      "value": "2025-02-08T00:43:07"
     },
     "value": {
       "type": "Text",
-      "value": "d1dda657"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -253,7 +253,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -278,11 +278,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-01T18:32:23"
+      "value": "2025-02-04T15:28:48"
     },
     "value": {
       "type": "Text",
-      "value": "8c7e7893"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -311,7 +311,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -336,11 +336,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-01T20:32:11"
+      "value": "2025-02-06T18:29:10"
     },
     "value": {
       "type": "Text",
-      "value": "ca92a9d1"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -369,7 +369,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -394,11 +394,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-05T01:07:37"
+      "value": "2025-02-05T00:30:10"
     },
     "value": {
       "type": "Text",
-      "value": "202b35b7"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -427,7 +427,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -452,11 +452,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-02T07:49:32"
+      "value": "2025-02-01T14:41:47"
     },
     "value": {
       "type": "Text",
-      "value": "66b66b91"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -485,7 +485,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -510,11 +510,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-04T10:32:15"
+      "value": "2025-02-06T18:33:43"
     },
     "value": {
       "type": "Text",
-      "value": "572768e5"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -543,7 +543,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -568,11 +568,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-01T08:52:05"
+      "value": "2025-02-06T05:29:20"
     },
     "value": {
       "type": "Text",
-      "value": "8a5cfda2"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -601,7 +601,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -626,11 +626,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-01T10:38:54"
+      "value": "2025-02-01T05:22:06"
     },
     "value": {
       "type": "Text",
-      "value": "74fd12b1"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -659,7 +659,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -684,11 +684,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-04T10:19:45"
+      "value": "2025-02-04T18:41:54"
     },
     "value": {
       "type": "Text",
-      "value": "494cad8c"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -717,7 +717,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -742,11 +742,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-05T09:13:30"
+      "value": "2025-02-04T19:01:09"
     },
     "value": {
       "type": "Text",
-      "value": "d5f91f61"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -775,7 +775,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -800,11 +800,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-04T07:27:11"
+      "value": "2025-02-08T11:05:03"
     },
     "value": {
       "type": "Text",
-      "value": "9db9d034"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -833,7 +833,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -858,11 +858,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-03T23:21:30"
+      "value": "2025-02-06T18:32:14"
     },
     "value": {
       "type": "Text",
-      "value": "49c2e2d3"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -891,7 +891,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -916,11 +916,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-01T16:37:33"
+      "value": "2025-02-05T20:49:59"
     },
     "value": {
       "type": "Text",
-      "value": "f6c4a98e"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -949,7 +949,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -974,11 +974,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-04T13:01:48"
+      "value": "2025-02-02T20:56:21"
     },
     "value": {
       "type": "Text",
-      "value": "6797f6fe"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -1007,7 +1007,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -1032,11 +1032,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-04T13:22:29"
+      "value": "2025-02-07T06:24:27"
     },
     "value": {
       "type": "Text",
-      "value": "d1866e02"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -1065,7 +1065,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -1090,11 +1090,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-04T15:07:39"
+      "value": "2025-02-07T08:58:29"
     },
     "value": {
       "type": "Text",
-      "value": "020c124a"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -1123,7 +1123,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -1148,11 +1148,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-05T06:34:35"
+      "value": "2025-02-03T14:48:18"
     },
     "value": {
       "type": "Text",
-      "value": "23983272"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -1181,7 +1181,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -1206,11 +1206,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-05T15:35:40"
+      "value": "2025-02-01T05:47:01"
     },
     "value": {
       "type": "Text",
-      "value": "34227620"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -1239,7 +1239,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -1264,11 +1264,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-04T22:37:47"
+      "value": "2025-02-04T00:58:53"
     },
     "value": {
       "type": "Text",
-      "value": "3084a501"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -1297,7 +1297,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -1322,11 +1322,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-02T21:59:24"
+      "value": "2025-02-07T07:11:05"
     },
     "value": {
       "type": "Text",
-      "value": "26ea24c4"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -1355,7 +1355,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -1380,11 +1380,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-01T17:58:23"
+      "value": "2025-02-08T13:11:59"
     },
     "value": {
       "type": "Text",
-      "value": "8ac7e5bb"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -1413,7 +1413,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -1438,11 +1438,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-02T09:32:41"
+      "value": "2025-02-06T09:52:35"
     },
     "value": {
       "type": "Text",
-      "value": "de1b4e86"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -1471,7 +1471,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -1496,11 +1496,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-02T17:48:46"
+      "value": "2025-02-06T02:58:18"
     },
     "value": {
       "type": "Text",
-      "value": "2acc9c1d"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -1529,7 +1529,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -1554,11 +1554,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-02T14:03:10"
+      "value": "2025-02-07T19:53:35"
     },
     "value": {
       "type": "Text",
-      "value": "80370eb1"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -1587,7 +1587,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -1612,11 +1612,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-02T15:13:18"
+      "value": "2025-02-06T03:40:21"
     },
     "value": {
       "type": "Text",
-      "value": "3d6c81c6"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -1645,7 +1645,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -1670,11 +1670,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-04T02:41:57"
+      "value": "2025-02-06T08:57:19"
     },
     "value": {
       "type": "Text",
-      "value": "4191ebc5"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -1703,7 +1703,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -1728,11 +1728,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-03T18:36:36"
+      "value": "2025-02-01T10:45:39"
     },
     "value": {
       "type": "Text",
-      "value": "49aafc03"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -1761,7 +1761,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -1786,11 +1786,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-05T16:56:28"
+      "value": "2025-02-07T13:56:51"
     },
     "value": {
       "type": "Text",
-      "value": "386c3dea"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -1819,7 +1819,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -1844,11 +1844,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-03T08:15:32"
+      "value": "2025-02-03T22:04:42"
     },
     "value": {
       "type": "Text",
-      "value": "99b730c8"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -1877,7 +1877,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -1902,11 +1902,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-02T06:42:19"
+      "value": "2025-02-03T20:21:40"
     },
     "value": {
       "type": "Text",
-      "value": "037d498d"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -1935,7 +1935,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -1960,11 +1960,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-05T03:17:11"
+      "value": "2025-02-08T01:00:27"
     },
     "value": {
       "type": "Text",
-      "value": "0d8bee08"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -1993,7 +1993,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -2018,11 +2018,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-02T13:52:17"
+      "value": "2025-02-02T03:40:53"
     },
     "value": {
       "type": "Text",
-      "value": "d2b5ee5e"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -2051,7 +2051,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -2076,11 +2076,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-03T16:50:38"
+      "value": "2025-02-04T12:28:16"
     },
     "value": {
       "type": "Text",
-      "value": "b21323c3"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -2109,7 +2109,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -2134,11 +2134,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-05T12:46:02"
+      "value": "2025-02-03T19:27:58"
     },
     "value": {
       "type": "Text",
-      "value": "17aa82b2"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -2167,7 +2167,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -2192,11 +2192,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-05T14:07:21"
+      "value": "2025-02-01T00:42:19"
     },
     "value": {
       "type": "Text",
-      "value": "a9d5863e"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -2225,7 +2225,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -2250,11 +2250,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-01T21:42:12"
+      "value": "2025-02-07T18:12:08"
     },
     "value": {
       "type": "Text",
-      "value": "e587d66a"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -2283,7 +2283,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -2308,11 +2308,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-04T01:38:24"
+      "value": "2025-02-03T17:24:48"
     },
     "value": {
       "type": "Text",
-      "value": "6ea4db0d"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -2341,7 +2341,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -2366,11 +2366,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-01T10:43:41"
+      "value": "2025-02-07T04:07:10"
     },
     "value": {
       "type": "Text",
-      "value": "b4a4b01f"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -2399,7 +2399,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -2424,11 +2424,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-02T00:15:45"
+      "value": "2025-02-05T17:55:12"
     },
     "value": {
       "type": "Text",
-      "value": "d82b95b5"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -2457,7 +2457,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -2482,11 +2482,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-04T18:16:08"
+      "value": "2025-02-05T21:25:58"
     },
     "value": {
       "type": "Text",
-      "value": "e9575878"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -2515,7 +2515,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -2540,11 +2540,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-02T01:52:36"
+      "value": "2025-02-06T16:33:20"
     },
     "value": {
       "type": "Text",
-      "value": "4211e194"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -2573,7 +2573,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -2598,11 +2598,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-04T11:49:16"
+      "value": "2025-02-03T07:55:52"
     },
     "value": {
       "type": "Text",
-      "value": "ecf9f0b9"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -2631,7 +2631,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -2656,11 +2656,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-01T09:44:40"
+      "value": "2025-02-04T19:48:39"
     },
     "value": {
       "type": "Text",
-      "value": "518ea0e1"
+      "value": ""
     },
     "direction": {
       "type": "Text",
@@ -2689,7 +2689,7 @@
     "controlledAsset": {
       "type": "StructuredValue",
       "value": [
-        "urn:ngsi-ld:Device:80"
+        "urn:ngsi-ld:Device:91"
       ]
     },
     "areaServed": {
@@ -2714,11 +2714,11 @@
     },
     "dateLastValueReported": {
       "type": "DateTime",
-      "value": "2025-02-04T03:38:48"
+      "value": "2025-02-02T06:35:15"
     },
     "value": {
       "type": "Text",
-      "value": "2bf8684a"
+      "value": ""
     },
     "direction": {
       "type": "Text",
