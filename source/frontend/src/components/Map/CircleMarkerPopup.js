@@ -119,6 +119,8 @@ const CircleMarkerPopup = ({ type, data, color, fillColor, radius, fillOpacity, 
         <br />
         <strong>Belongs To:</strong> {data.person_name}
         <br />
+        <strong>Role:</strong> {data.person_role}
+        <br />
         <strong>Current Facility:</strong> {data.facility_name}
         <br />
         <strong>Tracking Method:</strong> {data.tracking_type}
@@ -185,7 +187,7 @@ const CircleMarkerPopup = ({ type, data, color, fillColor, radius, fillOpacity, 
         <Popup>{popupContent}</Popup>
         <Tooltip
           direction="bottom"
-          offset={[0, 4]}
+          offset={[0, 8]}
           opacity={1}
           className="marker-label"
         >

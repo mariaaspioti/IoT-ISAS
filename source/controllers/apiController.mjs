@@ -204,6 +204,7 @@ let getAllDevicesControlledAssets = async (req, res) => {
                     device_id: device.id,
                     person_id: controlledAssetResponse.data.id,
                     person_name: controlledAssetResponse.data.name.value,
+                    person_role: controlledAssetResponse.data.role.value,
                     isIndoors: controlledAssetResponse.data.isIndoors ? controlledAssetResponse.data.isIndoors.value : null,
                 };
 
