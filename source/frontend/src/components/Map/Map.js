@@ -20,14 +20,22 @@ const MARKER_COLORS = {
   alert: 'red',
 };
 
+const ROLE_COLORS = {
+  Engineer: 'purple',
+  Janitor: 'brown',
+  Technician: 'orange',
+  'Cleanroom Operator': 'teal',
+  Default: 'blue', // Fallback color
+};
+
 const Map = ({ data, viewType, alerts, onDismissAlert }) => {
-  // Use memoization for markers or polygons to optimize rendering.
+  // Use memoization for markers or polygons
   const renderedElements = useMemo(() => {
     if (viewType === 'buildings') {
       // Group building data by building id extracted from the message.
       const buildingGroups = {};
       data.forEach((item) => {
-        // Assuming messages are of the form: "Building: urn:ngsi-ld:Building:<id>"
+        // messages are of the form: "Building: urn:ngsi-ld:Building:<id>"
         const parts = item.message.split(':');
         const buildingId = parts[parts.length - 1].trim();
         if (!buildingGroups[buildingId]) {
@@ -62,17 +70,21 @@ const Map = ({ data, viewType, alerts, onDismissAlert }) => {
       ));
     } else if (viewType === 'people') {
       // For doors or people, render individual markers.
-      return data.map((mdata) => (
-        <CircleMarkerPopup
+      
+      return data.map((mdata) => {
+        const personColor = ROLE_COLORS[mdata.person_role] || ROLE_COLORS.Default; // color by role
+        
+        return (<CircleMarkerPopup
           key={mdata.person_id}
           type={'person'}
           data={mdata}
-          color={MARKER_COLORS[viewType] || 'blue'}
-          fillColor={MARKER_COLORS[viewType] || 'blue'}
-          radius={8}
-          fillOpacity={0.6}
+          color={personColor}
+          fillColor={personColor}
+          radius={9}
+          fillOpacity={0.8}
         />
-      ));
+      );
+    });
     }
   }, [data, viewType]);
 
@@ -107,7 +119,7 @@ const Map = ({ data, viewType, alerts, onDismissAlert }) => {
     >
       {/* Create a custom pane for alerts */}
       <Pane name="alertPane" style={{ zIndex: 650, pointerEvents: 'none' }} />
-      
+
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"

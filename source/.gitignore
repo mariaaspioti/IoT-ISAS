@@ -19,6 +19,7 @@ Thumbs.db
 # Ignore logs and temporary files
 /logs/
 /tmp/
+*.log
 
 # Ignore IDE and editor specific files
 /.idea/

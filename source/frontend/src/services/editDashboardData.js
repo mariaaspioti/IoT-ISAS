@@ -78,7 +78,7 @@ export const fetchTrackingData = async () => {
                 message: `Device: ${selectedDeviceNum} | Facility: ${facility?.name || 'Outside'}, Person: ${initials}`
             };
         }).filter(Boolean);
-        
+
         return { mapData, facilities, controlledAssets, data };
     } catch (error) {
         console.error('Error fetching data:', error);
