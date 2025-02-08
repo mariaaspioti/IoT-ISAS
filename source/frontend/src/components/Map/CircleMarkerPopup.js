@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { CircleMarker, Popup } from 'react-leaflet';
+import { Marker, CircleMarker, Popup } from 'react-leaflet';
 
-const CircleMarkerPopup = ({ type, data, color, fillColor, radius, fillOpacity }) => {
+const CircleMarkerPopup = ({ type, data, color, fillColor, radius, fillOpacity, onDismissAlert }) => {
   const markerRef = useRef(null);
   const [popupOpen, setPopupOpen] = useState(false);
 
@@ -67,6 +67,21 @@ const CircleMarkerPopup = ({ type, data, color, fillColor, radius, fillOpacity }
         <strong>Owner:</strong> {data.personName}
         <br />
         <strong>Coordinates:</strong> {coordinates}
+        <div className="alert-actions">
+          <select 
+            onChange={(e) => {
+              if (e.target.value === 'dismiss') {
+                onDismissAlert(data.id);
+              }
+              e.target.value = '';
+            }}
+          >
+            <option value="">Actions...</option>
+            <option value="unlock">Unlock all doors</option>
+            <option value="alarm">Activate Alarm</option>
+            <option value="dismiss">Dismiss</option>
+          </select>
+        </div>
       </>
     );
   } else {
@@ -87,6 +102,8 @@ const CircleMarkerPopup = ({ type, data, color, fillColor, radius, fillOpacity }
       fillColor={fillColor}
       radius={radius}
       fillOpacity={fillOpacity}
+      pane={type === 'alert' ? 'alertPane' : undefined} // Use custom pane for alert markers
+      zIndexOffset={type === 'alert' ? 1000 : 0} // Higher zIndexOffset for alert markers
     >
       <Popup>{popupContent}</Popup>
     </CircleMarker>

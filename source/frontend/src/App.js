@@ -39,6 +39,10 @@ function App() {
 
   useWebSocket(handleNewAlert);
 
+  const handleDismissAlert = useCallback((alertId) => {
+    setAlerts(prev => prev.filter(alert => alert.id !== alertId));
+  }, []);
+
   return (
     <div className="app-container">
       <h1>Industrial Spatial Authorization System</h1>
@@ -55,13 +59,21 @@ function App() {
       ) : (
         <div className="main-content">
           <div className="map-container">
-            <Map data={mapData[activeView]} alerts={alerts} viewType={activeView} />
+            <Map 
+            data={mapData[activeView]} 
+            alerts={alerts} 
+            viewType={activeView}
+            onDismissAlert={handleDismissAlert}
+             />
             <div className="update-notice">
               Data updates every 2 seconds. Last update: {new Date().toLocaleTimeString()}
             </div>
           </div>
 
-          <AlertsList alerts={alerts} />
+          <AlertsList 
+          alerts={alerts}
+          onDismissAlert={handleDismissAlert}
+           />
         </div>
       )}
     </div>

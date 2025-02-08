@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { MapContainer, TileLayer, useMapEvent, Polygon, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, useMapEvent, Polygon, Popup, Pane } from 'react-leaflet';
 import CircleMarkerPopup from './CircleMarkerPopup';
 import 'leaflet/dist/leaflet.css';
 import { saveCoordinates } from '../../services/api';
@@ -20,7 +20,7 @@ const MARKER_COLORS = {
   alert: 'red',
 };
 
-const Map = ({ data, viewType, alerts }) => {
+const Map = ({ data, viewType, alerts, onDismissAlert }) => {
   // Use memoization for markers or polygons to optimize rendering.
   const renderedElements = useMemo(() => {
     if (viewType === 'buildings') {
@@ -93,10 +93,11 @@ const Map = ({ data, viewType, alerts }) => {
           fillColor={MARKER_COLORS.alert}
           radius={10}
           fillOpacity={0.2}
+          onDismissAlert={onDismissAlert}
         />
       );
     });
-  }, [alerts]);
+  }, [alerts, onDismissAlert]);
 
   return (
     <MapContainer
@@ -104,6 +105,9 @@ const Map = ({ data, viewType, alerts }) => {
       zoom={16}
       className="leaflet-container"
     >
+      {/* Create a custom pane for alerts */}
+      <Pane name="alertPane" style={{ zIndex: 650, pointerEvents: 'none' }} />
+      
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"

@@ -94,3 +94,35 @@
       transform: translateY(0);
     }
   }
+
+  .alert-actions {
+    margin-left: auto;
+  }
+  
+  .action-select {
+    padding: 5px 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+    font-size: 0.9em;
+  }
+  
+  .action-select:hover {
+    border-color: #ccc;
+  }
+  
+  .action-select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  }
+  
+  /* Style the options */
+  .action-select option {
+    padding: 8px;
+  }
+  
+  .action-select option[value="dismiss"] {
+    color: #dc3545;
+  }

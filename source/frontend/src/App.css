@@ -90,3 +90,20 @@
   font-size: 0.9rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+
+/* For alert map popup */
+.alert-actions select {
+  margin-top: 10px;
+  padding: 5px;
+  width: 100%;
+}
+
+/* Make the alert pane not intercept pointer events */
+.leaflet-pane.alertPane {
+  pointer-events: none;
+}
+
+/* But allow pointer events on popups within the alert pane */
+.leaflet-pane.alertPane .leaflet-popup {
+  pointer-events: auto;
+}
