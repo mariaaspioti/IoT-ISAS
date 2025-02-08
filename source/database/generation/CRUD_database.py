@@ -62,11 +62,11 @@ def create_maintenance_table(cursor):
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS Maintenance (
             maintenance_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            device_id INTEGER,
             startTime TEXT,
             endTime TEXT,
             dateCreated TEXT,
-            FOREIGN KEY (device_id) REFERENCES Device(device_id)
+            status TEXT,
+            description TEXT
         )
     ''')
     return cursor
@@ -134,6 +134,32 @@ def create_part_of_table(cursor):
     ''')
     return cursor
 
+def create_conducts_table(cursor):
+    # Person conducts maintenance (is exempt from maintenance lock out)
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS Conducts (
+            person_id INTEGER NOT NULL,
+            maintenance_id INTEGER NOT NULL,
+            PRIMARY KEY (person_id, maintenance_id),
+            FOREIGN KEY (person_id) REFERENCES Person(person_id),
+            FOREIGN KEY (maintenance_id) REFERENCES Maintenance(maintenance_id)
+        )
+    ''')
+    return cursor
+
+def create_reserves_table(cursor):
+    # Maintenance reserves a Facility (locks out the facility)
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS Reserves (
+            maintenance_id INTEGER NOT NULL,
+            facility_id INTEGER NOT NULL,
+            PRIMARY KEY (maintenance_id, facility_id),
+            FOREIGN KEY (maintenance_id) REFERENCES Maintenance(maintenance_id),
+            FOREIGN KEY (facility_id) REFERENCES Facility(facility_id)
+        )
+    ''')
+    return cursor
+
 def create_all_tables(cursor):
     create_roles_table(cursor)
     create_person_table(cursor)
@@ -145,6 +171,8 @@ def create_all_tables(cursor):
     create_has_assigned_device_table(cursor)
     create_concerns_table(cursor)
     create_part_of_table(cursor)
+    create_conducts_table(cursor)
+    create_reserves_table(cursor)
     return cursor
 
 # =================================================================================================

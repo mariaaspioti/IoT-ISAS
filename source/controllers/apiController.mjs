@@ -3,6 +3,7 @@ import axios from 'axios';
 // import express from 'express';
 // import * as turf from '@turf/turf';
 import * as stateController from '../controllers/stateController.mjs';
+import * as maintenanceController from '../controllers/maintenanceController.mjs';
 
 // Orion Context Broker URL
 const orionUrl = 'http://150.140.186.118:1026/v2/entities';
@@ -249,7 +250,19 @@ let saveCoordinates = (req, res) => {
     });
 };
 
-let getFacilities = async (req, res) => {
+let getAllFacilities = async (req, res) => {
+    try {
+        const response = await axios.get(`${orionUrl}?type=Building`, {
+            headers: getHeaders
+        });
+        res.json({ data: response.data });
+    } catch (error) {
+        console.error('Facilities error:', error);
+        res.status(500).json({ error: 'Failed to fetch facilities' });
+    }
+};
+
+let getFacilitiesNameAndLocation = async (req, res) => {
   try {
     const response = await axios.get(`${orionUrl}?type=Building`, {
       headers: getHeaders,
@@ -262,6 +275,33 @@ let getFacilities = async (req, res) => {
     console.error('Facilities error:', error);
     res.status(500).json({ error: 'Failed to fetch facilities' });
   }
+};
+
+let getFacilityLocationData = async (req, res) => {
+    try {
+        const facilityId = req.params.id;
+        const response = await axios.get(`${orionUrl}/${facilityId}`, {
+            headers: getHeaders,
+            params: {
+                options: 'keyValues',
+                attrs: 'location'
+            }
+        });
+
+        // console.log('Facility location data in getFacilityLocationData:', response.data.location.coordinates);
+
+        if (!response.data.location?.coordinates) {
+            return res.status(404).json({ error: 'Coordinates not found' });
+        }
+
+        const coordinates = response.data.location.coordinates[0]
+            .map(([lng, lat]) => [lat, lng ]);
+
+        res.json(coordinates);
+    } catch (error) {
+        console.error('Coordinate fetch error in getFacilityLocationData:', error);
+        res.status(500).json({ error: 'Failed to fetch facility location' });
+    }
 };
 
 let findCurrentFacilities = async (req, res) => {
@@ -383,7 +423,103 @@ let handleSOSAlert = (req, res) => {
     }
 };
 
-export { getData, getAllData, getDeviceData, getDeviceDataFromName, getDeviceLocationData, getAllDevicesLocationData, 
-    getAllDevicesControlledAssets, saveCoordinates, getFacilities, findCurrentFacilities,
-    getDoorsLocations, getPersonData, getAllPeopleData, handleSOSAlert
+let handleMaintenanceSchedule = async (req, res) => {
+    try {
+        const sampleReservation = { // check id
+            type: 'MaintenanceReservation',
+            building: {
+                type: 'Relationship',
+                value: req.body.buildingId
+            },
+            startTime: {
+                type: 'DateTime',
+                value: req.body.start
+            },
+            endTime: {
+                type: 'DateTime',
+                value: req.body.end
+            },
+            exemptPersonnel: {
+                type: 'Relationship',
+                value: req.body.exemptPersonnel
+            },
+            status: {
+                type: 'Text',
+                value: 'scheduled'
+            }
+        };
+
+        console.log("Request Body in handleMaintenanceSchedule:", req.body);
+        const buildingReservedId = req.body.buildingId;
+        const startDateTime = req.body.start;
+        const endDateTime = req.body.end;
+        const peopleIds = req.body.exemptPersonnel;
+        const status = 'scheduled';
+        const description = req.body?.description || 'No description';
+        const dateCreated = new Date().toISOString();
+        const maintenance = {
+            startTime: startDateTime,
+            endTime: endDateTime,
+            dateCreated,
+            status,
+            description,
+            peopleIds,
+            facilityId: buildingReservedId
+        };
+
+        // Insert maintenance record into the database
+        maintenanceController.insertMaintenanceRecord(maintenance, (err) => {
+            if (err) {
+                console.error('Error inserting maintenance record:', err);
+                res.status(500).json({ error: 'Failed to create maintenance reservation' });
+            }
+            console.log('Maintenance record inserted inn handleMaintenanceSchedule:', maintenance);
+            res.status(201).json(maintenance);
+
+            // const response = { data: sampleReservation };
+            // console.log('Maintenance reservation created:', response.data);
+
+            // res.status(201).json(sampleReservation);
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to create maintenance reservation' });
+    }
+};
+
+let checkAccessAuthorization = async (req, res) => {
+    const { person, building } = req.query;
+
+    try {
+    // Check active maintenance periods
+    const maintenanceQuery = {
+        type: 'MaintenanceReservation',
+        q: `building==${building};status==active`,
+        attrs: 'exemptPersonnel'
+    };
+
+    const maintenanceRes = await axios.get(`${orionUrl}/entities`, {
+        params: maintenanceQuery,
+        headers: FIWARE_HEADERS
+    });
+
+    if (maintenanceRes.data.length > 0) {
+        const exemptPersons = maintenanceRes.data[0].exemptPersonnel.value;
+        const isExempt = exemptPersons.includes(person);
+        
+        return res.json({
+        authorized: isExempt,
+        reason: isExempt ? '' : 'Building under maintenance'
+        });
+    }
+
+    res.json({ authorized: true, reason: '' });
+    } catch (error) {
+    res.status(500).json({ authorized: false, reason: 'System error' });
+    }
+    };
+
+export { getData, getAllData, getDeviceData, getDeviceDataFromName, getDeviceLocationData, 
+    getAllDevicesLocationData, getAllDevicesControlledAssets, saveCoordinates, getAllFacilities, 
+    getFacilityLocationData, getFacilitiesNameAndLocation, findCurrentFacilities, getDoorsLocations, 
+    getPersonData, getAllPeopleData, handleSOSAlert, handleMaintenanceSchedule, checkAccessAuthorization,
  };

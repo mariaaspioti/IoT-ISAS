@@ -1,8 +1,9 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { MapContainer, TileLayer, useMapEvent, Polygon, Popup, Pane } from 'react-leaflet';
 import CircleMarkerPopup from './CircleMarkerPopup';
 import 'leaflet/dist/leaflet.css';
 import { saveCoordinates } from '../../services/api';
+import { fetchBuildingCoordinates } from '../../services/buildingService';
 
 const ClickLogger = () => {
   useMapEvent('click', (e) => {
@@ -28,7 +29,9 @@ const ROLE_COLORS = {
   Default: 'blue', // Fallback color
 };
 
-const Map = ({ data, viewType, alerts, onDismissAlert }) => {
+const DashboardMap = ({ data, viewType, alerts, maintenanceSchedules, onDismissAlert }) => {
+  const [buildingCoordinates, setBuildingCoordinates] = useState({});
+
   // Use memoization for markers or polygons
   const renderedElements = useMemo(() => {
     if (viewType === 'buildings') {
@@ -111,6 +114,50 @@ const Map = ({ data, viewType, alerts, onDismissAlert }) => {
     });
   }, [alerts, onDismissAlert]);
 
+  // Fetch coordinates when maintenance schedules change
+  useEffect(() => {
+    const fetchCoordinates = async () => {
+      const coordinatesMap = {};
+      
+      for (const schedule of maintenanceSchedules) {
+        try {
+          const coords = await fetchBuildingCoordinates(schedule.facilityId);
+          coordinatesMap[schedule.facilityId] = coords;
+        } catch (error) {
+          console.warn(`Using default coordinates for ${schedule.facilityId}`);
+          coordinatesMap[schedule.facilityId] = []
+        }
+      }
+      
+      setBuildingCoordinates(coordinatesMap);
+    };
+
+    fetchCoordinates();
+  }, [maintenanceSchedules]);
+
+  const maintenanceOverlays = useMemo(() => {
+    return maintenanceSchedules.map(schedule => {
+      const coordinates = buildingCoordinates[schedule.facilityId] || []; // Use default if not found
+
+      return (<Polygon
+        key={schedule.id}
+        positions={coordinates}
+        color="orange"
+        fillOpacity={0.2}
+      >
+        <Popup>
+          <h3>Maintenance Scheduled</h3>
+          <strong>Building:</strong> {schedule.facilityId}<br />
+          <strong>Start:</strong> {new Date(schedule.startTime).toLocaleString()}<br />
+          <strong>End:</strong> {new Date(schedule.endTime).toLocaleString()}<br />
+          <strong>Status:</strong> {schedule.status}<br />
+          <strong>Description:</strong> {schedule.description}<br />
+          <strong>Exempt Personnel:</strong> {schedule.peopleIds.join(', ')}
+        </Popup>
+      </Polygon>
+    )});
+  }, [maintenanceSchedules, buildingCoordinates]);
+
   return (
     <MapContainer
       center={[53.37575635880662, -6.5230679512023935]}
@@ -119,6 +166,8 @@ const Map = ({ data, viewType, alerts, onDismissAlert }) => {
     >
       {/* Create a custom pane for alerts */}
       <Pane name="alertPane" style={{ zIndex: 650, pointerEvents: 'none' }} />
+
+      {maintenanceOverlays}
 
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -131,4 +180,4 @@ const Map = ({ data, viewType, alerts, onDismissAlert }) => {
   );
 };
 
-export default Map;
+export default DashboardMap;

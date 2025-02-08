@@ -14,16 +14,22 @@ router.get('/devices/:id/location', apiController.getDeviceLocationData);
 router.get('/devices/:id', apiController.getDeviceData);
 router.get('/devices/name/:name', apiController.getDeviceDataFromName);
 
-
-router.get('/facilities', apiController.getFacilities);
+router.get('/facilities', apiController.getAllFacilities);
+router.get('/facilities/name-location', apiController.getFacilitiesNameAndLocation);
+router.get('/facilities/:id/location', apiController.getFacilityLocationData);
 router.post('/facilities/find', apiController.findCurrentFacilities);
+
 
 router.get('/doors/location', apiController.getDoorsLocations);
 
 router.get('/people/:id', apiController.getPersonData);
 router.get('/people', apiController.getAllPeopleData);
 
+router.post('/maintenance', apiController.handleMaintenanceSchedule);
+
 // router.post('/alert/sos', apiController.handleSOSAlert); // For Orion subscription
 // router.get('/alert/sos', apiController.handleSOSAlert); // For polling
+
+router.get('access-check', apiController.checkAccessAuthorization);
 
 export {router as apiRoutes};

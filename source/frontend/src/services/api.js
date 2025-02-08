@@ -100,7 +100,7 @@ export const saveCoordinates = async (coordinate) => {
 };
 
 
-// Find the current facilities
+// Find the current facilities in which the person (coordinates) is located
 export const findCurrentFacilities = async (coordinates) => {
     try {
         // Send coordinates to the server for calculation
@@ -124,10 +124,22 @@ export const findCurrentFacilities = async (coordinates) => {
     }
 };
 
+// Fetch facilities-buildings data
+export const fetchAllBuildingsData = async () => {
+    try {
+        const response = await fetch('/api/facilities');
+        const json = await response.json();
+        return json.data;
+    } catch (error) {
+        console.error('Error fetching facilities data:', error);
+        throw error;
+    }
+}
+
 // Fetch facilities-buildings coordinates
 export const fetchBuildingsLocations = async () => {
     try {
-        const response = await fetch('/api/facilities');
+        const response = await fetch('/api/facilities/name-location');
         const json = await response.json();
         return json.data;
     } catch (error) {
@@ -149,6 +161,18 @@ export const fetchDoorsLocations = async () => {
     }
 };
 
+// Fetch all people data
+export const fetchAllPeopleData = async () => {
+    try {
+        const response = await fetch('/api/people');
+        const json = await response.json();
+        return json.data;
+    } catch (error) {
+        console.error('Error fetching people data:', error);
+        throw error;
+    }
+};
+
 // Fetch person data
 export const fetchPersonData = async (person_id) => {
     try {
@@ -157,6 +181,37 @@ export const fetchPersonData = async (person_id) => {
         return json.data;
     } catch (error) {
         console.error('Error fetching person data:', error);
+        throw error;
+    }
+};
+
+// Post Maintenance Schedule
+export const postMaintenanceSchedule = async (schedule) => {
+    try {
+        const response = await fetch('/api/maintenance', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(schedule)
+        });
+        
+        if (!response.ok) throw new Error('Scheduling failed');
+        
+        const newSchedule = await response.json();
+        return newSchedule;
+    } catch (error) {
+        console.error('Scheduling error:', error);
+        throw error;
+    }
+};
+
+// Fetch Access Authorization
+export const fetchAccessAuthorization = async (personId, buildingId) => {
+    try {
+        const response = await fetch(`/api/access-check?person=${personId}&building=${buildingId}`);
+        const { authorized, reason } = await response.json();
+        return { authorized, reason };
+    } catch (error) {
+        console.error('Error fetching access authorization data:', error);
         throw error;
     }
 };

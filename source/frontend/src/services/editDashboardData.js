@@ -177,3 +177,40 @@ export const fetchFormatAlertData = async (alertData) => {
     return formattedData;
     // return alertData;
 }
+
+export const fetchAllFacilitiesData = async () => {
+    const facilities = await APICall.fetchAllBuildingsData();
+    const facilitiesData = facilities.map(facility => ({
+        id: facility.id,
+        name: facility.name.value,
+        location: facility.location.value.coordinates[0],
+        category: facility.category.value,
+        description: facility.description.value,
+        cleanrooms: facility?.cleanrooms?.value,
+        peopleCapacity: facility.peopleCapacity.value,
+    }));
+    return facilitiesData;
+}
+
+export const fetchAllPeopleData = async () => {
+    const people = await APICall.fetchAllPeopleData();
+    const peopleData = people.map(person => ({
+        id: person.id,
+        name: person.name.value,
+        isIndoors: person.isIndoors.value,
+        currentFacility: person?.currentFacility?.value,    
+        hasDevices: person.hasDevices.value,
+        role: person.role.value,
+    }));
+    return peopleData;
+}
+
+export const postMaintenanceSchedule = async (scheduleData) => {
+    const response = await APICall.postMaintenanceSchedule(scheduleData);
+    return response;
+}
+
+export const fetchAuthorizationData = async (personId, buildingId) => {
+    const response = await APICall.fetchAccessAuthorization(personId, buildingId);
+    return response;
+}
