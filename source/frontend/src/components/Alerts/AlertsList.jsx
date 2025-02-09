@@ -30,7 +30,7 @@ const AlertsList = ({ alerts, onDismissAlert, onUnlockDoors, onActivateAlarm }) 
           <div className="alert-header">
             <span className="alert-id">Alert #{alert.id}</span>
             {/* <span className="alert-time">{alert.dateIssued.value}</span> */}
-            <span className="alert-time">{alert.frontend_timestamp}</span>
+            <span className="alert-time">{alert.dateIssued}</span>
           </div>
           <div className="alert-body">
             <span className="alert-severity">{alert.severity}</span>

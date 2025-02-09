@@ -3,7 +3,7 @@
 /* Alerts Container */
 /* Alerts positioned on the right */
 .alerts-container {
-    width: 300px; /* Adjust as needed */
+    width: 300px; 
     max-height: 600px;
     overflow-y: auto;
     border: 1px solid #e0e0e0;
@@ -19,7 +19,7 @@
   }
   
   .alerts-list {
-    max-height: 300px;
+    max-height: 230px;
     overflow-y: auto;
   }
   

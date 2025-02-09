@@ -29,7 +29,14 @@ const ROLE_COLORS = {
   Default: 'blue', // Fallback color
 };
 
-const DashboardMap = ({ data, viewType, alerts, maintenanceSchedules, onDismissAlert }) => {
+const DashboardMap = ({ 
+  data, 
+  viewType, 
+  alerts, 
+  maintenanceSchedules, 
+  onDismissAlert, 
+  onUnlockDoors, 
+  onActivateAlarm }) => {
   const [buildingCoordinates, setBuildingCoordinates] = useState({});
 
   // Use memoization for markers or polygons
@@ -104,15 +111,19 @@ const DashboardMap = ({ data, viewType, alerts, maintenanceSchedules, onDismissA
           key={alert.id}
           type="alert"
           data={alert}
-          color={MARKER_COLORS.alert}
-          fillColor={MARKER_COLORS.alert}
+          color={alert.status === 'resolved' ? 'green' : MARKER_COLORS.alert}
+          fillColor={alert.severity === 'high' ? MARKER_COLORS.alert : 'orange'}
+          // color={MARKER_COLORS.doors}
+          // fillColor={MARKER_COLORS.doors}
           radius={10}
           fillOpacity={0.2}
           onDismissAlert={onDismissAlert}
+          onUnlockDoors={onUnlockDoors}
+          onActivateAlarm={onActivateAlarm}
         />
       );
     });
-  }, [alerts, onDismissAlert]);
+  }, [alerts, onDismissAlert, onUnlockDoors, onActivateAlarm]);
 
   // Fetch coordinates when maintenance schedules change
   useEffect(() => {

@@ -5,7 +5,7 @@
     border: 1px solid #ddd;
     padding: 15px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    height: 230px;  
+    height: 250px;  
     display: flex;
     flex-direction: column;
   }
