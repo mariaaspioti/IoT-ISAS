@@ -213,7 +213,7 @@ const CircleMarkerPopup = ({
           opacity={1}
           className="marker-label"
         >
-          {data.person_id ? data.person_id : data.message}
+          {data.person_id ||data.id ? data.person_id || data.id : data.message}
         </Tooltip>
       </CircleMarker>
     </>
