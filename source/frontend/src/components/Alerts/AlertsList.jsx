@@ -2,13 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './AlertsList.css';
 
-const AlertsList = ({ alerts, onDismissAlert }) => {
+const AlertsList = ({ alerts, onDismissAlert, onUnlockDoors, onActivateAlarm }) => {
 
   const handleAction = (alertId, action) => {
     if (action === 'dismiss') {
       onDismissAlert(alertId);
     }
-    // Handle other actions...
+    else if (action === 'unlock') {
+      // console.log(`Unlocking doors for alert ${alertId}`);
+      onUnlockDoors(alertId);
+    }
+    else if (action === 'alarm') {
+      console.log(`Activating alarm for alert ${alertId}`);
+      onActivateAlarm(alertId);
+    }
+    else {
+      console.log('Invalid action');
+    }
   };
 
   return (
@@ -28,10 +38,18 @@ const AlertsList = ({ alerts, onDismissAlert }) => {
             <div className="alert-meta">
                   <span className="alert-person">Owner: {alert.personName}</span>
                   <span className="alert-location">
-                    Current Location: {alert.personCurrentFacility}
-                    <br />
-                    Coordinates: {alert.personCurrentLocation[0]}, {alert.personCurrentLocation[1]}
-                  </span>
+                    
+                    {alert.personCurrentFacility && (
+                      <>
+                        <span>Current Facility:</span> {alert.personCurrentFacility}<br />
+                      </>
+                    )}
+                    {alert.personCurrentLocation && (
+                      <>
+                      <span>Current Location:</span> {alert.personCurrentLocation.join(', ')}
+                      </>
+                    )}
+                    </span>
                   <span className="alert-status">Status: {alert.status}</span>
                 </div>
           </div>

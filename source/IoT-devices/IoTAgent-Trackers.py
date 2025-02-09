@@ -112,10 +112,41 @@ def on_message(client, userdata, message):
     except Exception as e:
         print(f"Error in on_message: {str(e)}")
 
+def on_disconnect(client, userdata, rc):
+    disconnect_reasons = {
+        0: "Connection successful",
+        1: "Connection refused - incorrect protocol version",
+        2: "Connection refused - invalid client identifier",
+        3: "Connection refused - server unavailable",
+        4: "Connection refused - bad username or password",
+        5: "Connection refused - not authorized",
+        6: "Connection lost",
+        7: "Connection refused - unknown reason"
+    }
+
+    reason = disconnect_reasons.get(rc, "Unknown reason")
+    if rc != 0:
+        print(f"Unexpected disconnection (rc={rc}): {reason}, attempting to reconnect...")
+        # Log the watchdog event
+        with open("watchdog-trackers.log", "a") as log_file:
+            log_file.write(f"Unexpected disconnection (reason={reason}) at {datetime.datetime.now()}\n")
+        try:
+            time.sleep(5)  # Delay before attempting to reconnect
+            client.reconnect()
+        except Exception as e:
+            print(f"Error during reconnection: {e}")
+            with open("watchdog-trackers.log", "a") as log_file:
+                log_file.write(f"Error during reconnection at {datetime.datetime.now()}\n")
+    else:
+        print("Disconnected successfully")
+
+    
+
 def read_data_from_mqtt():
     client = mqtt.Client(client_id)
     client.connect(mqtt_broker, mqtt_port)
     client.on_message = on_message
+    client.on_disconnect = on_disconnect
     
     client.subscribe(mqtt_gps_topic)
     print(f"Subscribed to {mqtt_gps_topic}")
@@ -132,6 +163,8 @@ def watchdog_on_message(client, userdata, message):
     A message was received, which means the agent is not listening to them.
     """
     global message_received
+    mqtt_message = json.loads(message.payload.decode())
+    print(f"Watchdog: Received message from {message.topic}: {mqtt_message}")
     message_received = True
     
 
@@ -191,10 +224,10 @@ def main():
         print("Starting IoT Agent for BT/GPS trackers...")
         threading.Thread(target=watchdog, daemon=True).start() # Start the watchdog thread
         read_data_from_mqtt()
-        while True:
-            pass # Keep the program running
     except KeyboardInterrupt:
         print("Shutting down")
+        # make sure all threads are stopped
+        os._exit(1)
 
 if __name__ == "__main__":
     main()

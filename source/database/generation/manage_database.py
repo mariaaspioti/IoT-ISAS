@@ -37,8 +37,9 @@ def menu_options():
     print("2. Drop all tables")
     print("3. Insert data into tables")
     print("4. Delete data from tables")
-    print("5. Run test function")
-    print("6. Press q to Exit")
+    print("5. Delete Maintenance, Conducts, Reserves data")
+    print("6. Run test function")
+    print("7. Press q to Exit")
     return input("> ")
 
 def main():
@@ -68,7 +69,11 @@ def main():
             CRUD.delete_all_tables(cursor)
             conn.commit()
             print("Data deleted successfully.")
-        elif choice == "4":
+        elif choice == "5":
+            CRUD.delete_maintenance_conducts_reserves(cursor)
+            conn.commit()
+            print("Maintenance data deleted successfully.")
+        elif choice == "6":
             test_func()
         else:
             print("Invalid choice. Please try again.")

@@ -25,10 +25,13 @@ router.get('/doors/location', apiController.getDoorsLocations);
 router.get('/people/:id', apiController.getPersonData);
 router.get('/people', apiController.getAllPeopleData);
 
+router.get('/maintenances/scheduled', apiController.getScheduledMaintenances);
 router.post('/maintenance', apiController.handleMaintenanceSchedule);
 
 // router.post('/alert/sos', apiController.handleSOSAlert); // For Orion subscription
 // router.get('/alert/sos', apiController.handleSOSAlert); // For polling
+router.get('/alerts/active', apiController.getActiveAlerts);
+router.patch('/alerts/:id/status', apiController.patchAlertStatus);
 
 router.get('access-check', apiController.checkAccessAuthorization);
 

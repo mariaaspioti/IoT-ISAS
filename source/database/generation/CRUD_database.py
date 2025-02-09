@@ -377,6 +377,25 @@ def delete_has_access(cursor):
     cursor.execute('''DELETE FROM HasAccess''')
     return cursor
 
+def delete_conducts(cursor):
+    cursor.execute('''DELETE FROM Conducts''')
+    return cursor
+
+def delete_reserves(cursor):
+    cursor.execute('''DELETE FROM Reserves''')
+    return cursor
+
+def delete_maintenance(cursor):
+    cursor.execute('''DELETE FROM Maintenance''')
+    return cursor
+
+def delete_maintenance_conducts_reserves(cursor):
+    # also delete from Conducts and Reserves and Maintenance
+    delete_conducts(cursor)
+    delete_reserves(cursor)
+    delete_maintenance(cursor)
+    return cursor
+
 def delete_all_tables(cursor):
     delete_has_access(cursor)
     delete_concerns(cursor)
@@ -386,6 +405,7 @@ def delete_all_tables(cursor):
     delete_facilities(cursor)
     delete_persons(cursor)
     delete_roles(cursor)
+    delete_maintenance_conducts_reserves(cursor)
     return cursor
 
 def drop_all_tables(cursor):
@@ -399,4 +419,6 @@ def drop_all_tables(cursor):
     cursor.execute('''DROP TABLE IF EXISTS HasAssignedDevice''')
     cursor.execute('''DROP TABLE IF EXISTS Concerns''')
     cursor.execute('''DROP TABLE IF EXISTS PartOf''')
+    cursor.execute('''DROP TABLE IF EXISTS Conducts''')
+    cursor.execute('''DROP TABLE IF EXISTS Reserves''')
     return cursor
