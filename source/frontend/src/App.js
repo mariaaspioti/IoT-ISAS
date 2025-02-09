@@ -6,10 +6,12 @@ import ViewControls from './components/MapControls/ViewControls';
 import AlertsList from './components/Alerts/AlertsList';
 import DashboardMap from './components/Map/DashboardMap';
 import ScheduleMaintenance from './components/Maintenance/ScheduleMaintenance';
+import MaintenanceList from './components/Maintenance/MaintenanceList';
 import './App.css';
 
 import { fetchFormatAlertData, fetchAllFacilitiesData, fetchAllPeopleData,
-  postMaintenanceSchedule, fetchAuthorizationData
+  postMaintenanceSchedule, fetchAuthorizationData, fetchScheduledMaintenanceData,
+  fetchActiveAlertsData, patchUpdatedAlertStatusData
  } from './services/editDashboardData';
 
 function App() {
@@ -25,11 +27,29 @@ function App() {
   // Load initial data
   useEffect(() => {
     const loadInitialData = async () => {
-      const buildingsData = await fetchAllFacilitiesData();
-      const workersData = await fetchAllPeopleData();
-      setBuildings(buildingsData);
-      setWorkers(workersData);
+      try {
+        const [buildingsData, workersData, maintenanceData, alertsData] = 
+          await Promise.all([
+            fetchAllFacilitiesData(),
+            fetchAllPeopleData(),
+            fetchScheduledMaintenanceData(),
+            fetchActiveAlertsData()
+          ]);
+          
+          console.log('Initial maintenanceData in App.js:', maintenanceData);
+        setBuildings(buildingsData);
+        setWorkers(workersData);
+        // setMaintenanceSchedules(maintenanceData.filter(s => 
+        //   new Date(s.scheduledTime) > new Date()
+        // ));
+        setMaintenanceSchedules(maintenanceData);
+        // setAlerts(alertsData.filter(a => !a.resolved));
+        setAlerts(alertsData);
+      } catch (error) {
+        console.error('Initial data load error:', error);
+      }
     };
+    
     loadInitialData();
   }, []);
 
@@ -54,24 +74,35 @@ function App() {
     }
   };
 
+  // const handleNewAlert = useCallback(async (alert) => {
+  //   try {
+  //     // Process alert asynchronously first
+  //     const formattedAlert = await fetchFormatAlertData(alert);
+      
+  //     // Then update state with processed alert
+  //     setAlerts(prev => {
+  //       const newAlert = {
+  //         ...formattedAlert,
+  //         frontend_timestamp: new Date().toLocaleTimeString()
+  //       };
+        
+  //       // Maintain temporal order while limiting count
+  //       const updated = [newAlert, ...prev];
+  //       return updated.length > MAX_ALERTS 
+  //         ? updated.slice(0, MAX_ALERTS)
+  //         : updated;
+  //     });
+  //   } catch (error) {
+  //     console.error('Error processing alert:', error);
+  //   }
+  // }, []);
   const handleNewAlert = useCallback(async (alert) => {
     try {
-      // Process alert asynchronously first
       const formattedAlert = await fetchFormatAlertData(alert);
-      
-      // Then update state with processed alert
-      setAlerts(prev => {
-        const newAlert = {
-          ...formattedAlert,
-          frontend_timestamp: new Date().toLocaleTimeString()
-        };
-        
-        // Maintain temporal order while limiting count
-        const updated = [newAlert, ...prev];
-        return updated.length > MAX_ALERTS 
-          ? updated.slice(0, MAX_ALERTS)
-          : updated;
-      });
+      setAlerts(prev => [
+        { ...formattedAlert, frontend_timestamp: new Date().toLocaleTimeString() },
+        ...prev
+      ].slice(0, MAX_ALERTS));
     } catch (error) {
       console.error('Error processing alert:', error);
     }
@@ -79,8 +110,52 @@ function App() {
 
   useWebSocket(handleNewAlert);
 
-  const handleDismissAlert = useCallback((alertId) => {
-    setAlerts(prev => prev.filter(alert => alert.id !== alertId));
+  const handleDismissAlert = useCallback(async (alertId) => {
+    // status is 'dismissed'
+    const alertStatus = 'dismissed';
+    setAlerts(prev => prev.map(alert =>
+      alert.id === alertId ? { ...alert, status: alertStatus } : alert
+    ));
+
+    // update in the backend
+    console.log(`Dismissing alert in handleDismissAlert: ${alertId}`);
+    const response = await patchUpdatedAlertStatusData(alertId, alertStatus);
+    if (response) {
+      console.log('State updated successfully');
+    }
+    
+  }, []);
+
+  const handleUnlockDoors = useCallback(async (alertId) => {
+    // status is 'resolved'
+    const alertStatus = 'resolved';
+    setAlerts(prev => prev.map(alert =>
+      alert.id === alertId ? { ...alert, status: alertStatus } : alert
+    ));
+
+    // update in the backend
+    console.log(`Unlocking doors for alert ${alertId}`);
+    // await ---unlockDoors---
+    const response = await patchUpdatedAlertStatusData(alertId, alertStatus);
+    if (response) {
+      console.log('State updated successfully');
+    }
+  }, []);
+
+  const handleActivateAlarm = useCallback(async (alertId) => {
+    // status is 'resolved'
+    const alertStatus = 'resolved';
+    setAlerts(prev => prev.map(alert =>
+      alert.id === alertId ? { ...alert, status: alertStatus } : alert
+    ));
+
+    // update in the backend
+    console.log(`Activating alarm for alert ${alertId}`);
+    // await ---activateAlarm---
+    const response = await patchUpdatedAlertStatusData(alertId, alertStatus);
+    if (response) {
+      console.log('State updated successfully');
+    }
   }, []);
 
     // Add to your existing alert handling logic
@@ -120,14 +195,6 @@ function App() {
           {showScheduler ? 'Hide Scheduler' : 'Schedule Maintenance'}
         </button>
       </div>
-
-      {showScheduler && (
-              <ScheduleMaintenance
-                buildings={buildings}
-                workers={workers}
-                onSubmit={handleScheduleSubmit}
-              />
-            )}
       
       <ViewControls 
         activeView={activeView}
@@ -148,25 +215,32 @@ function App() {
             viewType={activeView}
             onDismissAlert={handleDismissAlert}
              />
-            <div className="update-notice">
-              Data updates every 2 seconds. Last update: {new Date().toLocaleTimeString()}
-            </div>
           </div>
 
-          <AlertsList 
-          alerts={alerts}
-          onDismissAlert={handleDismissAlert}
-           />
+          <div className="data-panels">
+            <AlertsList 
+              alerts={alerts}
+              onDismissAlert={handleDismissAlert}
+              onUnlockDoors={handleUnlockDoors}
+              onActivateAlarm={handleActivateAlarm}
+            />
+            <MaintenanceList 
+              maintenanceSchedules={maintenanceSchedules}
+            />
+          </div>
         </div>
       )}
 
-      {/* {showScheduler && (
+      {showScheduler && (
               <ScheduleMaintenance
                 buildings={buildings}
                 workers={workers}
                 onSubmit={handleScheduleSubmit}
               />
-            )} */}
+            )}
+      <div className="update-notice">
+              Map data updates every 2 seconds. Last update: {new Date().toLocaleTimeString()}
+            </div>
     </div>
   );
 }

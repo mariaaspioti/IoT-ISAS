@@ -118,9 +118,10 @@ const DashboardMap = ({ data, viewType, alerts, maintenanceSchedules, onDismissA
   useEffect(() => {
     const fetchCoordinates = async () => {
       const coordinatesMap = {};
-      
+      console.log("Maintenance schedule in useEffect of DashboardMap", maintenanceSchedules);
       for (const schedule of maintenanceSchedules) {
         try {
+          console.log(`Fetching coordinates for ${schedule} in useEffect of DashboardMap`);
           const coords = await fetchBuildingCoordinates(schedule.facilityId);
           coordinatesMap[schedule.facilityId] = coords;
         } catch (error) {
@@ -147,12 +148,20 @@ const DashboardMap = ({ data, viewType, alerts, maintenanceSchedules, onDismissA
       >
         <Popup>
           <h3>Maintenance Scheduled</h3>
-          <strong>Building:</strong> {schedule.facilityId}<br />
+          <strong>Building:</strong> {schedule.facilityName}<br />
           <strong>Start:</strong> {new Date(schedule.startTime).toLocaleString()}<br />
           <strong>End:</strong> {new Date(schedule.endTime).toLocaleString()}<br />
           <strong>Status:</strong> {schedule.status}<br />
           <strong>Description:</strong> {schedule.description}<br />
-          <strong>Exempt Personnel:</strong> {schedule.peopleIds.join(', ')}
+          <strong>Exempt Personnel:</strong> {schedule.peopleNames && schedule.peopleNames.length > 0 ? (
+            <ul>
+              {schedule.peopleNames.map(personName => (
+                <li key={personName}>{personName}</li>
+              ))}
+            </ul>
+          ) : (
+            <span><em>None</em></span>
+          )}
         </Popup>
       </Polygon>
     )});

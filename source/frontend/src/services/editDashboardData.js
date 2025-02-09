@@ -214,3 +214,36 @@ export const fetchAuthorizationData = async (personId, buildingId) => {
     const response = await APICall.fetchAccessAuthorization(personId, buildingId);
     return response;
 }
+
+export const fetchScheduledMaintenanceData = async () => {
+    const schedules = await APICall.fetchScheduledMaintenance();
+    console.log("Schedules in fetchScheduledMaintenanceData:", schedules);
+    const schedulesData = schedules.map(schedule => ({
+        id: schedule.id,
+        facilityId: schedule.facilityId,
+        facilityName: schedule.facilityName,
+        startTime: schedule.startTime,
+        endTime: schedule.endTime,
+        status: schedule.status,
+        description: schedule.description,
+        peopleIds: schedule.peopleIds,
+        peopleNames: schedule.peopleNames,
+    }));
+    return schedulesData;
+}
+
+export const fetchActiveAlertsData = async () => {
+    const alerts = await APICall.fetchActiveAlerts();
+    const alertsData = alerts.map(alert => ({
+        id: alert.id,
+        description: alert.description.value,
+        severity: alert.severity.value,
+        status: alert.status.value,
+    }));
+    return alertsData;
+}
+
+export const patchUpdatedAlertStatusData = async (alertId, alertStatus) => {
+    const response = await APICall.patchAlertStatus(alertId, alertStatus);
+    return response;
+}

@@ -299,7 +299,7 @@ let getFacilityLocationData = async (req, res) => {
 
         res.json(coordinates);
     } catch (error) {
-        console.error('Coordinate fetch error in getFacilityLocationData:', error);
+        console.error('Coordinate fetch error in getFacilityLocationData:');
         res.status(500).json({ error: 'Failed to fetch facility location' });
     }
 };
@@ -449,15 +449,30 @@ let handleMaintenanceSchedule = async (req, res) => {
             }
         };
 
-        console.log("Request Body in handleMaintenanceSchedule:", req.body);
-        const buildingReservedId = req.body.buildingId;
+        // console.log("Request Body in handleMaintenanceSchedule:", req.body);
         const startDateTime = req.body.start;
         const endDateTime = req.body.end;
-        const peopleIds = req.body.exemptPersonnel;
         const status = 'scheduled';
         const description = req.body?.description || 'No description';
         const dateCreated = new Date().toISOString();
-        const maintenance = {
+
+        const buildingReservedCBId = req.body.buildingId;
+        // since the buildingId is a context broker id, we need to fetch the SQL id
+        const buildingReserved = await maintenanceController.getFacilityByCBId(buildingReservedCBId);
+        // console.log('Building reserved in handleMaintenanceSchedule:', buildingReserved);
+        const buildingReservedId = buildingReserved.facility_id;
+
+        const peopleCBIds = req.body.exemptPersonnel;
+        // since the peopleIds are context broker ids, we need to fetch the SQL ids
+        const peopleArray = await Promise.all(peopleCBIds.map(async (personCBId) => {
+            const person =  await maintenanceController.getPersonByCBId(personCBId);
+            // console.log('Person in handleMaintenanceSchedule:', person);
+            return person
+        }));
+        const peopleIds = peopleArray.map(person => person.person_id);
+        const peopleNames = peopleArray.map(person => person.name);
+
+        const maintenanceRecord = {
             startTime: startDateTime,
             endTime: endDateTime,
             dateCreated,
@@ -468,12 +483,24 @@ let handleMaintenanceSchedule = async (req, res) => {
         };
 
         // Insert maintenance record into the database
-        maintenanceController.insertMaintenanceRecord(maintenance, (err) => {
+        maintenanceController.insertMaintenanceRecord(maintenanceRecord, (err) => {
             if (err) {
                 console.error('Error inserting maintenance record:', err);
                 res.status(500).json({ error: 'Failed to create maintenance reservation' });
             }
-            console.log('Maintenance record inserted inn handleMaintenanceSchedule:', maintenance);
+            // console.log('Maintenance record inserted inn handleMaintenanceSchedule:', maintenanceRecord);
+            const maintenance = {
+                startTime: startDateTime,
+                endTime: endDateTime,
+                dateCreated,
+                status,
+                description,
+                peopleNames,
+                peopleCBIds,
+                facilityName: buildingReserved.name,
+                facilityId: buildingReservedCBId
+            };
+            // console.log('Maintenance reservation sent back to client:', maintenance);
             res.status(201).json(maintenance);
 
             // const response = { data: sampleReservation };
@@ -483,6 +510,65 @@ let handleMaintenanceSchedule = async (req, res) => {
         });
     } catch (error) {
         res.status(500).json({ error: 'Failed to create maintenance reservation' });
+    }
+};
+
+let getScheduledMaintenances = async (req, res) => {
+    try {
+        maintenanceController.getScheduledMaintenances(async (err, maintenances) => {
+            if (err) {
+                console.error('Error fetching scheduled maintenance:', err);
+                res.status(500).json({ error: 'Failed to fetch scheduled maintenance' });
+            }
+            // console.log('Scheduled maintenance in getScheduledMaintenances:', maintenances);
+            // maintenances.facility_id and maintenances.person_ids are SQL ids, not context broker ids
+            // we need to fetch the context broker ids
+            const maintenancePromises = maintenances.map(async (maintenance) => {
+                const facility = await maintenanceController.getFacilityById(maintenance.facility_id);
+                const facilityCBId = facility.context_broker_id;
+                const facilityName = facility.name;
+                // maintenance.person_ids is a string of comma-separated SQL ids if it exists
+                if (!maintenance.person_ids) {
+                    return {
+                        startTime: maintenance.startTime,
+                        endTime: maintenance.endTime,
+                        dateCreated: maintenance.date_created,
+                        status: maintenance.status,
+                        description: maintenance.description,
+                        peopleNames: [],
+                        peopleIds: [],
+                        facilityName,
+                        facilityId: facilityCBId
+                    }
+                }
+                const personIds = maintenance.person_ids.split(',');
+                const peoplePromises = personIds.map(async (personId) => {
+                    const person = await maintenanceController.getPersonById(personId);
+                    return person
+                });
+                const people = await Promise.all(peoplePromises);
+                const peopleCBIds = people.map(person => person.context_broker_id);
+                const peopleNames = people.map(person => person.name);
+                return {
+                    startTime: maintenance.startTime,
+                    endTime: maintenance.endTime,
+                    dateCreated: maintenance.date_created,
+                    status: maintenance.status,
+                    description: maintenance.description,
+                    peopleNames,
+                    peopleIds: peopleCBIds,
+                    facilityName,
+                    facilityId: facilityCBId
+                }
+            });
+            const enrichedMaintenances = await Promise.all(maintenancePromises);
+            // console.log('Enriched scheduled maintenance in getScheduledMaintenances:', enrichedMaintenances);
+
+            res.json({ data: enrichedMaintenances });
+        });
+    } catch (error) {
+        console.error('Scheduled maintenance error in getScheduledMaintenances:', error);
+        res.status(500).json({ error: 'Failed to fetch scheduled maintenance' });
     }
 };
 
@@ -516,12 +602,44 @@ let checkAccessAuthorization = async (req, res) => {
     } catch (error) {
     res.status(500).json({ authorized: false, reason: 'System error' });
     }
-    };
+};
 
+let getActiveAlerts = async (req, res) => {
+    try {
+        const response = await axios.get(`${orionUrl}?type=Alert`, {
+            headers: getHeaders,
+            params: {
+                q: 'status==active'
+            }
+        });
+        res.json({ data: response.data });
+    } catch (error) {
+        console.error('Alerts error in getActiveAlerts:', error);
+        res.status(500).json({ error: 'Failed to fetch active alerts' });
+    }
+}
+
+let patchAlertStatus = async (req, res) => {
+    const alertId = req.params.id;
+    const { status } = req.body;
+
+    try {
+        const response = await axios.patch(`${orionUrl}/${alertId}`, {
+            status
+        }, {
+            headers: getHeaders
+        });
+        res.json({ data: response.data });
+    } catch (error) {
+        console.error('Alert patch error:', error);
+        res.status(500).json({ error: 'Failed to update alert status' });
+    }
+};
+        
 
 export { getData, getAllData, getDeviceData, getDeviceDataFromName, getDeviceLocationData, 
     getAllDevicesLocationData, getAllDevicesControlledAssets, saveCoordinates, getAllFacilities, 
     getFacilityLocationData, getFacilitiesNameAndLocation, findCurrentFacilities, getDoorsLocations, 
-    getPersonData, getAllPeopleData, handleSOSAlert, handleMaintenanceSchedule, checkAccessAuthorization,
-    
+    getPersonData, getAllPeopleData, handleSOSAlert, handleMaintenanceSchedule, getScheduledMaintenances,
+    checkAccessAuthorization, getActiveAlerts, patchAlertStatus
  };

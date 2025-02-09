@@ -7,6 +7,7 @@ export const fetchBuildingCoordinates = async (buildingId) => {
 
   try {
     const response = await fetch(`/api/facilities/${buildingId}/location`);
+    console.log("Building id: ", buildingId, "and response: ", response);
     if (!response.ok) throw new Error('Failed to fetch coordinates');
     const coordinates = await response.json();
     coordinateCache.set(buildingId, coordinates);

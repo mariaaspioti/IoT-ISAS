@@ -215,3 +215,44 @@ export const fetchAccessAuthorization = async (personId, buildingId) => {
         throw error;
     }
 };
+
+// Fetch all maintenances that are scheduled
+export const fetchScheduledMaintenance= async () => {
+    try {
+        const response = await fetch('/api/maintenances/scheduled');
+        const json = await response.json();
+        return json.data;
+    } catch (error) {
+        console.error('Error fetching maintenance schedules:', error);
+        throw error;
+    }
+};
+
+// Fetch all alerts that are active
+export const fetchActiveAlerts = async () => {
+    try {
+        const response = await fetch('/api/alerts/active');
+        const json = await response.json();
+        return json.data;
+    } catch (error) {
+        console.error('Error fetching active alerts:', error);
+        throw error;
+    }
+};
+
+export const patchAlertStatus = async (alertId, status) => {
+    try {
+        const response = await fetch(`/api/alerts/${alertId}/status`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status })
+        });
+        if (!response.ok) {
+            throw new Error('Failed to update alert status');
+        }
+        // console.log('Alert status updated successfully');
+        return alertId;
+    } catch (error) {
+        console.error('Error updating alert status:', error);
+    }
+}
