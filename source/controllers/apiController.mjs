@@ -13,6 +13,12 @@ const getHeaders = {
     'Fiware-Service': fiwareService,
     'Fiware-ServicePath': fiwareServicePath,
 };
+const patchHeaders = {
+    'Fiware-Service': fiwareService,
+    'Fiware-ServicePath': fiwareServicePath,
+    'Content-Type': 'application/json',
+}
+
 
 let getData = (req, res) => {
     // get the coordinates from the Orion Context Broker for a specific building
@@ -78,7 +84,6 @@ let getDeviceData = (req, res) => {
         headers: getHeaders
     })
     .then((response) => {
-        console.log("Response Data:", response.data, "in getDeviceData");
         res.json({
             success: true,
             data: response.data
@@ -93,18 +98,18 @@ let getDeviceData = (req, res) => {
 let getDeviceDataFromName = (req, res) => {
     // get the Entity data from the Orion Context Broker for a specific device given a :name
     const deviceName = req.params.name;
-    console.log("Device Name:", deviceName, "in getDeviceDataFromName");
+    // console.log("Device Name:", deviceName, "in getDeviceDataFromName");
     const queryParams = {
         type: 'Device',
         q: `name==${deviceName}`,
     };
-    console.log("Query Params:", queryParams, "in getDeviceDataFromName");
+    // console.log("Query Params:", queryParams, "in getDeviceDataFromName");
     axios.get(orionUrl, {
         headers: getHeaders,
         params: queryParams
     })
     .then((response) => {
-        console.log("Response Data:", response.data, "in getDeviceDataFromName");
+        // console.log("Response Data:", response.data, "in getDeviceDataFromName");
         res.json({
             success: true,
             data: response.data
@@ -624,22 +629,90 @@ let patchAlertStatus = async (req, res) => {
     const { status } = req.body;
 
     try {
-        const response = await axios.patch(`${orionUrl}/${alertId}`, {
-            status
+        const response = await axios.patch(`${orionUrl}/${alertId}/attrs`, {
+            status: {
+                type: 'Text',
+                value: status
+            }
         }, {
-            headers: getHeaders
+            headers: patchHeaders
         });
-        res.json({ data: response.data });
+
+        res.json({ 
+            message: 'Status updated successfully',
+            data: response.data 
+        });
     } catch (error) {
         console.error('Alert patch error:', error);
-        res.status(500).json({ error: 'Failed to update alert status' });
+        const statusCode = error.response?.status || 500;
+        res.status(statusCode).json({ 
+            error: error.response?.data?.error || 'Failed to update alert status' 
+        });
     }
 };
-        
+
+let patchAlertLocation = async (req, res) => {
+    const alertId = req.params.id;
+    const { location } = req.body;
+    
+    const payload = {
+        "location": {
+            "type": "geo:json",
+            "value": {
+                "type": "Point",
+                "coordinates": [location.lng, location.lat]
+            }
+        }
+    };
+
+    try {
+        const response = await axios.patch(`${orionUrl}/${alertId}/attrs`, payload, {
+            headers: patchHeaders
+        });
+
+        res.json({ 
+            message: 'Location updated successfully',
+            data: response.data 
+        });
+    } catch (error) {
+        console.error('Alert patch error in patchAlertLocation:', error);
+        const statusCode = error.response?.status || 500;
+        res.status(statusCode).json({ 
+            error: error.response?.data?.error || 'Failed to update alert location' 
+        });
+    }
+}
+
+let patchAlertActionTaken = async (req, res) => {
+    const alertId = req.params.id;
+    const { action } = req.body;
+
+    try {
+        const response = await axios.patch(`${orionUrl}/${alertId}/attrs`, {
+            actionTaken: {
+                type: 'Text',
+                value: action
+            }
+        }, {
+            headers: patchHeaders
+        });
+
+        res.json({ 
+            message: 'Action taken updated successfully',
+            data: response.data 
+        });
+    } catch (error) {
+        console.error('Alert patch error:', error);
+        const statusCode = error.response?.status || 500;
+        res.status(statusCode).json({ 
+            error: error.response?.data?.error || 'Failed to update alert action' 
+        });
+    }
+};
 
 export { getData, getAllData, getDeviceData, getDeviceDataFromName, getDeviceLocationData, 
     getAllDevicesLocationData, getAllDevicesControlledAssets, saveCoordinates, getAllFacilities, 
     getFacilityLocationData, getFacilitiesNameAndLocation, findCurrentFacilities, getDoorsLocations, 
     getPersonData, getAllPeopleData, handleSOSAlert, handleMaintenanceSchedule, getScheduledMaintenances,
-    checkAccessAuthorization, getActiveAlerts, patchAlertStatus
+    checkAccessAuthorization, getActiveAlerts, patchAlertStatus, patchAlertLocation, patchAlertActionTaken
  };

@@ -6,7 +6,17 @@ const TRAIL_DURATION = 25000;  // How long a trail segment stays visible
 const SMOOTHING_FACTOR = 1;   // Number of positions to average for smoothing
 const INTERPOLATION_STEPS = 5; // Extra points per segment to smooth motion
 
-const CircleMarkerPopup = ({ type, data, color, fillColor, radius, fillOpacity, onDismissAlert }) => {
+const CircleMarkerPopup = ({ 
+  type, 
+  data, 
+  color, 
+  fillColor, 
+  radius, 
+  fillOpacity, 
+  onDismissAlert, 
+  onUnlockDoors, 
+  onActivateAlarm }) => {
+
   const markerRef = useRef(null);
   const [popupOpen, setPopupOpen] = useState(false);
   const [trail, setTrail] = useState([]); // Store past positions
@@ -136,7 +146,7 @@ const CircleMarkerPopup = ({ type, data, color, fillColor, radius, fillOpacity, 
       <>
         <strong>Alert:</strong> {data.description || 'No message'}
         <br />
-        <strong>Time:</strong> {data.frontend_timestamp}
+        <strong>Time:</strong> {data.dateIssued}
         <br />
         <strong>Status:</strong> {data.status}
         <br />
@@ -149,8 +159,20 @@ const CircleMarkerPopup = ({ type, data, color, fillColor, radius, fillOpacity, 
               if (e.target.value === 'dismiss') {
                 onDismissAlert(data.id);
               }
+              else if (e.target.value === 'unlock') {
+                // console.log(`Unlocking doors for alert ${alertId}`);
+                onUnlockDoors(data.id);
+              }
+              else if (e.target.value === 'alarm') {
+                // console.log(`Activating alarm for alert ${alertId}`);
+                onActivateAlarm(data.id);
+              }
+              else {
+                console.log('Invalid action');
+              }
               e.target.value = '';
             }}
+            disabled={data.status === 'resolved'}
           >
             <option value="">Actions...</option>
             <option value="unlock">Unlock all doors</option>
@@ -191,7 +213,7 @@ const CircleMarkerPopup = ({ type, data, color, fillColor, radius, fillOpacity, 
           opacity={1}
           className="marker-label"
         >
-          {data.person_id ? data.person_id : data.message}
+          {data.person_id ||data.id ? data.person_id || data.id : data.message}
         </Tooltip>
       </CircleMarker>
     </>

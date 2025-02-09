@@ -240,6 +240,7 @@ export const fetchActiveAlerts = async () => {
     }
 };
 
+// Patch the status of an alert
 export const patchAlertStatus = async (alertId, status) => {
     try {
         const response = await fetch(`/api/alerts/${alertId}/status`, {
@@ -254,5 +255,41 @@ export const patchAlertStatus = async (alertId, status) => {
         return alertId;
     } catch (error) {
         console.error('Error updating alert status:', error);
+    }
+};
+
+// Patch the location of an alert
+export const patchAlertLocation = async (alertId, location) => {
+    try {
+        const response = await fetch(`/api/alerts/${alertId}/location`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ location })
+        });
+        if (!response.ok) {
+            throw new Error('Failed to update alert location');
+        }
+        // console.log('Alert location updated successfully');
+        return alertId;
+    } catch (error) {
+        console.error('Error updating alert location:', error);
+    }
+};
+
+// Patch the action taken for an alert
+export const patchAlertAction = async (alertId, action) => {
+    try {
+        const response = await fetch(`/api/alerts/${alertId}/action-taken`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action })
+        });
+        if (!response.ok) {
+            throw new Error('Failed to update alert action');
+        }
+        // console.log('Alert action updated successfully');
+        return alertId;
+    } catch (error) {
+        console.error('Error updating alert action:', error);
     }
 }

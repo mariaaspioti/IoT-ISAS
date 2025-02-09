@@ -11,7 +11,7 @@ import './App.css';
 
 import { fetchFormatAlertData, fetchAllFacilitiesData, fetchAllPeopleData,
   postMaintenanceSchedule, fetchAuthorizationData, fetchScheduledMaintenanceData,
-  fetchActiveAlertsData, patchUpdatedAlertStatusData
+  fetchActiveAlertsData, patchUpdatedAlertStatusData, patchUpdatedAlertActionData
  } from './services/editDashboardData';
 
 function App() {
@@ -36,7 +36,8 @@ function App() {
             fetchActiveAlertsData()
           ]);
           
-          console.log('Initial maintenanceData in App.js:', maintenanceData);
+          // console.log('Initial maintenanceData in App.js:', maintenanceData);
+          console.log('Initial alertsData in App.js:', alertsData);
         setBuildings(buildingsData);
         setWorkers(workersData);
         // setMaintenanceSchedules(maintenanceData.filter(s => 
@@ -117,6 +118,9 @@ function App() {
       alert.id === alertId ? { ...alert, status: alertStatus } : alert
     ));
 
+    // remove from the frontend
+    setAlerts(prev => prev.filter(alert => alert.id !== alertId));
+
     // update in the backend
     console.log(`Dismissing alert in handleDismissAlert: ${alertId}`);
     const response = await patchUpdatedAlertStatusData(alertId, alertStatus);
@@ -134,11 +138,15 @@ function App() {
     ));
 
     // update in the backend
-    console.log(`Unlocking doors for alert ${alertId}`);
+    console.log(`Unlocking doors for alert ${alertId} with status ${alertStatus}`);
     // await ---unlockDoors---
-    const response = await patchUpdatedAlertStatusData(alertId, alertStatus);
-    if (response) {
+    const responseStatus = await patchUpdatedAlertStatusData(alertId, alertStatus);
+    const responseAction = await patchUpdatedAlertActionData(alertId, 'unlock doors');
+    if (responseStatus) {
       console.log('State updated successfully');
+    }
+    if (responseAction) {
+      console.log('Action updated successfully');
     }
   }, []);
 
@@ -152,9 +160,13 @@ function App() {
     // update in the backend
     console.log(`Activating alarm for alert ${alertId}`);
     // await ---activateAlarm---
-    const response = await patchUpdatedAlertStatusData(alertId, alertStatus);
-    if (response) {
+    const responseStatus = await patchUpdatedAlertStatusData(alertId, alertStatus);
+    const responseAction = await patchUpdatedAlertActionData(alertId, 'activate alarm');
+    if (responseStatus) {
       console.log('State updated successfully');
+    }
+    if (responseAction) {
+      console.log('Action updated successfully');
     }
   }, []);
 
@@ -214,6 +226,8 @@ function App() {
             maintenanceSchedules={maintenanceSchedules} 
             viewType={activeView}
             onDismissAlert={handleDismissAlert}
+            onUnlockDoors={handleUnlockDoors}
+            onActivateAlarm={handleActivateAlarm}
              />
           </div>
 

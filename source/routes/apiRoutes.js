@@ -32,6 +32,8 @@ router.post('/maintenance', apiController.handleMaintenanceSchedule);
 // router.get('/alert/sos', apiController.handleSOSAlert); // For polling
 router.get('/alerts/active', apiController.getActiveAlerts);
 router.patch('/alerts/:id/status', apiController.patchAlertStatus);
+router.patch('/alerts/:id/location', apiController.patchAlertLocation);
+router.patch('/alerts/:id/action-taken', apiController.patchAlertActionTaken);
 
 router.get('access-check', apiController.checkAccessAuthorization);
 

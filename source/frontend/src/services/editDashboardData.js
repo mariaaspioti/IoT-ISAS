@@ -121,6 +121,7 @@ export const showBuildings = async () => {
 }
 
 export const fetchFormatAlertData = async (alertData) => {
+    console.log("Alert Data:", alertData, "in fetchFormatAlertData");
     // // Given an alert, fetch the device data that caused it with known name
     const deviceName = alertData.alertSource.value[0];
     // console.log("Device Name:", deviceName, "in fetchFormatAlertData");
@@ -159,6 +160,21 @@ export const fetchFormatAlertData = async (alertData) => {
     const facility = facilities[0];
     console.log("facility:", facility, "in fetchFormatAlertData");
 
+    // If the alert is newly created, we need to patch the 'location' attribute
+    // to the Entity in the context broker
+    await APICall.patchAlertLocation(alertData.id, locationData);
+    
+    const formattedDate = new Date(alertData.dateIssued.value).toLocaleString('en-US', {
+        timeZone: 'UTC',
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: true
+      });
+
     // Format the alert data
     const formattedData = {
         id: alertData.id,
@@ -166,6 +182,8 @@ export const fetchFormatAlertData = async (alertData) => {
         severity: alertData.severity.value,
         status: alertData.status.value,
         frontend_timestamp: new Date().toLocaleString(),
+        // dateIssued: alertData.dateIssued.value, // make it human readable
+        dateIssued: formattedDate,
         personName: personData.name.value,
         personId: personData.id,
         // personIsIndoors: personData.isIndoors.value,
@@ -234,16 +252,20 @@ export const fetchScheduledMaintenanceData = async () => {
 
 export const fetchActiveAlertsData = async () => {
     const alerts = await APICall.fetchActiveAlerts();
-    const alertsData = alerts.map(alert => ({
-        id: alert.id,
-        description: alert.description.value,
-        severity: alert.severity.value,
-        status: alert.status.value,
-    }));
-    return alertsData;
+    // formattedAlerts = alerts.forEach(alert => {
+    //     return fetchFormatAlertData(alert);
+    // });
+    const formattedAlerts = await Promise.all(alerts.map(alert => fetchFormatAlertData(alert)));
+    console.log("Formatted Alerts in fetchActiveAlertsData:", formattedAlerts);
+    return formattedAlerts;
 }
 
 export const patchUpdatedAlertStatusData = async (alertId, alertStatus) => {
     const response = await APICall.patchAlertStatus(alertId, alertStatus);
+    return response;
+}
+
+export const patchUpdatedAlertActionData = async (alertId, alertAction) => {
+    const response = await APICall.patchAlertAction(alertId, alertAction);
     return response;
 }

@@ -155,6 +155,7 @@ def read_data_from_mqtt():
     
     client.loop_forever()
     # client.loop_start() # Start the loop in a separate thread
+    return client
 
 global message_received
 
@@ -220,14 +221,18 @@ def watchdog():
                     print("Continuing...")
 
 def main():
+    client = None
     try:
         print("Starting IoT Agent for BT/GPS trackers...")
         threading.Thread(target=watchdog, daemon=True).start() # Start the watchdog thread
-        read_data_from_mqtt()
+        client = read_data_from_mqtt()
     except KeyboardInterrupt:
-        print("Shutting down")
-        # make sure all threads are stopped
-        os._exit(1)
+        print("Shutting down...")
+        # disconnect from the MQTT broker
+        if client:
+            client.disconnect()
+        # Exit the program
+        os._exit(0)
 
 if __name__ == "__main__":
     main()

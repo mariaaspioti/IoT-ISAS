@@ -104,6 +104,17 @@ def create_alert_entity(data):
         "status": {
             "type": "Text",
             "value": data["status"]
+        },
+        "location": {
+            "type": "geo:json",
+            "value": {
+                "type": "Point",
+                "coordinates": [23.727539, 37.983810] 
+            }
+        },
+        "actionTaken": {
+            "type": "Text",
+            "value": "none"
         }
     }
     print(f"Alert entity: {entity}")
