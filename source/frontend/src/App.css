@@ -127,6 +127,11 @@
   transition: opacity 0.5s ease-out, stroke-dashoffset 0.5s ease-out;
 }
 
+.description-scroll {
+  max-height: 80px;    /* Fixed height (adjust as needed) */
+  max-width: 300px;
+  overflow-y: auto;    /* Enable vertical scrolling */
+}
 
 /* For the data panels */
 /* Columns */

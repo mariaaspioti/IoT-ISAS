@@ -67,6 +67,12 @@
     padding: 20px;
   }
   
+  .description-scroll {
+    max-height: 80px;    /* Fixed height (adjust as needed) */
+    max-width: 300px;
+    overflow-y: auto;    /* Enable vertical scrolling */
+  }
+  
 
 /* ======================== */
 

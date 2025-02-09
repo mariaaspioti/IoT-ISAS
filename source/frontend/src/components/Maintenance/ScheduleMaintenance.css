@@ -29,3 +29,21 @@
     align-items: center;
     margin-bottom: 20px;
   }
+
+  .schedule-form input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 5px;
+  }
+  
+  .schedule-form input[type="text"]::placeholder {
+    color: #999;
+  }
+  
+  .schedule-form input[type="text"]:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  }

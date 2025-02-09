@@ -145,6 +145,7 @@ const DashboardMap = ({ data, viewType, alerts, maintenanceSchedules, onDismissA
         positions={coordinates}
         color="orange"
         fillOpacity={0.2}
+        pane="maintenancePane"
       >
         <Popup>
           <h3>Maintenance Scheduled</h3>
@@ -152,7 +153,7 @@ const DashboardMap = ({ data, viewType, alerts, maintenanceSchedules, onDismissA
           <strong>Start:</strong> {new Date(schedule.startTime).toLocaleString()}<br />
           <strong>End:</strong> {new Date(schedule.endTime).toLocaleString()}<br />
           <strong>Status:</strong> {schedule.status}<br />
-          <strong>Description:</strong> {schedule.description}<br />
+          <span className='description-scrooll'><strong>Description:</strong> {schedule.description}</span><br />
           <strong>Exempt Personnel:</strong> {schedule.peopleNames && schedule.peopleNames.length > 0 ? (
             <ul>
               {schedule.peopleNames.map(personName => (
@@ -176,6 +177,8 @@ const DashboardMap = ({ data, viewType, alerts, maintenanceSchedules, onDismissA
       {/* Create a custom pane for alerts */}
       <Pane name="alertPane" style={{ zIndex: 650, pointerEvents: 'none' }} />
 
+      {/* Create a custom pane for maintenance overlays */}
+      <Pane name="maintenancePane" style={{ zIndex: 600, pointerEvents: 'none' }} />
       {maintenanceOverlays}
 
       <TileLayer

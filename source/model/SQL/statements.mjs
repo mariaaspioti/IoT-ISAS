@@ -47,7 +47,7 @@ export const selectScheduledMaintenances = `
     FROM Maintenance m
     LEFT JOIN Conducts c ON m.maintenance_id = c.maintenance_id
     LEFT JOIN Reserves r ON m.maintenance_id = r.maintenance_id
-    WHERE m.startTime > datetime('now')
+    WHERE datetime(m.startTime) > datetime('now')
     GROUP BY m.maintenance_id, m.startTime, m.endTime, m.dateCreated, m.status, m.description
     ORDER BY m.startTime;
     `;

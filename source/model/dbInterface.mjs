@@ -2,7 +2,6 @@ import sqlite3 from 'sqlite3';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import * as sqlCode from './SQL/statements.mjs';
-import e from 'express';
 
 // Convert import.meta.url to a file path
 const __filename = fileURLToPath(import.meta.url);
@@ -14,7 +13,7 @@ export const connectToDatabase = () => {
         if (err) {
             console.error('Error connecting to database:', err);
         } else {
-            console.log('Connected to database');
+            //console.log('Connected to database');
         }
     });
     return db;
