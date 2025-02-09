@@ -119,3 +119,14 @@ export const getScheduledMaintenances = (callback) => {
         callback(null, rows);
     });
 };
+
+export const checkRoleAccessInFacility = (personId, facilityId, callback) => {
+    const db = connectToDatabase();
+    db.get(sqlCode.checkRoleAccessInFacility, [personId, facilityId], (err, row) => {
+        if (err) {
+            console.error('Error checking role access in facility:', err);
+            return callback(err);
+        }
+        callback(null, row);
+    });
+}
