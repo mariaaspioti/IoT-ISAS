@@ -20,7 +20,9 @@ def create_person_table(cursor):
         CREATE TABLE IF NOT EXISTS Person (
             person_id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
-            context_broker_id TEXT
+            context_broker_id TEXT,
+            role_id INTEGER,
+            FOREIGN KEY (role_id) REFERENCES Role(role_id)
         )
     ''')
     return cursor
@@ -190,8 +192,12 @@ def import_persons(cursor):
     person_csv_file = os.path.join(os.path.dirname(__file__), "..", "entities_csv", "Person.csv")
     with open(person_csv_file, mode='r', newline='') as file:
         reader = csv.DictReader(file)
-        persons = [(row['id'], row['name']) for row in reader]
-        cursor.executemany('''INSERT INTO Person (context_broker_id, name) VALUES (?, ?)''', persons)
+        persons = [(row['id'], row['name'], row['role']) for row in reader]
+        # for 'role' attribute, we need to find the role_id from the Role table
+        for person in persons:
+            cursor.execute('''SELECT role_id FROM Role WHERE role_name = ?''', (person[2],))
+            role_id = cursor.fetchone()[0]
+            cursor.execute('''INSERT INTO Person (context_broker_id, name, role_id) VALUES (?, ?, ?)''', (person[0], person[1], role_id))
 
     return cursor
 
