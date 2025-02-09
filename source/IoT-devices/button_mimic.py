@@ -2,6 +2,10 @@ import json
 import uuid
 import paho.mqtt.client as mqtt
 from datetime import datetime, timezone
+from faker import Faker
+
+# faker
+fake = Faker()
 
 broker = '150.140.186.118'
 port = 1883
@@ -139,7 +143,7 @@ def generate_button_press_message(
 
     return message
 
-def generate_button_press_messages():
+def generate_sample_button_press_messages():
     # Define a default button_device dictionary
     default_button_device = {
         "tenantId": "063a0ecb-e8c2-4a13-975a-93d791e8d40c",
@@ -222,37 +226,95 @@ def generate_button_press_messages():
     
     return messages
 
-def transmit_messages(client, messages):
-    '''Transmit the SOS button messages to the MQTT broker every time
+def create_button_device_message(id):
+    button_device = {
+        "tenantId": "063a0ecb-e8c2-4a13-975a-93d791e8d40c",
+        "tenantName": "Smart Campus",
+        "applicationId": "97865748-6f77-4f37-82f0-d76771651b21",
+        "applicationName": "Buttons",
+        "deviceProfileId": "c707a935-359c-4359-9186-53bccc74bcb5",
+        "deviceProfileName": "MClimate Multipurpose Button",
+        "deviceName": f"mclimate-multipurpose-button:{id}",
+        "devEui": "70b3d52dd6000065",
+        "tags": {
+            "deviceId": f"mclimate-multipurpose-button:{id}",
+            "model": "multipurpose-button",
+            "apiKey": "some-key",
+            "manufacturer": "mclimate"
+        }
+    }
+
+    msg = generate_button_press_message(
+        button_device=button_device,
+        temperature=fake.pyfloat(min_value=18.0, max_value=22.0, right_digits=1),
+        pressEvent="01",
+        batteryVoltage=fake.pyfloat(min_value=3.2, max_value=3.6, right_digits=1),
+        rssi=fake.random_int(min=-115, max=-60),
+        snr=fake.pyfloat(min_value=1.0, max_value=10.0, right_digits=1),
+        channel=fake.random_int(min=1, max=8),
+        frequency=fake.random_int(min=867000000, max=868500000, step=100000),
+        spreadingFactor=fake.random_int(min=7, max=12),
+        fCnt=fake.random_int(min=1, max=100)
+    )
+
+    return msg
+
+
+def transmit_message(message):
+    '''Transmit the SOS button message to the MQTT broker every time
     the user presses Enter.'''
 
-    # Publish each message to the MQTT broker
-    for i, message in enumerate(messages, start=1):
-        # Wait for user input before sending the message
-        userin = input("Press Enter to send the next SOS button message or 'q' to quit: ")
-        if userin.lower() == 'q':
-            break
-        topic = f"{base_topic}/{message['deviceInfo']['deviceName']}"
-        payload = json.dumps(message)
-        client.publish(topic, payload)
-        print(f"Published message {i} to topic {topic}")
-        print(payload)
-        print()
-
-def main():
+    # Publish the message to the MQTT broker
+    # Wait for user input before sending the message
+    userin = input("Press Enter to send the SOS button message or 'q' to quit: ")
+    if userin.lower() == 'q':
+        return False
+    topic = f"{base_topic}/{message['deviceInfo']['deviceName']}"
+    payload = json.dumps(message)
     # Create an MQTT client
     client = mqtt.Client(client_id)
     client.connect(broker, port)
     print("Connected to MQTT broker")
-    
-    # Generate button press messages
-    messages = generate_button_press_messages()
-    
-    transmit_messages(client, messages)
-    
-    # Disconnect the client
+    client.publish(topic, payload)
+    print(f"Published message to topic {topic}")
+    print(payload)
+    print()
     client.disconnect()
     print("Disconnected from MQTT broker")
+    return True
+
+def alt_main(id):
+    # Generate button press messages
+    button_message = create_button_device_message(id)
+    print(f"Generated button press message for mclimate-multipurpose-button:{id}")
+    print(json.dumps(button_message, indent=2))
+    transmit_message(button_message)
+
+def main():
+    # Generate button press messages
+    exit = False
+    available_ids = range(0, 10)
+    while not exit:
+        print("===================")
+        print(f"Available devices mclimate-multipurpose-button:{available_ids[0]} to mclimate-multipurpose-button:{available_ids[-1]}")
+        print("Enter the ID of the device to simulate a button press, or 'q' to quit.")
+        input_id = input(f"Device ID (0-{available_ids[-1]}): ")
+        if input_id.lower() == 'q':
+            exit = True
+            break
+        try:
+            device_id = int(input_id)
+            if device_id in available_ids:
+                button_message = create_button_device_message(device_id)
+                print(f"Generated button press message for mclimate-multipurpose-button:{device_id}")
+                print(json.dumps(button_message, indent=2))
+                transmit_message(button_message)
+            else:
+                print(f"Device ID {device_id} is not available.")
+        except ValueError:
+            print("Invalid input. Please enter a valid device ID.")
+    print("Exiting...")
+    print("Goodbye!")
 
 
 if __name__ == "__main__":
