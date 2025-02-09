@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
+import Select from 'react-select';
 import 'react-datepicker/dist/react-datepicker.css';
 import './ScheduleMaintenance.css';
 
@@ -8,14 +9,22 @@ const ScheduleMaintenance = ({ buildings, workers, onSubmit }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [exemptWorkers, setExemptWorkers] = useState([]);
+  const [description, setDescription] = useState('');
+
+  const workerOptions = workers.map(worker => ({
+    value: worker.id,
+    label: worker.name
+  }));
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const exemptPersonnel = exemptWorkers.map(worker => worker.value);
     onSubmit({
       buildingId: selectedBuilding,
       start: startDate.toISOString(),
       end: endDate.toISOString(),
-      exemptPersonnel: exemptWorkers
+      description,
+      exemptPersonnel: exemptPersonnel
     });
   };
 
@@ -61,8 +70,18 @@ const ScheduleMaintenance = ({ buildings, workers, onSubmit }) => {
         </div>
 
         <div className="form-group">
+          <label>Description:</label>
+          <input
+            type="text"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Brief description of maintenance"
+          />
+        </div>
+
+        <div className="form-group">
           <label>Exempt Personnel:</label>
-          <select 
+          {/* <select 
             multiple
             value={exemptWorkers}
             onChange={(e) => setExemptWorkers([...e.target.selectedOptions].map(o => o.value))}
@@ -72,7 +91,15 @@ const ScheduleMaintenance = ({ buildings, workers, onSubmit }) => {
                 {worker.name}
               </option>
             ))}
-          </select>
+          </select> */}
+          <Select
+            isMulti
+            value={exemptWorkers}
+            onChange={setExemptWorkers}
+            options={workerOptions}
+            placeholder="Select exempt personnel..."
+            className="exempt-workers-select"
+          />
         </div>
 
         <button type="submit">Schedule Maintenance</button>

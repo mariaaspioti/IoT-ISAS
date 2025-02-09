@@ -18,7 +18,7 @@ const MaintenanceList = ({ maintenanceSchedules }) => {
             <div className="maintenance-details">
               <p><strong>Start:</strong> {new Date(schedule.startTime).toLocaleString()}</p>
               <p><strong>End:</strong> {new Date(schedule.endTime).toLocaleString()}</p>
-              <p><strong>Description:</strong> {schedule.description}</p>
+              <p className='description-scroll'><strong>Description:</strong> {schedule.description}</p>
               <p><strong>Exempt Personnel:</strong></p>
               <ul>
                 {/* {schedule?.peopleIds.map(personId => (
