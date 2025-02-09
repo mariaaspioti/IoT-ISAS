@@ -10,7 +10,8 @@ const app = express();
 // Routers
 const indexRouter = express.Router();
 import { apiRoutes } from './routes/apiRoutes.js';
-import { startAlertPolling } from './utils/orionPolling.js';
+import { startAlertPolling, startNFCPolling } from './utils/orionPolling.js';
+
 
 
 // Orion Context Broker URL
@@ -87,7 +88,22 @@ io.on('connection', (socket) => {
 });
 
 // Start polling Orion for alert data and emit new alerts via Socket.IO
-startAlertPolling(io, 3000);
+const stopAlertPolling = startAlertPolling(io, 3000);
+
+// Start polling Orion for NFC data and emit new data via Socket.IO with a limit of 50 entities
+const stopNFCPolling = startNFCPolling(io, 3000, 100);
+
+
+// Handle SIGINT signal (Ctrl+C)
+process.on('SIGINT', () => {
+  console.log('Received SIGINT. Shutting down gracefully...');
+  stopAlertPolling();
+  stopNFCPolling();
+  server.close(() => {
+    console.log('Server closed');
+    process.exit(0);
+  });
+});
 
 // ---
 // Export the HTTP server for use in index.mjs

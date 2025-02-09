@@ -35,4 +35,5 @@ router.patch('/alerts/:id/status', apiController.patchAlertStatus);
 
 router.get('access-check', apiController.checkAccessAuthorization);
 
+
 export {router as apiRoutes};

@@ -102,11 +102,12 @@ def main():
 
     nfc_device_id = f"NFCReader-{i}"
     
-
     # Start mimic readers
-    # start_mimic_reader("NFCReader-1", 3, mqtt_client)
-    # start_mimic_reader("NFCReader-2", 3, mqtt_client)
+    start_mimic_reader("NFCReader-1", 10, mqtt_client)
+    start_mimic_reader("NFCReader-2", 10, mqtt_client)
+    
     try:
+
         read_nfc_tags(mqtt_client, nfc_device_id, base_nfc_reader_topic)
     except KeyboardInterrupt:
         print("Shutting down...")
