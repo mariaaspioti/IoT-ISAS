@@ -125,7 +125,7 @@ export const startNFCPolling = (socket, intervalMs = 2000, limit = 100) => {
               value: currentValue,
               dateLastValueReported: currentDateLastValueReported
             });
-            console.log('Device state changed:', device);
+            // console.log('Device state changed:', device);
 
             // Emit the change via Socket.IO
             socket.emit('nfcDeviceUpdate', device);

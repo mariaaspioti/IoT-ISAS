@@ -53,3 +53,8 @@ export const selectScheduledMaintenances = `
     `;
 
 
+export const checkRoleAccessInFacility = `
+    SELECT *
+    FROM Person p JOIN HasAccess a ON p.role_id = a.role_id
+    WHERE p.context_broker_id = ? AND a.facility_id = ?;
+    `;

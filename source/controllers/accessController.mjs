@@ -1,5 +1,6 @@
 import * as dbInterface from '../model/dbInterface.mjs';
 import axios from 'axios';
+import { unlockSmartLock } from './smartlockController.mjs';
 
 
 const orionUrl = 'http://150.140.186.118:1026/v2/entities';
@@ -11,7 +12,7 @@ const getHeaders = {
 };
 
 let handleNFCDeviceUpdates = async (device, socket) => {
-    console.log(device);
+    console.log("NFC DEVICE",device.id, device.name.value);
 
     try {
         const nfcReaderId = device.id;
@@ -31,26 +32,43 @@ let handleNFCDeviceUpdates = async (device, socket) => {
 
         const smartLockId = nfcReaderResponse.data[0].controlledAsset.value[0];
         const smartLockUrl = `${orionUrl}/?type=Device&id=${smartLockId}`;
-        
-
+        console.log("smartlockid,url",smartLockId, smartLockUrl);
         const smartLockResponse = await axios.get(smartLockUrl, {
             headers: getHeaders
         });
 
         const smartLockData = smartLockResponse.data[0];
-        // console.log('Smart Lock Data:', smartLockData);
-        const facility  = getFacility(device.direction.value, smartLockData);
+        console.log("SmartLockData",smartLockData)
+        const facility = getFacility(device.direction.value, smartLockData);
         console.log(facility);
+        if (facility != '') {
+            checkUidAuthorization(device.value.value, facility, (roleAccess) => {
+                console.log(roleAccess);
+                if (roleAccess) {
+                    // Handle authorized access
+                    // socket.emit('accessGranted', { device, facility });
+                    console.log("access granted")
+                    unlockSmartLock(smartLockId);
 
-
+                } else {
+                    // Handle unauthorized access
+                    // socket.emit('accessDenied', { device, facility });
+                    console.log("access denied")
+                }
+            });
+        }else{
+            console.log("No facility found, smart lock opens")
+        }
 
     } catch (error) {
         console.error('Error handling NFC device updates:', error);
     }
 };
 
+
 let getPersonFromUid = async (uid) => {
     try {
+        console.log("INside personfromuid")
         const nfcTagUrl = `${orionUrl}/?type=Device&q=serialNumber==${uid}`;
         const nfcTagResponse = await axios.get(nfcTagUrl, {
             headers: getHeaders
@@ -63,7 +81,7 @@ let getPersonFromUid = async (uid) => {
 
         const nfcTag = nfcTagResponse.data[0];
         const personId = nfcTag.controlledAsset.value[0];
-
+        console.log("nfctag, personid",nfcTag, personId);
         return personId;
     } catch (error) {
         console.error('Error fetching NFC tag:', error);
@@ -72,24 +90,36 @@ let getPersonFromUid = async (uid) => {
 };
 
 
-let checkUidAuthorization = async (uid, facilityId) => {
-    
-    const personId = await getPersonFromUid(uid);
-    if (!personId) {
-        console.error('Person not found for the specified UID');
-        return false;
-    }
-    else
-    {
-        console.log(personId);
+let checkUidAuthorization = async (uid, facilityCBId, callback) => {
+    try {
+        const personCBId = await getPersonFromUid(uid);
+        console.log("personCBId",personCBId);
+        if (!personCBId) {
+            console.error('Person not found for the specified UID');
+            return callback(false);
+        }
+
+        const facility = await dbInterface.getFacilityByCBId(facilityCBId);
+        const facilityID = facility.facility_id;
+        console.log("facilityID",facilityID);
+        dbInterface.checkRoleAccessInFacility(personCBId, facilityID, (err, roleAccess) => {
+            if (err) {
+                console.error('Error checking role access in facility:', err);
+                return callback(false);
+            }
+            callback(!!roleAccess);
+        });
+    } catch (error) {
+        console.error('Error in checkUidAuthorization:', error);
+        callback(false);
     }
 };
 
-let getFacility = ( direction, smartlock) => {
+let getFacility = (direction, smartlock) => {
     if (direction === 'Entry') {
-        return smartlock.entry.value;
+        return smartlock.entry.value[0];
     } else if (direction === 'Exit') {
-        return smartlock.exit.value;
+        return smartlock.exit.value[0];
     }
 };
 
