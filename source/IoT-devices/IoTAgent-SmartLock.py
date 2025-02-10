@@ -163,14 +163,13 @@ def monitor_smart_locks():
                     last_states[smart_lock_id] = (value, device_state)
                     if device_state == "unlocked":
                         if (smart_lock['serialNumber']['value']=='18043712356'):
-                            print(smart_lock['serialNumber']['value'])
                             unlock_smartlock()
-                            print(f"Smart Lock {smart_lock_id} unlocked, will lock again in 10 seconds")
+                            print(f"Smart Lock {smart_lock_id} unlocked, will lock again in 15 seconds")
                             time.sleep(15)
                             send_lock_command(smart_lock_id)
                             lock_smartlock()
                         else:
-                            print(f"Smart Lock {smart_lock_id} unlocked, will lock again in 10 seconds")
+                            print(f"Smart Lock {smart_lock_id} unlocked, will lock again in 15 seconds")
                             time.sleep(10)
                             send_lock_command(smart_lock_id)
                     else:
