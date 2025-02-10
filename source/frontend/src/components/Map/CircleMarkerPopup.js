@@ -175,7 +175,7 @@ const CircleMarkerPopup = ({
             disabled={data.status === 'resolved'}
           >
             <option value="">Actions...</option>
-            <option value="unlock">Unlock all doors</option>
+            <option value="unlock" disabled={data.personCurrentFacility === "Outside"}>Unlock all doors</option>
             <option value="alarm">Activate Alarm</option>
             <option value="dismiss">Dismiss</option>
           </select>

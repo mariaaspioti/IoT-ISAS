@@ -86,22 +86,58 @@ export const findFacilityContainingPoint = (point, facilities) => {
 // and returns an array of objects with the following structure:
 // { lat: number, lng: number, facility: { id: string, name: string } }
 // The facility object is null if the point is not within any facility
+// export const processFacilities = async (coordinates, rawFacilities) => {
+//   const facilities = rawFacilities.map(f => ({
+//     id: f.id,
+//     name: f.name.value,
+//     bounds: f.location.value.coordinates[0]
+//   }));
+
+//   return Promise.all(coordinates.map(loc => {
+//     const point = turf.point([loc.lng, loc.lat]);
+//     let facility = findFacilityContainingPoint(point, facilities);
+
+//     return {
+//       lat: loc.lat,
+//       lng: loc.lng,
+//       ...(facility ? { id: facility.id, name: facility.name } : {})
+
+//     };
+//   }));
+// };
 export const processFacilities = async (coordinates, rawFacilities) => {
-  const facilities = rawFacilities.map(f => ({
-    id: f.id,
-    name: f.name.value,
-    bounds: f.location.value.coordinates[0]
-  }));
+  // Add area calculation and sort by ascending area (smallest first)
+  const facilities = rawFacilities
+    .map(f => {
+      const bounds = f.location.value.coordinates[0];
+      const polygon = createValidPolygon(bounds);
+      return {
+        id: f.id,
+        name: f.name.value,
+        bounds: bounds,
+        area: turf.area(polygon) // Calculate polygon area
+      };
+    })
+    .sort((a, b) => a.area - b.area); // Sort by smallest area first
 
   return Promise.all(coordinates.map(loc => {
     const point = turf.point([loc.lng, loc.lat]);
-    let facility = findFacilityContainingPoint(point, facilities);
+    
+    // Find ALL containing facilities and pick the smallest
+    const containingFacilities = facilities.filter(f => 
+      validateFacility(f) && 
+      turf.booleanPointInPolygon(point, createValidPolygon(f.bounds))
+    );
+    
+    const mostSpecificFacility = containingFacilities[0] || null;
 
     return {
       lat: loc.lat,
       lng: loc.lng,
-      ...(facility ? { id: facility.id, name: facility.name } : {})
-
+      ...(mostSpecificFacility ? { 
+        id: mostSpecificFacility.id, 
+        name: mostSpecificFacility.name 
+      } : {})
     };
   }));
 };

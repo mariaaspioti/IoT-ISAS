@@ -240,6 +240,18 @@ export const fetchActiveAlerts = async () => {
     }
 };
 
+// Fetch the location of an alert
+export const fetchAlertLocation = async (alertId) => {
+    try {
+        const response = await fetch(`/api/alerts/${alertId}/location`);
+        const json = await response.json();
+        return json.data;
+    } catch (error) {
+        console.error('Error fetching alert location:', error);
+        throw error;
+    }
+};
+
 // Patch the status of an alert
 export const patchAlertStatus = async (alertId, status) => {
     try {

@@ -113,8 +113,6 @@ const DashboardMap = ({
           data={alert}
           color={alert.status === 'resolved' ? 'green' : MARKER_COLORS.alert}
           fillColor={alert.severity === 'high' ? MARKER_COLORS.alert : 'orange'}
-          // color={MARKER_COLORS.doors}
-          // fillColor={MARKER_COLORS.doors}
           radius={10}
           fillOpacity={0.2}
           onDismissAlert={onDismissAlert}
