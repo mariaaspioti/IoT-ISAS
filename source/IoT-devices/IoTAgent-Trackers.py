@@ -224,7 +224,7 @@ def main():
     client = None
     try:
         print("Starting IoT Agent for BT/GPS trackers...")
-        threading.Thread(target=watchdog, daemon=True).start() # Start the watchdog thread
+        # threading.Thread(target=watchdog, daemon=True).start() # Start the watchdog thread
         client = read_data_from_mqtt()
     except KeyboardInterrupt:
         print("Shutting down...")
