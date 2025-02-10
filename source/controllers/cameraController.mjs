@@ -8,12 +8,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Ensure the directory exists
-const folderPath = path.join(__dirname, 'cameraImages');
+const folderPath = path.join(__dirname, '../frontend/public/cameraImages');
+
 if (!fs.existsSync(folderPath)) {
     fs.mkdirSync(folderPath, { recursive: true });
 }
 
-const url = 'http://150.140.186.118:1111/'; // Your stream URL
+const url = 'http://150.140.186.118:1111/'; // Lab's Camera stream URL
 
 axios({
   method: 'get',

@@ -166,7 +166,7 @@ def monitor_smart_locks():
                             print(smart_lock['serialNumber']['value'])
                             unlock_smartlock()
                             print(f"Smart Lock {smart_lock_id} unlocked, will lock again in 10 seconds")
-                            time.sleep(10)
+                            time.sleep(15)
                             send_lock_command(smart_lock_id)
                             lock_smartlock()
                         else:
@@ -206,8 +206,8 @@ def send_lock_command_to_device(device_id):
 def main():
     try:
         print("Starting IoT Agent for Smart Locks...")
-        # monitor_smart_locks()
-        send_lock_command_to_device("urn:ngsi-ld:Device:91")
+        monitor_smart_locks()
+        # send_lock_command_to_device("urn:ngsi-ld:Device:91")
     except KeyboardInterrupt:
         print("Shutting down")
 
