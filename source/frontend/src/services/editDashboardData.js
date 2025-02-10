@@ -120,81 +120,80 @@ export const showBuildings = async () => {
     return mapData;
 }
 
-export const fetchFormatAlertData = async (alertData) => {
+export const fetchFormatAlertData = async (alertData, isNew = false) => {
     console.log("Alert Data:", alertData, "in fetchFormatAlertData");
-    // // Given an alert, fetch the device data that caused it with known name
-    const deviceName = alertData.alertSource.value[0];
-    // console.log("Device Name:", deviceName, "in fetchFormatAlertData");
-    const arr = await APICall.fetchDeviceDataGivenName(deviceName);
-    const deviceData = arr[0];
-    // console.log("Device Data:", deviceData, "in fetchFormatAlertData");
-    // Extract the controlled asset (person id) from the device data
-    const personId = deviceData.controlledAsset.value;
-    // Fetch the person data
-    const personData = await APICall.fetchPersonData(personId);
-    
-    // given the person data, recover their devices with 'hasDevices' relationship
-    console.log("personData:", personData, "in fetchFormatAlertData");
-    // console.log("personData.hasDevices:", personData.hasDevices, "in fetchFormatAlertData");
-    const deviceIds = personData.hasDevices.value;
-    console.log("deviceIds:", deviceIds, "in fetchFormatAlertData");
-    // Fetch the device data
-    // console.log("deviceIds:", deviceIds);
-    const devicesData = await Promise.all(deviceIds.map(deviceId => APICall.fetchDeviceData(deviceId)));
-    console.log("devicesData:", devicesData);
 
-    // If the person is indoors, keep the location indicated by the device with name starting with 'BluetoothTracker'
-    // Otherwise, keep the location indicated by the device with name starting with 'GPS'
+    // Common functions
+    const formatAlertDate = (dateString) => {
+        return new Date(dateString).toLocaleString('en-US', {
+            timeZone: 'UTC',
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric',
+            hour12: true
+        });
+    };
+
+    const getPersonAndDeviceData = async (alertData) => {
+        const deviceName = alertData.alertSource.value[0];
+        const [deviceData] = await APICall.fetchDeviceDataGivenName(deviceName);
+        const personId = deviceData.controlledAsset.value;
+        const personData = await APICall.fetchPersonData(personId);
+        return { deviceData, personData };
+    };
+
+    const getFacilityData = async (coordinates) => {
+        const locationData = { lat: coordinates[1], lng: coordinates[0] };
+        const facilities = await APICall.findCurrentFacilities([locationData]);
+        return facilities[0];
+    };
+
+    // Common data processing
+    const { deviceData, personData } = await getPersonAndDeviceData(alertData);
+    
+    // Location handling
     let deviceLocation;
-    if (personData.isIndoors.value) {
-        deviceLocation = devicesData.find(device => 
-            device.name.value.startsWith('BluetoothTracker')).location.value.coordinates;
+    if (isNew) {
+        const deviceIds = personData.hasDevices.value;
+        const devicesData = await Promise.all(deviceIds.map(deviceId => 
+            APICall.fetchDeviceData(deviceId)
+        ));
+        
+        deviceLocation = personData.isIndoors.value
+            ? devicesData.find(d => d.name.value.startsWith('BluetoothTracker')).location.value.coordinates
+            : devicesData.find(d => d.name.value.startsWith('GPS')).location.value.coordinates;
+
+        await APICall.patchAlertLocation(alertData.id, {
+            lat: deviceLocation[1],
+            lng: deviceLocation[0]
+        });
     } else {
-        deviceLocation = devicesData.find(device => 
-            device.name.value.startsWith('GPS')).location.value.coordinates;
+        deviceLocation = alertData.location.value.coordinates;
     }
-    console.log("deviceLocation:", deviceLocation, "in fetchFormatAlertData");
-    // Find the facility in which the device is located
-    const locationData = { lat: deviceLocation[1], lng: deviceLocation[0] };
-    const facilities = await APICall.findCurrentFacilities([locationData]);
-    const facility = facilities[0];
-    console.log("facility:", facility, "in fetchFormatAlertData");
 
-    // If the alert is newly created, we need to patch the 'location' attribute
-    // to the Entity in the context broker
-    await APICall.patchAlertLocation(alertData.id, locationData);
-    
-    const formattedDate = new Date(alertData.dateIssued.value).toLocaleString('en-US', {
-        timeZone: 'UTC',
-        year: 'numeric',
-        month: 'numeric',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
-        hour12: true
-      });
+    const facility = await getFacilityData(deviceLocation);
+    const formattedDate = formatAlertDate(alertData.dateIssued.value);
 
-    // Format the alert data
-    const formattedData = {
+    // Common response structure
+    const baseData = {
         id: alertData.id,
         description: alertData.description.value,
         severity: alertData.severity.value,
         status: alertData.status.value,
         frontend_timestamp: new Date().toLocaleString(),
-        // dateIssued: alertData.dateIssued.value, // make it human readable
         dateIssued: formattedDate,
         personName: personData.name.value,
         personId: personData.id,
-        // personIsIndoors: personData.isIndoors.value,
         personCurrentLocation: deviceLocation,
         personCurrentFacility: facility.name ? facility.name : 'Outside'
     };
 
-    console.log('Formatted alert data:', formattedData);
-    return formattedData;
-    // return alertData;
-}
+    console.log('Formatted alert data:', baseData);
+    return baseData;
+};
 
 export const fetchAllFacilitiesData = async () => {
     const facilities = await APICall.fetchAllBuildingsData();
@@ -255,7 +254,7 @@ export const fetchActiveAlertsData = async () => {
     // formattedAlerts = alerts.forEach(alert => {
     //     return fetchFormatAlertData(alert);
     // });
-    const formattedAlerts = await Promise.all(alerts.map(alert => fetchFormatAlertData(alert)));
+    const formattedAlerts = await Promise.all(alerts.map(alert => fetchFormatAlertData(alert, false)));
     console.log("Formatted Alerts in fetchActiveAlertsData:", formattedAlerts);
     return formattedAlerts;
 }

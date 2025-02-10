@@ -99,7 +99,8 @@ function App() {
   // }, []);
   const handleNewAlert = useCallback(async (alert) => {
     try {
-      const formattedAlert = await fetchFormatAlertData(alert);
+      const isNew = true;
+      const formattedAlert = await fetchFormatAlertData(alert, isNew);
       setAlerts(prev => [
         { ...formattedAlert, frontend_timestamp: new Date().toLocaleTimeString() },
         ...prev

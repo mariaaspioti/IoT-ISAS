@@ -624,6 +624,31 @@ let getActiveAlerts = async (req, res) => {
     }
 }
 
+let getAlertLocation = async (req, res) => {
+    const alertId = req.params.id;
+    
+    try {
+        const response = await axios.get(`${orionUrl}/${alertId}`, {
+            headers: getHeaders,
+            params: {
+                attrs: 'location'
+            }
+        });
+
+        if (!response.data.location?.value?.coordinates) {
+            return res.status(404).json({ error: 'Coordinates not found' });
+        }
+
+        const coordinates = response.data.location.value.coordinates[0]
+            .map(([lng, lat]) => [lat, lng ]);
+
+        res.json(coordinates);
+    } catch (error) {
+        console.error('Alert location error in getAlertLocation:', error);
+        res.status(500).json({ error: 'Failed to fetch alert location' });
+    }
+}
+
 let patchAlertStatus = async (req, res) => {
     const alertId = req.params.id;
     const { status } = req.body;
@@ -714,5 +739,6 @@ export { getData, getAllData, getDeviceData, getDeviceDataFromName, getDeviceLoc
     getAllDevicesLocationData, getAllDevicesControlledAssets, saveCoordinates, getAllFacilities, 
     getFacilityLocationData, getFacilitiesNameAndLocation, findCurrentFacilities, getDoorsLocations, 
     getPersonData, getAllPeopleData, handleSOSAlert, handleMaintenanceSchedule, getScheduledMaintenances,
-    checkAccessAuthorization, getActiveAlerts, patchAlertStatus, patchAlertLocation, patchAlertActionTaken
+    checkAccessAuthorization, getActiveAlerts, getAlertLocation, patchAlertStatus, patchAlertLocation, 
+    patchAlertActionTaken
  };

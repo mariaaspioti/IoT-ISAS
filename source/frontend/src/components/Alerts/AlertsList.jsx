@@ -66,7 +66,7 @@ const AlertsList = ({ alerts, onDismissAlert, onUnlockDoors, onActivateAlarm }) 
                     <option value="">Resolved</option>
                   )}
                   <option value="">Actions...</option>
-                  <option value="unlock">Unlock all doors</option>
+                  <option value="unlock" disabled={alert.personCurrentFacility === "Outside"}>Unlock Doors</option>
                   <option value="alarm">Activate Alarm</option>
                   <option value="dismiss">Dismiss</option>
                 </select>
