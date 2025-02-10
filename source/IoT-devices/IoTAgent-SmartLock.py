@@ -1,6 +1,7 @@
 import requests
 import time
 import os
+import threading
 from dotenv import load_dotenv
 
 # Orion Context Broker details
@@ -21,12 +22,11 @@ gd_headers = {
     "Fiware-ServicePath": fiware_service_path
 }
 
-# REAL Smart Lock Functions
-
-
 # Load environment variables from the .env file in the parent 'source' directory
 dotenv_path = os.path.join(os.path.dirname(__file__), '..', '.env')
 load_dotenv(dotenv_path)
+
+stop_event = threading.Event()
 
 def unlock_smartlock():
     token = os.getenv('AUTH_TOKEN')
@@ -49,7 +49,6 @@ def unlock_smartlock():
         print('Status code:', response.status_code)
         print('Response:', response.text)
 
-
 def lock_smartlock():
     token = os.getenv('AUTH_TOKEN')
     if not token:
@@ -70,7 +69,7 @@ def lock_smartlock():
         print('Lock request failed')
         print('Status code:', response.status_code)
         print('Response:', response.text)
-        
+
 def get_smartlock_():
     token = os.getenv('AUTH_TOKEN')
 
@@ -81,7 +80,6 @@ def get_smartlock_():
     headers = {
         'Accept': 'application/json',
         'Authorization': f'Bearer {token}',
-       
     }
 
     response = requests.get(url, headers=headers)
@@ -89,8 +87,6 @@ def get_smartlock_():
     # Print the response status code and JSON content
     print(response.status_code)
     print(response.json())
-
-# ALL Smart Lock Functions
 
 def get_all_smart_locks():
     url = f"{orion_url}?type=Device&q=name~=^SmartLock-"
@@ -108,27 +104,28 @@ def get_smart_lock_state(smart_lock_id):
         data = response.json()
         value = data['value']['value']
         device_state = data['deviceState']['value']
-        return value, device_state
+        serial_number = data['serialNumber']['value']
+        return value, device_state, serial_number
     else:
         print(f"Error fetching data for {smart_lock_id}: {response.status_code}")
-        return None, None
+        return None, None, None
 
 def send_lock_command(smart_lock_id):
     command_url = f"{orion_url}/{smart_lock_id}/attrs"
     command_payload = {
         "deviceState": {
-                    "type": "Text",
-                    "value": "locked"
-                },
-                "value": {
-                    "type": "Text",
-                    "value": "2"
-                },
-                "dateLastValueReported": {
-                    "type": "DateTime",
-                    "value": time.strftime("%Y-%m-%dT%H:%M:%S.000Z", time.gmtime())
-                },
-            }
+            "type": "Text",
+            "value": "locked"
+        },
+        "value": {
+            "type": "Text",
+            "value": "2"
+        },
+        "dateLastValueReported": {
+            "type": "DateTime",
+            "value": time.strftime("%Y-%m-%dT%H:%M:%S.000Z", time.gmtime())
+        }
+    }
     try:
         response = requests.patch(command_url, headers=pp_headers, json=command_payload)
         if response.status_code == 204:
@@ -143,39 +140,45 @@ def initialize_smart_lock_states():
     smart_locks = get_all_smart_locks()
     for smart_lock in smart_locks:
         smart_lock_id = smart_lock['id']
-        value, device_state = get_smart_lock_state(smart_lock_id)
+        value, device_state, serial_number = get_smart_lock_state(smart_lock_id)
         if value is not None and device_state is not None:
-            last_states[smart_lock_id] = (value, device_state)
+            last_states[smart_lock_id] = (value, device_state, serial_number)
     return last_states
 
-def monitor_smart_locks():
-    last_states = initialize_smart_lock_states()
-
-    while True:
-        smart_locks = get_all_smart_locks()
-        for smart_lock in smart_locks:
-            smart_lock_id = smart_lock['id']
-            value, device_state = get_smart_lock_state(smart_lock_id)
-            if value is not None and device_state is not None:
-                last_value, last_device_state = last_states.get(smart_lock_id, (None, None))
-                if value != last_value or device_state != last_device_state:
-                    print(f"Smart Lock {smart_lock_id} - Value: {value}, Device State: {device_state}")
-                    last_states[smart_lock_id] = (value, device_state)
-                    if device_state == "unlocked":
-                        if (smart_lock['serialNumber']['value']=='18043712356'):
-                            unlock_smartlock()
-                            print(f"Smart Lock {smart_lock_id} unlocked, will lock again in 15 seconds")
-                            time.sleep(15)
-                            send_lock_command(smart_lock_id)
-                            lock_smartlock()
-                        else:
-                            print(f"Smart Lock {smart_lock_id} unlocked, will lock again in 15 seconds")
-                            time.sleep(10)
-                            send_lock_command(smart_lock_id)
+def monitor_single_smart_lock(smart_lock_id, serial_number):
+    last_value, last_device_state, _ = get_smart_lock_state(smart_lock_id)
+    while not stop_event.is_set():
+        value, device_state, current_serial_number = get_smart_lock_state(smart_lock_id)
+        if value is not None and device_state is not None:
+            if value != last_value or device_state != last_device_state:
+                print(f"Smart Lock {smart_lock_id} - Value: {value}, Device State: {device_state}, Serial Number: {current_serial_number}")
+                last_value, last_device_state = value, device_state
+                if device_state == "unlocked":
+                    if current_serial_number == '18043712356':
+                        unlock_smartlock()
+                        print(f"Smart Lock {smart_lock_id} unlocked, will lock again in 15 seconds")
+                        time.sleep(15)
+                        send_lock_command(smart_lock_id)
+                        lock_smartlock()
                     else:
-                        print("Device is already unlocked")       
+                        print(f"Smart Lock {smart_lock_id} unlocked, will lock again in 15 seconds")
+                        time.sleep(15)
+                        send_lock_command(smart_lock_id)
         time.sleep(5)
 
+def monitor_smart_locks():
+    smart_locks = get_all_smart_locks()
+    threads = []
+    for smart_lock in smart_locks:
+        smart_lock_id = smart_lock['id']
+        print(smart_lock_id)
+        _, _, serial_number = get_smart_lock_state(smart_lock_id)
+        thread = threading.Thread(target=monitor_single_smart_lock, args=(smart_lock_id, serial_number))
+        thread.start()
+        threads.append(thread)
+
+    for thread in threads:
+        thread.join()
 
 def send_lock_command_to_device(device_id):
     command_url = f"{orion_url}/{device_id}/attrs"
@@ -209,7 +212,7 @@ def main():
         # send_lock_command_to_device("urn:ngsi-ld:Device:91")
     except KeyboardInterrupt:
         print("Shutting down")
-
+        stop_event.set()
 
 if __name__ == "__main__":
     main()
