@@ -13,13 +13,166 @@ client_id = f"ISAS-BTGPStrackerPublisher-{timestamp}"
 print(f"Client ID: {client_id}")
 base_bt_topic = "ISAS/devices/BT"
 base_gps_topic = "ISAS/devices/GPS"
+base_nfc_reader_topic = "ISAS/devices/NFC"
 
+door_cooldown = 4  # Cooldown time in seconds
+last_door_trigger = {}  # Format: {(device_id, door_index): last_trigger_timestamp}
+cooldown_lock = threading.Lock()  # Thread-safe access to last_door_trigger
+device_at_door_index = {}  # key: device_id, value: current atDoorIndex
+
+
+def get_door_parameters():
+  door_locations = np.array([
+      [-6.52482748, 53.376367338], 
+      [-6.522874832, 53.376015129], 
+      [-6.527380943, 53.376277685], 
+      [-6.526683569, 53.377347103], 
+      [-6.526007652, 53.376994902], 
+      [-6.523604393, 53.375016122], 
+      [-6.521619558, 53.374574246], 
+      [-6.521984339, 53.374881638], 
+      [-6.52233839, 53.375163614], 
+      [-6.521083117, 53.374267052], 
+      [-6.521093845, 53.37494588], 
+      [-6.519141197, 53.374491195], 
+      [-6.519334316, 53.374728144], 
+      [-6.51976347, 53.375503022], 
+      [-6.524634361, 53.375214846], 
+      [-6.525557041, 53.374984303], 
+      [-6.525900364, 53.37551583], 
+      [-6.526694298, 53.37475376], 
+      [-6.521018744, 53.375861639], 
+      [-6.520332098, 53.37574637],
+      [-6.521844864, 53.376591671], 
+      [-6.522767544, 53.377726867], 
+      [-6.523625851, 53.378378383], 
+      [-6.528314352, 53.378160665]
+  ])
+
+  person_uids = ["1C553B4F", 
+                 "9C72324F",
+                 "8CCF454F",
+                 "C23D4D41",
+                 "182C6B80",
+                 "8E546381",
+                 "152C2382",
+                 "1E2C2783",
+                 "5AB82C84",
+                 "35BC2209",
+                 "1E2C6B80"]
+
+  route_1_nfc_readers = [["NFCReader-4"],
+                         ["NFCReader-6"], # last reader
+                         ["NFCReader-7"], # Retrace, exit reader
+                         ["NFCReader-5"]]
+  
+  routes_nfc_readers = [route_1_nfc_readers]
+  return door_locations, person_uids, routes_nfc_readers
+
+def check_door_proximity(door_locations, lat, lng):
+    ''' This function checks if a device is close to a door. 
+    Parameters:
+      lat (float): The latitude of the device.
+      lng (float): The longitude of the device.
+    Returns:
+      int: The index of the door the device is close to. -1 if the device is not close to any door.'''
+    for i, door in enumerate(door_locations):
+        if np.linalg.norm([lng, lat] - door) < 0.00005: # 0.00005 degrees is approximately 5.5 meters
+            return i
+    return -1
+
+def handle_door_entry(mqtt_client, lat, lng, device_id):
+    door_locations, person_uids, routes_nfc_readers = get_door_parameters()
+    # Determine if the device is physically close to a door.
+    # (This returns the door’s physical index – used here only for logging and cooldown.)
+    physical_door_index = check_door_proximity(door_locations, lat, lng)
+    if physical_door_index == -1:
+        return
+
+    current_time = time.time()
+    key = (device_id, physical_door_index)
+    
+    with cooldown_lock:
+        # Enforce cooldown per (device, physical door) combination.
+        last_trigger = last_door_trigger.get(key, 0)
+        if current_time - last_trigger < door_cooldown:
+            return  # Still in cooldown period
+        last_door_trigger[key] = current_time
+
+    # Log the door entry event.
+    with open("door_entry.log", "a") as log_file:
+        log_file.write(
+            f"{device_id} is close to door {physical_door_index} at location {lat}, {lng} "
+            f"-- {door_locations[physical_door_index][1]}, {door_locations[physical_door_index][0]} dat {datetime.datetime.now()}\n"
+        )
+
+    # --- NEW: Use per-device counter instead of the door’s physical index ---
+    with cooldown_lock:
+        # Get the current door count for this device (defaulting to 0 if not present).
+        current_atDoorIndex = device_at_door_index.get(device_id, 0)
+        # For example, assume that every person uses the same NFC reader route.
+        # In your parameters, routes_nfc_readers is a list of routes. For instance, if you only
+        # have one route for the person, you might do:
+        nfc_readers_for_person = routes_nfc_readers[0]
+        # If the counter exceeds the number of NFC readers, you can reset it (or handle it as needed)
+        if current_atDoorIndex >= len(nfc_readers_for_person):
+            current_atDoorIndex = 0  # or leave it at the last valid index if you prefer
+
+        # Retrieve the NFC reader name.
+        # (In your data structure, each NFC reader is stored as a list with one item.
+        # Adjust the indexing if your data structure changes.)
+        nfc_reader_name = nfc_readers_for_person[current_atDoorIndex][0]
+
+        # Increment and update the per-device counter for the next door event.
+        device_at_door_index[device_id] = current_atDoorIndex + 1
+    # -------------------------------------------------------------------------
+
+    # Get the person's UID (assuming your device naming convention allows for this)
+    person_uid = person_uids[int(device_id.split("-")[-1])]
+
+    # Create and publish the door entry event payload.
+    payload = {
+        "device_id": person_uid,
+        "door_index": physical_door_index,  # For logging/cooldown purposes
+        "timestamp": datetime.datetime.now().isoformat()
+    }
+    topic = f"{base_nfc_reader_topic}/{nfc_reader_name}"
+    mqtt_client.publish(topic, json.dumps(payload))
+    # print(f"Published door entry for {device_id} to {topic} with payload: {payload}")
+    with open("door_entry.log", "a") as log_file:
+        log_file.write(f"Published door entry for {device_id} to {topic} with payload: {payload}\n")
+    
 def get_parameters():
-    route_1 = np.array([ [-6.528346538543702, 53.376431064762556],
-              [-6.52765989303589, 53.37647589103842],
-              [-6.5271878242492685, 53.37693055488485], # End of route
-              [-6.52765989303589, 53.37647589103842], # Retrace
-              [-6.528346538543702, 53.376431064762556] ])
+    # route_1 = np.array([ [-6.528346538543702, 53.376431064762556],
+    #           [-6.52765989303589, 53.37647589103842],
+    #           [-6.5271878242492685, 53.37693055488485], # End of route
+    #           [-6.52765989303589, 53.37647589103842], # Retrace
+    #           [-6.528346538543702, 53.376431064762556] ])
+    route_1 = np.array([ [-6.527753477659821, 53.37587935174477], 
+                        [-6.527571044366648, 53.37600095963548], 
+                        [-6.527388611073495, 53.376173770251256], 
+                        [-6.527485193405168, 53.376416984004045], 
+                        [-6.527935910952972, 53.376416984004045], 
+                        [-6.527345685592745, 53.37658339261358], 
+                        [-6.526648146530654, 53.37658339261358], 
+                        [-6.526454981867309, 53.37665379606033], 
+                        [-6.526358399535638, 53.3770442130619], 
+                        [-6.526487175977868, 53.3773258231034], 
+                        [-6.527034475857364, 53.37730022226749], 
+                        [-6.527592507107033, 53.37702501230941], # End of route
+                        [-6.527592507107033, 53.37702501230941], # Retrace
+                        [-6.527034475857364, 53.37730022226749], 
+                        [-6.526487175977868, 53.3773258231034], 
+                        [-6.526358399535638, 53.3770442130619], 
+                        [-6.526454981867309, 53.37665379606033], 
+                        [-6.526648146530654, 53.37658339261358], 
+                        [-6.527345685592745, 53.37658339261358], 
+                        [-6.527935910952972, 53.376416984004045], 
+                        [-6.527485193405168, 53.376416984004045], 
+                        [-6.527388611073495, 53.376173770251256], 
+                        [-6.527571044366648, 53.37600095963548], 
+                        [-6.527753477659821, 53.37587935174477]])
+
     route_2 = np.array([ [-6.523389816284181, 53.37424853336731],
               [-6.523271799087524, 53.374568736425694],
               [-6.523518562316895, 53.374850513125764],
@@ -231,7 +384,7 @@ def get_parameters():
                          [-6.520684304835045, 53.375098279456914] ]) # Retrace
                   
 
-    total_time_1 = 90
+    total_time_1 = 160
     total_time_2 = 120
     total_time_3 = 180
     total_time_4 = 150
@@ -296,7 +449,8 @@ def mimic_beacon(mqtt_client, route, speed, device_id, base_topic):
         topic = f"{base_topic}/{device_id}"
         mqtt_client.publish(topic, json.dumps(payload))
         print(f"{device_id} published to {topic}")#: {payload}")
-
+        if (device_id == "BluetoothTracker-0" or device_id == "GPSTracker-0"):
+            handle_door_entry(mqtt_client, position[1], position[0], device_id)
         time.sleep(1)
 
 def main():
@@ -357,22 +511,57 @@ if __name__=="__main__":
 
 
 '''
+ROUTES
 First
   Start
     {
-      "lat": 53.376431064762556,
-      "lng": -6.528346538543702
-    }
-  1.
-    {
-      "lat": 53.37647589103842,
-      "lng": -6.52765989303589
-    }
-  2.
-    {
-      "lat": 53.37693055488485,
-      "lng": -6.5271878242492685
-    }
+    "lat": 53.37587935174477,
+    "lng": -6.527753477659821
+  },
+  {
+    "lat": 53.37600095963548,
+    "lng": -6.527571044366648
+  },
+  {
+    "lat": 53.376173770251256,
+    "lng": -6.527388611073495
+  },
+  {
+    "lat": 53.376416984004045,
+    "lng": -6.527485193405168
+  },
+  {
+    "lat": 53.376416984004045,
+    "lng": -6.527935910952972
+  },
+  {
+    "lat": 53.37658339261358,
+    "lng": -6.527345685592745
+  },
+  {
+    "lat": 53.37658339261358,
+    "lng": -6.526648146530654
+  },
+  {
+    "lat": 53.37665379606033,
+    "lng": -6.526454981867309
+  },
+  {
+    "lat": 53.3770442130619,
+    "lng": -6.526358399535638
+  },
+  {
+    "lat": 53.3773258231034,
+    "lng": -6.526487175977868
+  },
+  {
+    "lat": 53.37730022226749,
+    "lng": -6.527034475857364
+  },
+  {
+    "lat": 53.37702501230941,
+    "lng": -6.527592507107033
+  }
   - Retrace and repeat
 
 Second
@@ -847,3 +1036,7 @@ Eleventh
   }
   - Retrace and repeat
 '''
+"""
+DOOR LOCATIONS
+[{"id":"urn:ngsi-ld:Door:0","type":"Door","location":{"type":"geo:json","value":{"type":"Point","coordinates":[-6.52482748,53.376367338]},"metadata":{}}},{"id":"urn:ngsi-ld:Door:1","type":"Door","location":{"type":"geo:json","value":{"type":"Point","coordinates":[-6.522874832,53.376015129]},"metadata":{}}},{"id":"urn:ngsi-ld:Door:2","type":"Door","location":{"type":"geo:json","value":{"type":"Point","coordinates":[-6.527380943,53.376277685]},"metadata":{}}},{"id":"urn:ngsi-ld:Door:3","type":"Door","location":{"type":"geo:json","value":{"type":"Point","coordinates":[-6.526683569,53.377347103]},"metadata":{}}},{"id":"urn:ngsi-ld:Door:4","type":"Door","location":{"type":"geo:json","value":{"type":"Point","coordinates":[-6.526007652,53.376994902]},"metadata":{}}},{"id":"urn:ngsi-ld:Door:5","type":"Door","location":{"type":"geo:json","value":{"type":"Point","coordinates":[-6.523604393,53.375016122]},"metadata":{}}},{"id":"urn:ngsi-ld:Door:6","type":"Door","location":{"type":"geo:json","value":{"type":"Point","coordinates":[-6.521619558,53.374574246]},"metadata":{}}},{"id":"urn:ngsi-ld:Door:7","type":"Door","location":{"type":"geo:json","value":{"type":"Point","coordinates":[-6.521984339,53.374881638]},"metadata":{}}},{"id":"urn:ngsi-ld:Door:8","type":"Door","location":{"type":"geo:json","value":{"type":"Point","coordinates":[-6.52233839,53.375163614]},"metadata":{}}},{"id":"urn:ngsi-ld:Door:9","type":"Door","location":{"type":"geo:json","value":{"type":"Point","coordinates":[-6.521083117,53.374267052]},"metadata":{}}},{"id":"urn:ngsi-ld:Door:10","type":"Door","location":{"type":"geo:json","value":{"type":"Point","coordinates":[-6.521093845,53.37494588]},"metadata":{}}},{"id":"urn:ngsi-ld:Door:11","type":"Door","location":{"type":"geo:json","value":{"type":"Point","coordinates":[-6.519141197,53.374491195]},"metadata":{}}},{"id":"urn:ngsi-ld:Door:12","type":"Door","location":{"type":"geo:json","value":{"type":"Point","coordinates":[-6.519334316,53.374728144]},"metadata":{}}},{"id":"urn:ngsi-ld:Door:13","type":"Door","location":{"type":"geo:json","value":{"type":"Point","coordinates":[-6.51976347,53.375503022]},"metadata":{}}},{"id":"urn:ngsi-ld:Door:14","type":"Door","location":{"type":"geo:json","value":{"type":"Point","coordinates":[-6.524634361,53.375214846]},"metadata":{}}},{"id":"urn:ngsi-ld:Door:15","type":"Door","location":{"type":"geo:json","value":{"type":"Point","coordinates":[-6.525557041,53.374984303]},"metadata":{}}},{"id":"urn:ngsi-ld:Door:16","type":"Door","location":{"type":"geo:json","value":{"type":"Point","coordinates":[-6.525900364,53.37551583]},"metadata":{}}},{"id":"urn:ngsi-ld:Door:17","type":"Door","location":{"type":"geo:json","value":{"type":"Point","coordinates":[-6.526694298,53.37475376]},"metadata":{}}},{"id":"urn:ngsi-ld:Door:18","type":"Door","location":{"type":"geo:json","value":{"type":"Point","coordinates":[-6.521018744,53.375861639]},"metadata":{}}},{"id":"urn:ngsi-ld:Door:19","type":"Door","location":{"type":"geo:json","value":{"type":"Point","coordinates":[-6.520332098,53.37574637]},"metadata":{}}}]
+"""
