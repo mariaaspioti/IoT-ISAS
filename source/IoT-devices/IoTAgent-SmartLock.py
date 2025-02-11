@@ -96,7 +96,7 @@ def get_smartlock_():
     print(response.json())
 
 def get_all_smart_locks():
-    url = f"{orion_url}?type=Device&q=name~=^SmartLock-"
+    url = f"{orion_url}?type=Device&limit=200&q=name~=^SmartLock-"
     response = requests.get(url, headers=gd_headers)
     if response.status_code == 200:
         return response.json()
@@ -161,7 +161,7 @@ def monitor_single_smart_lock(smart_lock_id, serial_number):
                 print(f"Smart Lock {smart_lock_id} - Value: {value}, Device State: {device_state}, Serial Number: {current_serial_number}")
                 last_value, last_device_state = value, device_state
                 if device_state == "unlocked":
-                    if current_serial_number == '18043712356':
+                    if current_serial_number == 18043712356:
                         unlock_smartlock()
                         print(f"Smart Lock {smart_lock_id} unlocked, will lock again in 15 seconds")
                         time.sleep(15)
@@ -229,7 +229,7 @@ def main():
     try:
         print("Starting IoT Agent for Smart Locks...")
         monitor_smart_locks()
-        # send_lock_command_to_device("urn:ngsi-ld:Device:93")
+        # send_lock_command_to_device("urn:ngsi-ld:Device:91")
     except KeyboardInterrupt:
         print("\nShutting down gracefully...")
         stop_event.set()  # Signal all threads to stop

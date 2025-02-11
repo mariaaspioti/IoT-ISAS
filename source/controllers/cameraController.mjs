@@ -1,59 +1,15 @@
-import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
 
-// Fix __dirname for ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Ensure the directory exists
 const folderPath = path.join(__dirname, '../frontend/public/cameraImages');
+const imagePath = path.join(folderPath, 'latest_image.jpg');
 
-if (!fs.existsSync(folderPath)) {
-    fs.mkdirSync(folderPath, { recursive: true });
-}
+export const getLatestImage = (req, res) => {
+  fs.access(imagePath, fs.constants.F_OK, (err) => {
+    if (err) {
+      return res.status(404).send('Image not found');
+    }
 
-const url = 'http://150.140.186.118:1111/'; // Lab's Camera stream URL
-
-axios({
-  method: 'get',
-  url,
-  responseType: 'stream', // Treat response as a stream
-}).then((response) => {
-  let buffer = '';
-
-  response.data.on('data', (chunk) => {
-    buffer += chunk.toString('binary'); // Append chunk data as binary
-
-    // Detect boundaries between images
-    const boundary = '--frame';
-    const parts = buffer.split(boundary);
-    buffer = parts.pop(); // Keep any leftover data
-
-    parts.forEach((part) => {
-      if (part.includes('Content-Type: image/jpeg')) {
-        const imageData = part.split('\r\n\r\n')[1]; // Extract binary image data
-
-        if (imageData) {
-          const imageBuffer = Buffer.from(imageData, 'binary');
-
-          // Generate a unique filename
-          const filename = `image_${Date.now()}.jpg`;
-          const filePath = path.join(folderPath, filename);
-
-          // Save image
-          fs.writeFileSync(filePath, imageBuffer);
-          console.log(`Saved: ${filePath}`);
-        }
-      }
-    });
+    res.sendFile(imagePath);
   });
-
-  response.data.on('end', () => {
-    console.log('Stream ended.');
-  });
-
-}).catch((error) => {
-  console.error('Error fetching the stream:', error);
-});
+};

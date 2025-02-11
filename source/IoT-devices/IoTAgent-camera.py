@@ -23,7 +23,19 @@ response = requests.get(url, stream=True)
 
 if response.status_code == 200:
     buffer = b''
+    last_save_time = time.time()
 
+    def save_image(image_data):
+        # Use a fixed filename
+        filename = 'latest_image.jpg'
+        file_path = os.path.join(folder_path, filename)
+
+        # Save image
+        with open(file_path, 'wb') as f:
+            f.write(image_data)
+        print(f'Saved: {file_path}')
+
+    # Read the response content in chunks of 1024 bytes
     for chunk in response.iter_content(chunk_size=1024):
         buffer += chunk
 
@@ -37,14 +49,10 @@ if response.status_code == 200:
                 image_data = part.split(b'\r\n\r\n')[1]  # Extract binary image data
 
                 if image_data:
-                    # Generate a unique filename
-                    filename = f'image_{int(time.time() * 1000)}.jpg'
-                    file_path = os.path.join(folder_path, filename)
-
-                    # Save image
-                    with open(file_path, 'wb') as f:
-                        f.write(image_data)
-                    print(f'Saved: {file_path}')
+                    current_time = time.time()
+                    if current_time - last_save_time >= 5:
+                        save_image(image_data)
+                        last_save_time = current_time
 
     print('Stream ended.')
 else:

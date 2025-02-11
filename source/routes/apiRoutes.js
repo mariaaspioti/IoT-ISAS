@@ -41,4 +41,6 @@ router.get('access-check', apiController.checkAccessAuthorization);
 
 router.get('/smart-locks', apiController.getAllSmartLocks);
 
+router.get('/latest-image', apiController.fetchCameraImage);
+
 export {router as apiRoutes};
