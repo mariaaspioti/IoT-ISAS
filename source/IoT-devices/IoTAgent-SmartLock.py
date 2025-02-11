@@ -26,6 +26,14 @@ gd_headers = {
 dotenv_path = os.path.join(os.path.dirname(__file__), '..', '.env')
 load_dotenv(dotenv_path)
 
+# Get the smart lock URLs from the environment variables
+unlock_url = os.getenv('SMARTLOCK_UNLOCK_URL')
+lock_url = os.getenv('SMARTLOCK_LOCK_URL')
+
+if not unlock_url or not lock_url:
+    raise ValueError("SMARTLOCK_UNLOCK_URL or SMARTLOCK_LOCK_URL not found in environment variables")
+
+
 stop_event = threading.Event()
 
 def unlock_smartlock():
@@ -33,14 +41,13 @@ def unlock_smartlock():
     if not token:
         raise ValueError("No token found in the environment variables")
 
-    url = 'https://api.nuki.io/smartlock/18043712356/action/unlock'
     headers = {
         'Authorization': f'Bearer {token}',
         'accept': 'application/json',  # Add 'accept' header for consistency
     }
 
     # No payload sent
-    response = requests.post(url, headers=headers)
+    response = requests.post(unlock_url, headers=headers)
 
     if response.status_code == 204:
         print('Unlock request was successful')
@@ -54,14 +61,13 @@ def lock_smartlock():
     if not token:
         raise ValueError("No token found in the environment variables")
 
-    url = 'https://api.nuki.io/smartlock/18043712356/action/lock'
     headers = {
         'Authorization': f'Bearer {token}',
         'accept': 'application/json',  # Add 'accept' header for consistency
     }
 
     # No payload sent
-    response = requests.post(url, headers=headers)
+    response = requests.post(lock_url, headers=headers)
 
     if response.status_code == 204:
         print('Lock request was successful')
@@ -69,6 +75,7 @@ def lock_smartlock():
         print('Lock request failed')
         print('Status code:', response.status_code)
         print('Response:', response.text)
+
 
 def get_smartlock_():
     token = os.getenv('AUTH_TOKEN')
