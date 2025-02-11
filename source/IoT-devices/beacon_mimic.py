@@ -106,17 +106,16 @@ def handle_door_entry(mqtt_client, lat, lng, device_id):
             f"-- {door_locations[physical_door_index][1]}, {door_locations[physical_door_index][0]} dat {datetime.datetime.now()}\n"
         )
 
-    # --- NEW: Use per-device counter instead of the door’s physical index ---
+    in_order_indexing = int(device_id.split("-")[-1])
     with cooldown_lock:
         # Get the current door count for this device (defaulting to 0 if not present).
         current_atDoorIndex = device_at_door_index.get(device_id, 0)
-        # For example, assume that every person uses the same NFC reader route.
-        # In your parameters, routes_nfc_readers is a list of routes. For instance, if you only
-        # have one route for the person, you might do:
-        nfc_readers_for_person = routes_nfc_readers[0]
-        # If the counter exceeds the number of NFC readers, you can reset it (or handle it as needed)
+        # Get the NFC readers for this person's route, based on the in-order indexing
+        # which stems from the device ID. i.e. 'BluetoothTracker-0' will use the first route.
+        nfc_readers_for_person = routes_nfc_readers[in_order_indexing]
+        # If the counter exceeds the number of NFC readers, reset it
         if current_atDoorIndex >= len(nfc_readers_for_person):
-            current_atDoorIndex = 0  # or leave it at the last valid index if you prefer
+            current_atDoorIndex = 0
 
         # Retrieve the NFC reader name.
         # (In your data structure, each NFC reader is stored as a list with one item.
@@ -127,13 +126,13 @@ def handle_door_entry(mqtt_client, lat, lng, device_id):
         device_at_door_index[device_id] = current_atDoorIndex + 1
     # -------------------------------------------------------------------------
 
-    # Get the person's UID (assuming your device naming convention allows for this)
-    person_uid = person_uids[int(device_id.split("-")[-1])]
+    # Get the person's UID 
+    person_uid = person_uids[in_order_indexing]
 
     # Create and publish the door entry event payload.
     payload = {
-        "device_id": person_uid,
-        "door_index": physical_door_index,  # For logging/cooldown purposes
+        "device_id": nfc_reader_name,
+        "uid": person_uid,	
         "timestamp": datetime.datetime.now().isoformat()
     }
     topic = f"{base_nfc_reader_topic}/{nfc_reader_name}"

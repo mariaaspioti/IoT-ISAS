@@ -1,2 +1,5 @@
-pyscard 
-threading
+pyscard==2.2.1 
+dotenv==1.0.1
+numpy==1.26.4
+paho-mqtt==1.6.1
+requests==2.31.0

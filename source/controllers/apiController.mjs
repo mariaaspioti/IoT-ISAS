@@ -581,29 +581,8 @@ let checkAccessAuthorization = async (req, res) => {
     const { person, building } = req.query;
 
     try {
-    // Check active maintenance periods
-    const maintenanceQuery = {
-        type: 'MaintenanceReservation',
-        q: `building==${building};status==active`,
-        attrs: 'exemptPersonnel'
-    };
-
-    const maintenanceRes = await axios.get(`${orionUrl}/entities`, {
-        params: maintenanceQuery,
-        headers: FIWARE_HEADERS
-    });
-
-    if (maintenanceRes.data.length > 0) {
-        const exemptPersons = maintenanceRes.data[0].exemptPersonnel.value;
-        const isExempt = exemptPersons.includes(person);
+        //do nothing
         
-        return res.json({
-        authorized: isExempt,
-        reason: isExempt ? '' : 'Building under maintenance'
-        });
-    }
-
-    res.json({ authorized: true, reason: '' });
     } catch (error) {
     res.status(500).json({ authorized: false, reason: 'System error' });
     }
