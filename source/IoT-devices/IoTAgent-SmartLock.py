@@ -29,9 +29,10 @@ load_dotenv(dotenv_path)
 # Get the smart lock URLs from the environment variables
 unlock_url = os.getenv('SMARTLOCK_UNLOCK_URL')
 lock_url = os.getenv('SMARTLOCK_LOCK_URL')
+get_smartlocks_url = os.getenv('SMARTLOCK_GET_URL')
 
-if not unlock_url or not lock_url:
-    raise ValueError("SMARTLOCK_UNLOCK_URL or SMARTLOCK_LOCK_URL not found in environment variables")
+if not unlock_url or not lock_url or not get_smartlocks_url:
+    raise ValueError("SMARTLOCK_UNLOCK_URL or SMARTLOCK_LOCK_URL or SMARTLOCK_GET_URL not found in environment variables")
 
 
 stop_event = threading.Event()
@@ -83,13 +84,12 @@ def get_smartlock_():
     if not token:
         raise ValueError("No token found in the environment variables")
     
-    url = 'https://api.nuki.io/smartlock'
     headers = {
         'Accept': 'application/json',
         'Authorization': f'Bearer {token}',
     }
 
-    response = requests.get(url, headers=headers)
+    response = requests.get(get_smartlocks_url, headers=headers)
 
     # Print the response status code and JSON content
     print(response.status_code)
