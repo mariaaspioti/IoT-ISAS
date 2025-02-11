@@ -228,6 +228,24 @@ export const fetchScheduledMaintenance= async () => {
     }
 };
 
+// Update the maintenance status for given maintenance id
+export const updateMaintenanceStatus = async (maintenanceId, status) => {
+    try {
+        const response = await fetch(`/api/maintenances/${maintenanceId}/status`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status })
+        });
+        if (!response.ok) {
+            throw new Error('Failed to update maintenance status in updateMaintenanceStatus');
+        }
+        return maintenanceId;
+    } catch (error) {
+        console.error('Error updating maintenance status:', error);
+        throw error;
+    }
+}
+
 // Fetch all alerts that are active
 export const fetchActiveAlerts = async () => {
     try {

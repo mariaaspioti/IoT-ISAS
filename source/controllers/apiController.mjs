@@ -535,6 +535,7 @@ let getScheduledMaintenances = async (req, res) => {
                 // maintenance.person_ids is a string of comma-separated SQL ids if it exists
                 if (!maintenance.person_ids) {
                     return {
+                        id: maintenance.maintenance_id,
                         startTime: maintenance.startTime,
                         endTime: maintenance.endTime,
                         dateCreated: maintenance.date_created,
@@ -555,6 +556,7 @@ let getScheduledMaintenances = async (req, res) => {
                 const peopleCBIds = people.map(person => person.context_broker_id);
                 const peopleNames = people.map(person => person.name);
                 return {
+                    id: maintenance.maintenance_id,
                     startTime: maintenance.startTime,
                     endTime: maintenance.endTime,
                     dateCreated: maintenance.date_created,
@@ -574,6 +576,23 @@ let getScheduledMaintenances = async (req, res) => {
     } catch (error) {
         console.error('Scheduled maintenance error in getScheduledMaintenances:', error);
         res.status(500).json({ error: 'Failed to fetch scheduled maintenance' });
+    }
+};
+
+let updateMaintenanceStatus = async (req, res) => {
+    try {
+        const maintenanceId = req.params.id;
+        const { status } = req.body;
+        maintenanceController.updateMaintenanceStatus(maintenanceId, status, (err) => {
+            if (err) {
+                console.error('Error updating maintenance status:', err);
+                res.status(500).json({ error: 'Failed to update maintenance status' });
+            }
+            res.json({ message: 'Maintenance status updated successfully' });
+        });
+    } catch (error) {
+        console.error('Maintenance status update error:', error, 'in updateMaintenanceStatus');
+        res.status(500).json({ error: 'Failed to update maintenance status' });
     }
 };
 
@@ -740,6 +759,6 @@ export { getData, getAllData, getDeviceData, getDeviceDataFromName, getDeviceLoc
     getAllDevicesLocationData, getAllDevicesControlledAssets, saveCoordinates, getAllFacilities, 
     getFacilityLocationData, getFacilitiesNameAndLocation, findCurrentFacilities, getDoorsLocations, 
     getPersonData, getAllPeopleData, handleSOSAlert, handleMaintenanceSchedule, getScheduledMaintenances,
-    checkAccessAuthorization, getActiveAlerts, getAlertLocation, patchAlertStatus, patchAlertLocation, 
+    updateMaintenanceStatus, checkAccessAuthorization, getActiveAlerts, getAlertLocation, patchAlertStatus, patchAlertLocation, 
     patchAlertActionTaken, getAllSmartLocks
  };

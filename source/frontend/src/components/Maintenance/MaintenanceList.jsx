@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './MaintenanceList.css';
 
-const MaintenanceList = ({ maintenanceSchedules }) => {
+const MaintenanceList = ({ 
+  maintenanceSchedules,
+  onCancelMaintenance 
+}) => {
   return (
     <div className="maintenance-list">
       <h3>Scheduled Maintenance</h3>
@@ -32,6 +35,12 @@ const MaintenanceList = ({ maintenanceSchedules }) => {
                     <li>None</li>
                 )}
               </ul>
+              <button 
+                className="cancel-button" 
+                onClick={() => onCancelMaintenance(schedule.id)}
+              >
+                Cancel
+              </button>
             </div>
           </div>
         ))}
@@ -46,7 +55,8 @@ const MaintenanceList = ({ maintenanceSchedules }) => {
 };
 
 MaintenanceList.propTypes = {
-  maintenanceSchedules: PropTypes.array.isRequired
+  maintenanceSchedules: PropTypes.array.isRequired,
+  onCancelMaintenance: PropTypes.func.isRequired
 };
 
 export default MaintenanceList;

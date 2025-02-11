@@ -55,6 +55,11 @@
     background: #d6d8d9;
     color: #1b1e21;
   }
+
+  .status.cancelled {
+    background: #f8d7da;
+    color: #721c24;
+  }
   
   .maintenance-details p {
     margin: 5px 0;

@@ -120,6 +120,17 @@ export const getScheduledMaintenances = (callback) => {
     });
 };
 
+export const updateMaintenanceStatus = (maintenanceId, status, callback) => {
+    const db = connectToDatabase();
+    db.run(sqlCode.updateMaintenanceStatus, [status, maintenanceId], (err) => {
+        if (err) {
+            console.error('Error updating maintenance status:', err);
+            return callback(err);
+        }
+        callback(null); // No error
+    });
+};
+
 export const checkRoleAccessInFacility = (personId, facilityId, callback) => {
     const db = connectToDatabase();
     db.get(sqlCode.checkRoleAccessInFacility, [personId, facilityId], (err, row) => {

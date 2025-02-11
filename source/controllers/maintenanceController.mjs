@@ -63,3 +63,13 @@ export const getScheduledMaintenances = (callback) => {
         callback(null, maintenances);
     });
 };
+
+export const updateMaintenanceStatus = (maintenanceId, status, callback) => {
+    dbInterface.updateMaintenanceStatus(maintenanceId, status, (err) => {
+        if (err) {
+            console.error('Error updating maintenance status:', err);
+            return callback(err);
+        }
+        callback(null); // Success
+    });
+};

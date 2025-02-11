@@ -43,112 +43,86 @@ const DashboardMap = ({
 }) => {
   const [buildingCoordinates, setBuildingCoordinates] = useState({});
 
-  // Use memoization for markers or polygons
-  const renderedElements = useMemo(() => {
-    if (viewType === 'buildings') {
-      // Group building data by building id extracted from the message.
-      const buildingGroups = {};
-      data[viewType].forEach((item) => {
-        // messages are of the form: "Building: urn:ngsi-ld:Building:<id>"
-        const parts = item.message.split(':');
-        const buildingId = parts[parts.length - 1].trim();
-        if (!buildingGroups[buildingId]) {
-          buildingGroups[buildingId] = [];
-        }
-        // Each building group gets an array of coordinate pairs and name.
-        buildingGroups[buildingId].push([item.lng, item.lat, item.name]);
-      });
+  // Memoize data layers with proper dependencies
+  const buildingsData = useMemo(
+    () => data[VIEW_TYPES.BUILDINGS] || [],
+    [data[VIEW_TYPES.BUILDINGS]]
+  );
 
-      // Create a polygon for each building group.
-      return Object.entries(buildingGroups).map(([buildingId, positions]) => {
-        const name = positions[0][2];
-        const coordinates = positions.map(([lng, lat]) => [lat, lng]);
-        return <Polygon key={buildingId} positions={coordinates} color={MARKER_COLORS[viewType] || 'red'}>
-          <Popup>
-            <strong>Building:</strong> {name}
-          </Popup>
+  const doorsData = useMemo(
+    () => data[VIEW_TYPES.DOORS] || [],
+    [data[VIEW_TYPES.DOORS]]
+  );
+
+  const peopleData = useMemo(
+    () => data[VIEW_TYPES.PEOPLE] || [],
+    [data[VIEW_TYPES.PEOPLE]]
+  );
+
+  // Building polygons
+  const buildingElements = useMemo(() => {
+    const buildingGroups = buildingsData.reduce((acc, item) => {
+      const parts = item.message.split(':');
+      const buildingId = parts[parts.length - 1].trim();
+      (acc[buildingId] = acc[buildingId] || []).push([item.lng, item.lat, item.name]);
+      return acc;
+    }, {});
+
+    return Object.entries(buildingGroups).map(([buildingId, positions]) => {
+      const name = positions[0][2];
+      const coordinates = positions.map(([lng, lat]) => [lat, lng]);
+      return (
+        <Polygon key={buildingId} positions={coordinates} color={MARKER_COLORS.buildings}>
+          <Popup><strong>Building:</strong> {name}</Popup>
         </Polygon>
-        });
-    } else if (viewType === 'doors') {
-      // Use doorStates to change the appearance of door markers.
-      return data[VIEW_TYPES.DOORS]?.map((door) => {
-        // Look up the door's current state; default to 'default' if not set.
-        const doorState = doorStates[door.id]?.status || 'default';
-        const color = {
-          success: 'blue',
-          denied: 'red',
-          default: MARKER_COLORS.doors,
-        }[doorState];
+      );
+    });
+  }, [buildingsData]);
 
-        console.log("DoorState in DashboardMap for viewType doors", doorState);
-        console.log("door in DashboardMap for viewType doors", door);
+  // Door markers with state handling
+  const doorElements = useMemo(() => doorsData.map(door => {
+    console.log("doorStates in useMemo of DashboardMap", doorStates);
+    const doorState = doorStates[door.id]?.status || 'default';
+    const color = {
+      success: 'blue',
+      denied: 'red',
+      default: MARKER_COLORS.doors,
+    }[doorState];
 
-        return (
-          <CircleMarkerPopup
-            key={door.id}
-            type="door"
-            data={door}
-            color={color}
-            fillColor={color}
-            radius={doorState === 'default' ? 3 : 5} // Larger when active (i.e. not 'default')
-            fillOpacity={0.8}
-          >
-            {doorState !== 'default' && (
-              <Popup>
-                {doorState === 'success' ? '✅ Access Granted' : '⛔ Access Denied'}
-              </Popup>
-            )}
-          </CircleMarkerPopup>
-        );
-      });
-    } else if (viewType === 'people') {
-       // Render people markers.
-      const peopleMarkers = data[VIEW_TYPES.PEOPLE].map((mdata) => {
-        const personColor = ROLE_COLORS[mdata.person_role] || ROLE_COLORS.Default;
-        return (
-          <CircleMarkerPopup
-            key={mdata.person_id}
-            type="person"
-            data={mdata}
-            color={personColor}
-            fillColor={personColor}
-            radius={9}
-            fillOpacity={0.8}
-          />
-        );
-      });
+    return (
+      <CircleMarkerPopup
+        key={door.id}
+        type="door"
+        data={door}
+        color={color}
+        fillColor={color}
+        radius={viewType === VIEW_TYPES.PEOPLE ? 3 : 5}
+        fillOpacity={0.8}
+      >
+        {doorState !== 'default' && (
+          <Popup>
+            {doorState === 'success' ? '✅ Access Granted' : '⛔ Access Denied'}
+          </Popup>
+        )}
+      </CircleMarkerPopup>
+    );
+  }), [doorsData, doorStates, viewType]);
 
-      // Render door markers with state-based styling (same as above).
-      const doorMarkers = data[VIEW_TYPES.DOORS]?.map((door) => {
-        const doorState = doorStates[door.id]?.status || 'default';
-        const color = {
-          success: 'blue',
-          denied: 'red',
-          default: MARKER_COLORS.doors,
-        }[doorState];
-
-        return (
-          <CircleMarkerPopup
-            key={door.message.split('Door: ')[1] || door.id}
-            type="door"
-            data={door}
-            color={color}
-            fillColor={color}
-            radius={doorState === 'default' ? 3 : 5}
-            fillOpacity={0.8}
-          >
-            {doorState !== 'default' && (
-              <Popup>
-                {doorState === 'success' ? '✅ Access Granted' : '⛔ Access Denied'}
-              </Popup>
-            )}
-          </CircleMarkerPopup>
-        );
-      });
-
-      return [...peopleMarkers, ...doorMarkers];
-    }
-  }, [data, viewType, doorStates]);
+  // People markers
+  const peopleElements = useMemo(() => peopleData.map(person => {
+    const personColor = ROLE_COLORS[person.person_role] || ROLE_COLORS.Default;
+    return (
+      <CircleMarkerPopup
+        key={person.person_id}
+        type="person"
+        data={person}
+        color={personColor}
+        fillColor={personColor}
+        radius={9}
+        fillOpacity={0.8}
+      />
+    );
+  }), [peopleData]);
 
    const alertMarkers = useMemo(() => {
     return alerts.map(alert => {
@@ -174,6 +148,23 @@ const DashboardMap = ({
       );
     });
   }, [alerts, onDismissAlert, onUnlockDoors, onActivateAlarm]);
+
+  // Combined view logic
+  const getViewElements = () => {
+    switch(viewType) {
+      case VIEW_TYPES.BUILDINGS:
+        return buildingElements;
+        
+      case VIEW_TYPES.DOORS:
+        return doorElements;
+
+      case VIEW_TYPES.PEOPLE:
+        return [...peopleElements, ...doorElements];
+
+      default:
+        return null;
+    }
+  };
 
   // Fetch coordinates when maintenance schedules change
   useEffect(() => {
@@ -235,19 +226,21 @@ const DashboardMap = ({
       zoom={16}
       className="leaflet-container"
     >
-      {/* Create a custom pane for alerts */}
-      <Pane name="alertPane" style={{ zIndex: 650, pointerEvents: 'none' }} />
-
-      {/* Create a custom pane for maintenance overlays */}
-      <Pane name="maintenancePane" style={{ zIndex: 600, pointerEvents: 'none' }} />
-      {maintenanceOverlays}
 
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
-      />
+ 
+ />
+      {/* Create a custom pane for alerts */}
+      <Pane name="alertPane" style={{ zIndex: 650, pointerEvents: 'none' }} />
+      {/* Create a custom pane for maintenance overlays */}
+      <Pane name="maintenancePane" style={{ zIndex: 600, pointerEvents: 'none' }} />
+      
+
       <ClickLogger />
-      {renderedElements}
+      {getViewElements()}
+      {maintenanceOverlays}
       {alertMarkers}
     </MapContainer>
   );

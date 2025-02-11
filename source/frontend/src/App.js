@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useMemo } from 'react';
+import React, { useState, useCallback, useEffect, useMemo, useRef } from 'react';
 import useWebSocket from './hooks/useWebSocket';
 import useMapData from './hooks/useMapData';
 import { VIEW_TYPES, MAX_ALERTS } from './constants';
@@ -12,12 +12,12 @@ import './App.css';
 import { fetchFormatAlertData, fetchAllFacilitiesData, fetchAllPeopleData,
   postMaintenanceSchedule, fetchAuthorizationData, fetchScheduledMaintenanceData,
   fetchActiveAlertsData, patchUpdatedAlertStatusData, patchUpdatedAlertActionData,
-  fetchAllSmartLocksData
+  fetchAllSmartLocksData, updateMaintenanceStatus
  } from './services/editDashboardData';
 
 function App() {
   // for the view controls
-  const [activeView, setActiveView] = useState(VIEW_TYPES.BUILDINGS);
+  const [activeView, setActiveView] = useState(VIEW_TYPES.PEOPLE);
   // for the alerts
   const [alerts, setAlerts] = useState([]);
   // for the map data
@@ -44,7 +44,7 @@ function App() {
             fetchActiveAlertsData()
           ]);
           
-          // console.log('Initial maintenanceData in App.js:', maintenanceData);
+          console.log('Initial maintenanceData in App.js:', maintenanceData);
           // console.log('Initial alertsData in App.js:', alertsData);
           // console.log('Initial doorData in App.js:', doorData);
         setBuildings(buildingsData);
@@ -59,6 +59,11 @@ function App() {
     
     loadInitialData();
   }, []);
+
+  const mapDataRef = useRef(mapData);
+    useEffect(() => {
+      mapDataRef.current = mapData;
+    }, [mapData]);
 
   const generateAccessViolationAlert = (personId, buildingId, reason) => {
     const violationAlert = {
@@ -77,15 +82,6 @@ function App() {
   // Handle maintenance scheduling
   const handleScheduleSubmit = async (schedule) => {
     try {
-      // const response = await fetch('/api/maintenance', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(schedule)
-      // });
-      
-      // if (!response.ok) throw new Error('Scheduling failed');
-      
-      // const newSchedule = await response.json();
       const newSchedule = await postMaintenanceSchedule(schedule);
       console.log('New schedule:', newSchedule);
 
@@ -94,6 +90,19 @@ function App() {
       console.error('Scheduling error:', error);
     }
   };
+
+  const handleCancelMaintenance = useCallback(async (scheduleId) => {
+    try {
+      await updateMaintenanceStatus(scheduleId, 'cancelled');
+      const updatedSchedules = maintenanceSchedules.map(schedule =>
+        schedule.id === scheduleId ? { ...schedule, status: 'cancelled' } : schedule
+      );
+      console.log('Updated schedules in handleCancelMaintenance:', updatedSchedules);
+      setMaintenanceSchedules(updatedSchedules);
+    } catch (error) {
+      console.error('Error cancelling maintenance:', error);
+    }
+  }, [maintenanceSchedules]);
 
   // const handleNewAlert = useCallback(async (alert) => {
   //   try {
@@ -138,14 +147,16 @@ function App() {
     // we're interested in
 
     // Access doors from mapData instead of separate state
-    const doors = mapData[VIEW_TYPES.DOORS] || [];
+    const doors = mapDataRef.current[VIEW_TYPES.DOORS] || [];
+    console.log("doors in handleNfcDeviceUpdate:", doors);
     
     // Handle NGSI-LD URI format
-    const targetDoorId = device.controlledAsset.value[0].split(':').pop(); // Extract numeric ID
-    const door = doors.find(d => d.id.endsWith(targetDoorId));
-
+    const targetDoorId = device.controlledAsset.value[0];
+    console.log("targetDoorId in handleNfcDeviceUpdate:", targetDoorId);
+    const door = doors.find(door => door.id === targetDoorId);
+    console.log("door in handleNfcDeviceUpdate:", door);
     if (!door) {
-      console.error('Door not found for controlledAsset:', targetDoorId);
+      console.error('Controlled asset not found for the specified NFC reader');
       return;
     }
 
@@ -170,7 +181,7 @@ function App() {
     if (!result.success) {
       generateAccessViolationAlert(result.personId, door.entry, result.reason);
     }
-  }, [mapData]); // Now depends on mapData instead of doors state
+  }, [])
 
 
 
@@ -306,6 +317,7 @@ function App() {
             />
             <MaintenanceList 
               maintenanceSchedules={maintenanceSchedules}
+              onCancelMaintenance={handleCancelMaintenance}
             />
           </div>
         </div>
