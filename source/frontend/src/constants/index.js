@@ -4,5 +4,5 @@ export const VIEW_TYPES = {
     PEOPLE: 'people'
   };
   
-export const SOCKET_SERVER_URL = 'http://localhost:3001';
+export const SOCKET_SERVER_URL = '/';
 export const MAX_ALERTS = 10;

@@ -150,6 +150,11 @@
   /* margin-top: 20px; */
 }
 
+.scheduler-controls {
+  margin: 20px 0;
+  text-align: start;
+}
+
 .scheduler-section {
   margin-top: 30px;
   padding: 20px;
@@ -157,3 +162,4 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+

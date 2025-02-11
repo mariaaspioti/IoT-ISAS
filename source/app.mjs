@@ -74,16 +74,18 @@ const server = http.createServer(app);
 const io = new SocketIOServer(server, {
   cors: {
     origin: 'http://localhost:3000',
-    methods: ["GET", "POST"]
-  }
+    methods: ["GET", "POST"],
+    credentials: true
+  },
+  transports: ['websocket', 'polling'],
 });
 
 // When a client connects via Socket.IO
 io.on('connection', (socket) => {
-  console.log('A client connected:', socket.id);
+  // console.log('A client connected:', socket.id);
   
   socket.on('disconnect', () => {
-    console.log('Client disconnected:', socket.id);
+    // console.log('Client disconnected:', socket.id);
   });
 });
 

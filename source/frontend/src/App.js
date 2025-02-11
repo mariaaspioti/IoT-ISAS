@@ -29,33 +29,28 @@ function App() {
   // for the buildings and workers
   const [buildings, setBuildings] = useState([]);
   const [workers, setWorkers] = useState([]);
-  const [doors, setDoors] = useState([]);
   const [doorStates, setDoorStates] = useState({});
 
   // Load initial data
   useEffect(() => {
     const loadInitialData = async () => {
       try {
-        const [buildingsData, workersData, doorData, maintenanceData, alertsData] = 
+        const [buildingsData, workersData, maintenanceData, alertsData] = 
           await Promise.all([
             fetchAllFacilitiesData(),
             fetchAllPeopleData(),
-            fetchAllSmartLocksData(),
+            // fetchAllSmartLocksData(),
             fetchScheduledMaintenanceData(),
             fetchActiveAlertsData()
           ]);
           
           // console.log('Initial maintenanceData in App.js:', maintenanceData);
           // console.log('Initial alertsData in App.js:', alertsData);
-          console.log('Initial doorData in App.js:', doorData);
+          // console.log('Initial doorData in App.js:', doorData);
         setBuildings(buildingsData);
         setWorkers(workersData);
-        setDoors(doorData);
-        // setMaintenanceSchedules(maintenanceData.filter(s => 
-        //   new Date(s.scheduledTime) > new Date()
-        // ));
+        // setDoors(doorData);
         setMaintenanceSchedules(maintenanceData);
-        // setAlerts(alertsData.filter(a => !a.resolved));
         setAlerts(alertsData);
       } catch (error) {
         console.error('Initial data load error:', error);
@@ -142,27 +137,23 @@ function App() {
     // device.controlledAsset == doors[device.id] which is the Smart Lock entity
     // we're interested in
 
-    if (!Array.isArray(device.controlledAsset.value) || device.controlledAsset.value.length === 0) {
-      console.error('Invalid controlledAsset value:', device.controlledAsset.value);
-      return;
-    }
-
-    // find the Smart Lock entity for the NFC reader
-    const door = doors.find(door => door.id === device.controlledAsset.value[0]);
-    if (!door) {
-      console.error('Door not found for controlledAsset:', device.controlledAsset.value[0]);
-      return;
-    }
-    console.log('Door in handleNfcDeviceUpdate:', door);
-
+    // Access doors from mapData instead of separate state
+    const doors = mapData[VIEW_TYPES.DOORS] || [];
     
+    // Handle NGSI-LD URI format
+    const targetDoorId = device.controlledAsset.value[0].split(':').pop(); // Extract numeric ID
+    const door = doors.find(d => d.id.endsWith(targetDoorId));
+
+    if (!door) {
+      console.error('Door not found for controlledAsset:', targetDoorId);
+      return;
+    }
+
     setDoorStates(prev => {
-      // Clear existing timer if present
       if (prev[door.id]?.timerId) {
         clearTimeout(prev[door.id].timerId);
       }
-  
-      // Set new status and timer
+
       const newState = {
         status: result.success ? 'success' : 'denied',
         timerId: setTimeout(() => {
@@ -170,20 +161,18 @@ function App() {
             ...prev,
             [door.id]: { ...prev[door.id], status: 'default' }
           }));
-        }, 8000) // 8 seconds timeout
+        }, 8000)
       };
-  
-      return {
-        ...prev,
-        [door.id]: newState
-      };
+
+      return { ...prev, [door.id]: newState };
     });
-  
-    // Optional: Update alerts if access was denied
+
     if (!result.success) {
       generateAccessViolationAlert(result.personId, door.entry, result.reason);
     }
-  }, [doors, generateAccessViolationAlert]);
+  }, [mapData]); // Now depends on mapData instead of doors state
+
+
 
   // Add useMemo to prevent unnecessary handler recreation
   const eventHandlers = useMemo(() => ({
@@ -282,9 +271,6 @@ function App() {
     <div className="app-container">
       <div className="header-controls">
         <h1>Industrial Spatial Authorization System</h1>
-        <button onClick={() => setShowScheduler(!showScheduler)}>
-          {showScheduler ? 'Hide Scheduler' : 'Schedule Maintenance'}
-        </button>
       </div>
       
       <ViewControls 
@@ -324,6 +310,12 @@ function App() {
           </div>
         </div>
       )}
+
+    <div className="scheduler-controls">
+          <button onClick={() => setShowScheduler(!showScheduler)}>
+            {showScheduler ? 'Hide Scheduler' : 'Schedule Maintenance'}
+          </button>
+        </div>
 
       {showScheduler && (
               <ScheduleMaintenance
