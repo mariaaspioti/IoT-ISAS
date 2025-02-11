@@ -13,7 +13,8 @@ const useMapData = () => {
   const fetchData = useCallback(async () => {
     try {
       const { mapData: peopleRaw } = await editMap.fetchTrackingData();
-      const doors = await editMap.showDoors();
+      // const doors = await editMap.showDoors();
+      const doors = await editMap.fetchAllSmartLocksData();
       const buildings = await editMap.showBuildings();
 
       // Deduplicate PEOPLE data using a Map object (keeps latest entry per id)

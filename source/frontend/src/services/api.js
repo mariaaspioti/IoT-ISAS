@@ -305,3 +305,15 @@ export const patchAlertAction = async (alertId, action) => {
         console.error('Error updating alert action:', error);
     }
 }
+
+// Fetch all smart locks 
+export const fetchAllSmartLocks = async () => {
+    try {
+        const response = await fetch('/api/smart-locks');
+        const json = await response.json();
+        return json.data;
+    } catch (error) {
+        console.error('Error fetching smart locks:', error);
+        throw error;
+    }
+};

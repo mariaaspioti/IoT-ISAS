@@ -38,7 +38,9 @@ const DashboardMap = ({
   maintenanceSchedules, 
   onDismissAlert, 
   onUnlockDoors, 
-  onActivateAlarm }) => {
+  onActivateAlarm, 
+  doorStates
+}) => {
   const [buildingCoordinates, setBuildingCoordinates] = useState({});
 
   // Use memoization for markers or polygons
@@ -68,26 +70,45 @@ const DashboardMap = ({
         </Polygon>
         });
     } else if (viewType === 'doors') {
-      // For doors or people, render individual markers.
-      return data[viewType].map((mdata) => (
-        <CircleMarkerPopup
-          key={mdata.message.split('Door: ')[1]}
-          type={'door'}
-          data={mdata}
-          color={MARKER_COLORS[viewType] || 'green'}
-          fillColor={MARKER_COLORS[viewType] || 'green'}
-          radius={5}
-          fillOpacity={1}
-        />
-      ));
+      // Use doorStates to change the appearance of door markers.
+      return data[VIEW_TYPES.DOORS]?.map((door) => {
+        // Look up the door's current state; default to 'default' if not set.
+        const doorState = doorStates[door.id]?.status || 'default';
+        const color = {
+          success: 'blue',
+          denied: 'red',
+          default: MARKER_COLORS.doors,
+        }[doorState];
+
+        console.log("DoorState in DashboardMap for viewType doors", doorState);
+        console.log("door in DashboardMap for viewType doors", door);
+
+        return (
+          <CircleMarkerPopup
+            key={door.id}
+            type="door"
+            data={door}
+            color={color}
+            fillColor={color}
+            radius={doorState === 'default' ? 3 : 5} // Larger when active (i.e. not 'default')
+            fillOpacity={0.8}
+          >
+            {doorState !== 'default' && (
+              <Popup>
+                {doorState === 'success' ? '✅ Access Granted' : '⛔ Access Denied'}
+              </Popup>
+            )}
+          </CircleMarkerPopup>
+        );
+      });
     } else if (viewType === 'people') {
-        // People markers
+       // Render people markers.
       const peopleMarkers = data[VIEW_TYPES.PEOPLE].map((mdata) => {
         const personColor = ROLE_COLORS[mdata.person_role] || ROLE_COLORS.Default;
         return (
           <CircleMarkerPopup
             key={mdata.person_id}
-            type={'person'}
+            type="person"
             data={mdata}
             color={personColor}
             fillColor={personColor}
@@ -97,22 +118,37 @@ const DashboardMap = ({
         );
       });
 
-      // Door markers (smaller and green)
-      const doorMarkers = data[VIEW_TYPES.DOORS].map((door) => (
-        <CircleMarkerPopup
-          key={door.message.split('Door: ')[1]}
-          type={'door'}
-          data={door}
-          color={MARKER_COLORS.doors}
-          fillColor={MARKER_COLORS.doors}
-          radius={3}
-          fillOpacity={1}
-        />
-      ));
+      // Render door markers with state-based styling (same as above).
+      const doorMarkers = data[VIEW_TYPES.DOORS]?.map((door) => {
+        const doorState = doorStates[door.id]?.status || 'default';
+        const color = {
+          success: 'blue',
+          denied: 'red',
+          default: MARKER_COLORS.doors,
+        }[doorState];
+
+        return (
+          <CircleMarkerPopup
+            key={door.message.split('Door: ')[1] || door.id}
+            type="door"
+            data={door}
+            color={color}
+            fillColor={color}
+            radius={doorState === 'default' ? 3 : 5}
+            fillOpacity={0.8}
+          >
+            {doorState !== 'default' && (
+              <Popup>
+                {doorState === 'success' ? '✅ Access Granted' : '⛔ Access Denied'}
+              </Popup>
+            )}
+          </CircleMarkerPopup>
+        );
+      });
 
       return [...peopleMarkers, ...doorMarkers];
     }
-  }, [data, viewType]);
+  }, [data, viewType, doorStates]);
 
    const alertMarkers = useMemo(() => {
     return alerts.map(alert => {

@@ -582,7 +582,7 @@ let checkAccessAuthorization = async (req, res) => {
 
     try {
         //do nothing
-        
+
     } catch (error) {
     res.status(500).json({ authorized: false, reason: 'System error' });
     }
@@ -706,11 +706,24 @@ let patchAlertActionTaken = async (req, res) => {
             data: response.data 
         });
     } catch (error) {
-        console.error('Alert patch error:', error);
+        console.error('Alert patch error in patchAlertActionTaken:', error);
         const statusCode = error.response?.status || 500;
         res.status(statusCode).json({ 
             error: error.response?.data?.error || 'Failed to update alert action' 
         });
+    }
+};
+
+let getAllSmartLocks = async (req, res) => {
+    try {
+        // Type is Device and name starts with SmartLock-
+        const response = await axios.get(`${orionUrl}?type=Device&q=name~=^SmartLock-`, {
+            headers: getHeaders
+        });
+        res.json({ data: response.data });
+    } catch (error) {
+        console.error('Smart locks error in getAllSmartLocks:', error);
+        res.status(500).json({ error: 'Failed to fetch smart locks' });
     }
 };
 
@@ -719,5 +732,5 @@ export { getData, getAllData, getDeviceData, getDeviceDataFromName, getDeviceLoc
     getFacilityLocationData, getFacilitiesNameAndLocation, findCurrentFacilities, getDoorsLocations, 
     getPersonData, getAllPeopleData, handleSOSAlert, handleMaintenanceSchedule, getScheduledMaintenances,
     checkAccessAuthorization, getActiveAlerts, getAlertLocation, patchAlertStatus, patchAlertLocation, 
-    patchAlertActionTaken
+    patchAlertActionTaken, getAllSmartLocks
  };

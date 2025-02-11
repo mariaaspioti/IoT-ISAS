@@ -11,35 +11,46 @@ import './App.css';
 
 import { fetchFormatAlertData, fetchAllFacilitiesData, fetchAllPeopleData,
   postMaintenanceSchedule, fetchAuthorizationData, fetchScheduledMaintenanceData,
-  fetchActiveAlertsData, patchUpdatedAlertStatusData, patchUpdatedAlertActionData
+  fetchActiveAlertsData, patchUpdatedAlertStatusData, patchUpdatedAlertActionData,
+  fetchAllSmartLocksData
  } from './services/editDashboardData';
 
 function App() {
+  // for the view controls
   const [activeView, setActiveView] = useState(VIEW_TYPES.BUILDINGS);
+  // for the alerts
   const [alerts, setAlerts] = useState([]);
+  // for the map data
   const { loading, mapData } = useMapData();
   // for the schedule maintenance form
   const [showScheduler, setShowScheduler] = useState(false);
+  // for the maintenance schedules
   const [maintenanceSchedules, setMaintenanceSchedules] = useState([]);
+  // for the buildings and workers
   const [buildings, setBuildings] = useState([]);
   const [workers, setWorkers] = useState([]);
+  const [doors, setDoors] = useState([]);
+  const [doorStates, setDoorStates] = useState({});
 
   // Load initial data
   useEffect(() => {
     const loadInitialData = async () => {
       try {
-        const [buildingsData, workersData, maintenanceData, alertsData] = 
+        const [buildingsData, workersData, doorData, maintenanceData, alertsData] = 
           await Promise.all([
             fetchAllFacilitiesData(),
             fetchAllPeopleData(),
+            fetchAllSmartLocksData(),
             fetchScheduledMaintenanceData(),
             fetchActiveAlertsData()
           ]);
           
           // console.log('Initial maintenanceData in App.js:', maintenanceData);
-          console.log('Initial alertsData in App.js:', alertsData);
+          // console.log('Initial alertsData in App.js:', alertsData);
+          console.log('Initial doorData in App.js:', doorData);
         setBuildings(buildingsData);
         setWorkers(workersData);
+        setDoors(doorData);
         // setMaintenanceSchedules(maintenanceData.filter(s => 
         //   new Date(s.scheduledTime) > new Date()
         // ));
@@ -53,6 +64,20 @@ function App() {
     
     loadInitialData();
   }, []);
+
+  const generateAccessViolationAlert = (personId, buildingId, reason) => {
+    const violationAlert = {
+      id: `access-violation-${Date.now()}`,
+      type: 'AccessViolation',
+      personId,
+      buildingId,
+      description: `Unauthorized access attempt: ${reason}`,
+      severity: 'high',
+      timestamp: new Date().toISOString()
+    };
+  
+    // setAlerts(prev => [violationAlert, ...prev].slice(0, MAX_ALERTS));
+  };
 
   // Handle maintenance scheduling
   const handleScheduleSubmit = async (schedule) => {
@@ -111,10 +136,54 @@ function App() {
   }, []);
 
   const handleNfcDeviceUpdate = useCallback((device, result) => {
-    // Implement your NFC update logic here
     console.log('NFC Device Update:', device, result);
-    // ...
-  }, []);
+    // device is the NFC reader Device entity
+    // device.controlledAsset is the controlled Smart Lock entity, so
+    // device.controlledAsset == doors[device.id] which is the Smart Lock entity
+    // we're interested in
+
+    if (!Array.isArray(device.controlledAsset.value) || device.controlledAsset.value.length === 0) {
+      console.error('Invalid controlledAsset value:', device.controlledAsset.value);
+      return;
+    }
+
+    // find the Smart Lock entity for the NFC reader
+    const door = doors.find(door => door.id === device.controlledAsset.value[0]);
+    if (!door) {
+      console.error('Door not found for controlledAsset:', device.controlledAsset.value[0]);
+      return;
+    }
+    console.log('Door in handleNfcDeviceUpdate:', door);
+
+    
+    setDoorStates(prev => {
+      // Clear existing timer if present
+      if (prev[door.id]?.timerId) {
+        clearTimeout(prev[door.id].timerId);
+      }
+  
+      // Set new status and timer
+      const newState = {
+        status: result.success ? 'success' : 'denied',
+        timerId: setTimeout(() => {
+          setDoorStates(prev => ({
+            ...prev,
+            [door.id]: { ...prev[door.id], status: 'default' }
+          }));
+        }, 8000) // 8 seconds timeout
+      };
+  
+      return {
+        ...prev,
+        [door.id]: newState
+      };
+    });
+  
+    // Optional: Update alerts if access was denied
+    if (!result.success) {
+      generateAccessViolationAlert(result.personId, door.entry, result.reason);
+    }
+  }, [doors, generateAccessViolationAlert]);
 
   // Add useMemo to prevent unnecessary handler recreation
   const eventHandlers = useMemo(() => ({
@@ -124,6 +193,14 @@ function App() {
   
   // Update the useWebSocket usage
   useWebSocket(eventHandlers);
+
+  // for the door states
+  useEffect(() => {
+    return () => {
+      // Clear all timers when component unmounts
+      Object.values(doorStates).forEach(state => clearTimeout(state.timerId));
+    };
+  }, [doorStates]);
 
   const handleDismissAlert = useCallback(async (alertId) => {
     // status is 'dismissed'
@@ -199,19 +276,7 @@ function App() {
     }
   };
 
-  const generateAccessViolationAlert = (personId, buildingId, reason) => {
-    const violationAlert = {
-      id: `access-violation-${Date.now()}`,
-      type: 'AccessViolation',
-      personId,
-      buildingId,
-      description: `Unauthorized access attempt: ${reason}`,
-      severity: 'high',
-      timestamp: new Date().toISOString()
-    };
   
-  setAlerts(prev => [violationAlert, ...prev].slice(0, MAX_ALERTS));
-};
 
   return (
     <div className="app-container">
@@ -242,6 +307,7 @@ function App() {
             onDismissAlert={handleDismissAlert}
             onUnlockDoors={handleUnlockDoors}
             onActivateAlarm={handleActivateAlarm}
+            doorStates={doorStates}
              />
           </div>
 

@@ -38,5 +38,6 @@ router.patch('/alerts/:id/action-taken', apiController.patchAlertActionTaken);
 
 router.get('access-check', apiController.checkAccessAuthorization);
 
+router.get('/smart-locks', apiController.getAllSmartLocks);
 
 export {router as apiRoutes};

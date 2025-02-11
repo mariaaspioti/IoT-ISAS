@@ -268,3 +268,23 @@ export const patchUpdatedAlertActionData = async (alertId, alertAction) => {
     const response = await APICall.patchAlertAction(alertId, alertAction);
     return response;
 }
+
+export const fetchAllSmartLocksData = async () => {
+    const smartlocks = await APICall.fetchAllSmartLocks();
+    const smartlocksData = smartlocks.map(smartlock => ({
+        id: smartlock.id,
+        lat: smartlock.location.value.coordinates[1],
+        lng: smartlock.location.value.coordinates[0],
+        message: `SmartLock: ${smartlock.id}`,
+        controlledAsset: smartlock.controlledAsset.value,
+        deviceCategory: smartlock.deviceCategory.value,
+        deviceState: smartlock.deviceState.value,
+        entry: smartlock.entry.value,
+        exit: smartlock.exit.value,
+        hardLock: smartlock.hardLock.value,
+        name: smartlock.name.value,
+        serialNumber: smartlock.serialNumber.value,
+        value: smartlock.value.value
+    }));
+    return smartlocksData;
+}
