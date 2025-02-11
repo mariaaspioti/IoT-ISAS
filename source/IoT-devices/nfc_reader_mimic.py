@@ -97,7 +97,7 @@ def main():
     mqtt_client = mqtt.Client(client_id)
     mqtt_client.connect(broker, port)
     mqtt_client.loop_start()
-    i=0
+    i=8
     print("Connected to MQTT broker")
 
     nfc_device_id = f"NFCReader-{i}"

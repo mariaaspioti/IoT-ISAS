@@ -92,7 +92,7 @@ export const startNFCPolling = (socket, intervalMs = 2000, limit = 100) => {
         headers: getHeaders,
         params: {
           type: 'Device',
-          q: "name~=^NFCReader-", // Regex-like query to match names starting with NFCReader-
+          q: "name~=^NFCReader-", // query to match names starting with NFCReader-
           limit: limit, // Set the limit parameter
         },
       };
