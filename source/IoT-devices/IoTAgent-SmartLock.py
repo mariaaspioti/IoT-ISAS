@@ -26,7 +26,6 @@ gd_headers = {
 dotenv_path = os.path.join(os.path.dirname(__file__), '..', '.env')
 load_dotenv(dotenv_path)
 
-
 stop_event = threading.Event()
 
 def unlock_smartlock():
@@ -170,16 +169,29 @@ def monitor_single_smart_lock(smart_lock_id, serial_number):
 def monitor_smart_locks():
     smart_locks = get_all_smart_locks()
     threads = []
+    
     for smart_lock in smart_locks:
         smart_lock_id = smart_lock['id']
-        print(smart_lock_id)
+        print(f"Monitoring {smart_lock_id}...")
         _, _, serial_number = get_smart_lock_state(smart_lock_id)
         thread = threading.Thread(target=monitor_single_smart_lock, args=(smart_lock_id, serial_number))
         thread.start()
         threads.append(thread)
 
-    for thread in threads:
-        thread.join()
+    # Wait for all threads to finish or stop event to be set
+    try:
+        while any(thread.is_alive() for thread in threads):
+            for thread in threads:
+                thread.join(timeout=1)  # Check every second if threads are still running
+            if stop_event.is_set():
+                break  # Exit loop if stop_event is set
+    except KeyboardInterrupt:
+        print("\nKeyboardInterrupt detected. Stopping monitoring...")
+        stop_event.set()  # Set event to signal threads to exit
+        for thread in threads:
+            thread.join()  # Ensure threads stop before exiting
+        print("All threads stopped. Exiting program.")
+
 
 def send_lock_command_to_device(device_id):
     command_url = f"{orion_url}/{device_id}/attrs"
@@ -212,8 +224,8 @@ def main():
         monitor_smart_locks()
         # send_lock_command_to_device("urn:ngsi-ld:Device:91")
     except KeyboardInterrupt:
-        print("Shutting down")
-        stop_event.set()
+        print("\nShutting down gracefully...")
+        stop_event.set()  # Signal all threads to stop
 
 if __name__ == "__main__":
     main()
