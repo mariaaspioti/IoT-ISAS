@@ -727,10 +727,19 @@ let getAllSmartLocks = async (req, res) => {
     }
 };
 
+let fetchCameraImage = async (req, res) => {
+    try {
+        getLatestImage(req, res);
+    } catch (error) {
+        console.error('Error fetching camera image:', error);
+        res.status(500).json({ error: 'Failed to fetch camera image' });
+    }
+};
+
 export { getData, getAllData, getDeviceData, getDeviceDataFromName, getDeviceLocationData, 
     getAllDevicesLocationData, getAllDevicesControlledAssets, saveCoordinates, getAllFacilities, 
     getFacilityLocationData, getFacilitiesNameAndLocation, findCurrentFacilities, getDoorsLocations, 
     getPersonData, getAllPeopleData, handleSOSAlert, handleMaintenanceSchedule, getScheduledMaintenances,
     checkAccessAuthorization, getActiveAlerts, getAlertLocation, patchAlertStatus, patchAlertLocation, 
-    patchAlertActionTaken, getAllSmartLocks
+    patchAlertActionTaken, getAllSmartLocks, fetchCameraImage
  };
