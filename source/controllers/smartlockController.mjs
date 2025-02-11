@@ -18,7 +18,7 @@ export const unlockSmartLock = async (smartLockId) => {
                 },
                 "value": {
                     "type": "Text",
-                    "value": "2"
+                    "value": "1"
                 },
                 "dateLastValueReported": {
                     "type": "DateTime",
