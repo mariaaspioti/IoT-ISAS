@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import useWebSocket from './hooks/useWebSocket';
 import useMapData from './hooks/useMapData';
 import { VIEW_TYPES, MAX_ALERTS } from './constants';
@@ -110,7 +110,20 @@ function App() {
     }
   }, []);
 
-  useWebSocket(handleNewAlert);
+  const handleNfcDeviceUpdate = useCallback((device, result) => {
+    // Implement your NFC update logic here
+    console.log('NFC Device Update:', device, result);
+    // ...
+  }, []);
+
+  // Add useMemo to prevent unnecessary handler recreation
+  const eventHandlers = useMemo(() => ({
+    alertSOSbutton: handleNewAlert,
+    nfcDeviceUpdate: handleNfcDeviceUpdate
+  }), [handleNewAlert, handleNfcDeviceUpdate]);
+  
+  // Update the useWebSocket usage
+  useWebSocket(eventHandlers);
 
   const handleDismissAlert = useCallback(async (alertId) => {
     // status is 'dismissed'
