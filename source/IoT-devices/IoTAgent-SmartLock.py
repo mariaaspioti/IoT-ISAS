@@ -26,6 +26,14 @@ gd_headers = {
 dotenv_path = os.path.join(os.path.dirname(__file__), '..', '.env')
 load_dotenv(dotenv_path)
 
+# Get the smart lock URLs from the environment variables
+unlock_url = os.getenv('SMARTLOCK_UNLOCK_URL')
+lock_url = os.getenv('SMARTLOCK_LOCK_URL')
+get_smartlocks_url = os.getenv('SMARTLOCK_GET_URL')
+
+if not unlock_url or not lock_url or not get_smartlocks_url:
+    raise ValueError("SMARTLOCK_UNLOCK_URL or SMARTLOCK_LOCK_URL or SMARTLOCK_GET_URL not found in environment variables")
+
 
 stop_event = threading.Event()
 
@@ -34,14 +42,13 @@ def unlock_smartlock():
     if not token:
         raise ValueError("No token found in the environment variables")
 
-    url = 'https://api.nuki.io/smartlock/18043712356/action/unlock'
     headers = {
         'Authorization': f'Bearer {token}',
         'accept': 'application/json',  # Add 'accept' header for consistency
     }
 
     # No payload sent
-    response = requests.post(url, headers=headers)
+    response = requests.post(unlock_url, headers=headers)
 
     if response.status_code == 204:
         print('Unlock request was successful')
@@ -55,14 +62,13 @@ def lock_smartlock():
     if not token:
         raise ValueError("No token found in the environment variables")
 
-    url = 'https://api.nuki.io/smartlock/18043712356/action/lock'
     headers = {
         'Authorization': f'Bearer {token}',
         'accept': 'application/json',  # Add 'accept' header for consistency
     }
 
     # No payload sent
-    response = requests.post(url, headers=headers)
+    response = requests.post(lock_url, headers=headers)
 
     if response.status_code == 204:
         print('Lock request was successful')
@@ -71,19 +77,19 @@ def lock_smartlock():
         print('Status code:', response.status_code)
         print('Response:', response.text)
 
+
 def get_smartlock_():
     token = os.getenv('AUTH_TOKEN')
 
     if not token:
         raise ValueError("No token found in the environment variables")
     
-    url = 'https://api.nuki.io/smartlock'
     headers = {
         'Accept': 'application/json',
         'Authorization': f'Bearer {token}',
     }
 
-    response = requests.get(url, headers=headers)
+    response = requests.get(get_smartlocks_url, headers=headers)
 
     # Print the response status code and JSON content
     print(response.status_code)
@@ -170,16 +176,29 @@ def monitor_single_smart_lock(smart_lock_id, serial_number):
 def monitor_smart_locks():
     smart_locks = get_all_smart_locks()
     threads = []
+    
     for smart_lock in smart_locks:
         smart_lock_id = smart_lock['id']
-        print(smart_lock_id)
+        print(f"Monitoring {smart_lock_id}...")
         _, _, serial_number = get_smart_lock_state(smart_lock_id)
         thread = threading.Thread(target=monitor_single_smart_lock, args=(smart_lock_id, serial_number))
         thread.start()
         threads.append(thread)
 
-    for thread in threads:
-        thread.join()
+    # Wait for all threads to finish or stop event to be set
+    try:
+        while any(thread.is_alive() for thread in threads):
+            for thread in threads:
+                thread.join(timeout=1)  # Check every second if threads are still running
+            if stop_event.is_set():
+                break  # Exit loop if stop_event is set
+    except KeyboardInterrupt:
+        print("\nKeyboardInterrupt detected. Stopping monitoring...")
+        stop_event.set()  # Set event to signal threads to exit
+        for thread in threads:
+            thread.join()  # Ensure threads stop before exiting
+        print("All threads stopped. Exiting program.")
+
 
 def send_lock_command_to_device(device_id):
     command_url = f"{orion_url}/{device_id}/attrs"
@@ -212,8 +231,8 @@ def main():
         monitor_smart_locks()
         # send_lock_command_to_device("urn:ngsi-ld:Device:91")
     except KeyboardInterrupt:
-        print("Shutting down")
-        stop_event.set()
+        print("\nShutting down gracefully...")
+        stop_event.set()  # Signal all threads to stop
 
 if __name__ == "__main__":
     main()
