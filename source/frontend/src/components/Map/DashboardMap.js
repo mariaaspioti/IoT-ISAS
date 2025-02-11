@@ -4,6 +4,7 @@ import CircleMarkerPopup from './CircleMarkerPopup';
 import 'leaflet/dist/leaflet.css';
 import { saveCoordinates } from '../../services/api';
 import { fetchBuildingCoordinates } from '../../services/buildingService';
+import { VIEW_TYPES } from '../../constants';
 
 const ClickLogger = () => {
   useMapEvent('click', (e) => {
@@ -16,7 +17,8 @@ const ClickLogger = () => {
 
 const MARKER_COLORS = {
   buildings: 'darkred',
-  doors: 'green',
+  // doors: 'green',
+  doors: "#a9a9a9",
   people: 'blue',
   alert: 'red',
 };
@@ -44,7 +46,7 @@ const DashboardMap = ({
     if (viewType === 'buildings') {
       // Group building data by building id extracted from the message.
       const buildingGroups = {};
-      data.forEach((item) => {
+      data[viewType].forEach((item) => {
         // messages are of the form: "Building: urn:ngsi-ld:Building:<id>"
         const parts = item.message.split(':');
         const buildingId = parts[parts.length - 1].trim();
@@ -67,7 +69,7 @@ const DashboardMap = ({
         });
     } else if (viewType === 'doors') {
       // For doors or people, render individual markers.
-      return data.map((mdata) => (
+      return data[viewType].map((mdata) => (
         <CircleMarkerPopup
           key={mdata.message.split('Door: ')[1]}
           type={'door'}
@@ -79,22 +81,36 @@ const DashboardMap = ({
         />
       ));
     } else if (viewType === 'people') {
-      // For doors or people, render individual markers.
-      
-      return data.map((mdata) => {
-        const personColor = ROLE_COLORS[mdata.person_role] || ROLE_COLORS.Default; // color by role
-        
-        return (<CircleMarkerPopup
-          key={mdata.person_id}
-          type={'person'}
-          data={mdata}
-          color={personColor}
-          fillColor={personColor}
-          radius={9}
-          fillOpacity={0.8}
+        // People markers
+      const peopleMarkers = data[VIEW_TYPES.PEOPLE].map((mdata) => {
+        const personColor = ROLE_COLORS[mdata.person_role] || ROLE_COLORS.Default;
+        return (
+          <CircleMarkerPopup
+            key={mdata.person_id}
+            type={'person'}
+            data={mdata}
+            color={personColor}
+            fillColor={personColor}
+            radius={9}
+            fillOpacity={0.8}
+          />
+        );
+      });
+
+      // Door markers (smaller and green)
+      const doorMarkers = data[VIEW_TYPES.DOORS].map((door) => (
+        <CircleMarkerPopup
+          key={door.message.split('Door: ')[1]}
+          type={'door'}
+          data={door}
+          color={MARKER_COLORS.doors}
+          fillColor={MARKER_COLORS.doors}
+          radius={3}
+          fillOpacity={1}
         />
-      );
-    });
+      ));
+
+      return [...peopleMarkers, ...doorMarkers];
     }
   }, [data, viewType]);
 

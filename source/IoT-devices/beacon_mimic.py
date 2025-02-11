@@ -77,7 +77,7 @@ def check_door_proximity(door_locations, lat, lng):
     Returns:
       int: The index of the door the device is close to. -1 if the device is not close to any door.'''
     for i, door in enumerate(door_locations):
-        if np.linalg.norm([lng, lat] - door) < 0.00005: # 0.00005 degrees is approximately 5.5 meters
+        if np.linalg.norm([lng, lat] - door) < 0.00007: # 0.00007 is approximately 5 meters
             return i
     return -1
 
@@ -449,7 +449,7 @@ def mimic_beacon(mqtt_client, route, speed, device_id, base_topic):
         topic = f"{base_topic}/{device_id}"
         mqtt_client.publish(topic, json.dumps(payload))
         print(f"{device_id} published to {topic}")#: {payload}")
-        if (device_id == "BluetoothTracker-0" or device_id == "GPSTracker-0"):
+        if (device_id == "BluetoothTracker-0"):
             handle_door_entry(mqtt_client, position[1], position[0], device_id)
         time.sleep(1)
 

@@ -39,46 +39,38 @@ let handleNFCDeviceUpdates = async (device, socket) => {
 
         const facility = getFacility(device.direction.value, smartLockData);
         
-        
+        let result;
         if (!smartLockData.hardLock.value) {
             if (facility != '') {
-                checkUidAuthorization(device.value.value, facility, (roleAccess) => {
-                    if (roleAccess) {
-                        // Handle authorized access
-                        // socket.emit('accessGranted', { device, facility });
-                        console.log("access granted")
-                        unlockSmartLock(smartLockId);
-
-                    } else {
-                        // Handle unauthorized access
-                        // socket.emit('accessDenied', { device, facility });
-                        console.log("access denied");
+                // Use the Promise wrapper to await the authorization result.
+                const roleAccess = await checkUidAuthorizationAsync(device.value.value, facility);
+                if (roleAccess) {
+                    console.log("access granted");
+                    unlockSmartLock(smartLockId);
+                    result = "success";
+                } else {
+                    console.log("access denied");
+                    result = "denied";
                     }
-                });
-            } else {
-                // The person is trying to go outside
-                // We need to find the facility that they are in now
-                const facilityPersonIsIn = getFacilityPersonIsIn(device.direction.value, smartLockData);
-                checkUidAuthorization(device.value.value, facilityPersonIsIn, (roleAccess) => {
+                } else {
+                    // The person is trying to go outside
+                    // We need to find the facility that they are in now
+                    const facilityPersonIsIn = getFacilityPersonIsIn(device.direction.value, smartLockData);
+                    const roleAccess = await checkUidAuthorizationAsync(device.value.value, facilityPersonIsIn);
                     if (roleAccess) {
-                        // If they originally had access to this area, unlock the door and let them go outside
-
-                        // socket.emit('accessGranted', { device, facility });  
-                        console.log("access granted")
+                        console.log("access granted");
                         unlockSmartLock(smartLockId);
-
+                        result = "success";
                     } else {
-                        // If they didn't have access to the area they are in now, log that they are inside 
-                        // an unauthorized area
-                        // socket.emit('accessDenied', { device, facility });
                         console.log("Inside unauthorized area");
+                        result = "denied";
                     }
-                });
-            }
+                }
         } else {
             console.log("Hardlock is active. Access is restricted until the security officer disables it.");
+            result = "denied"
         }
-
+        return result;
     } catch (error) {
         console.error('Error handling NFC device updates:', error);
     }
@@ -106,6 +98,14 @@ let getPersonFromUid = async (uid) => {
     }
 };
 
+const checkUidAuthorizationAsync = (uid, facilityCBId) => {
+    return new Promise((resolve, reject) => {
+      // Call the original function and resolve when the callback is invoked
+      checkUidAuthorization(uid, facilityCBId, (roleAccess) => {
+        resolve(roleAccess);
+      });
+    });
+  };
 
 let checkUidAuthorization = async (uid, facilityCBId, callback) => {
     try {

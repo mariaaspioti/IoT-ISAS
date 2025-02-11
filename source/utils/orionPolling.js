@@ -104,37 +104,66 @@ export const startNFCPolling = (socket, intervalMs = 2000, limit = 100) => {
         return;
       }
 
-      // Iterate over each device and check for changes
-      deviceData.forEach((device) => {
+      // // Iterate over each device and check for changes
+      // deviceData.forEach((device) => {
+      //   const currentValue = device.value.value;
+      //   const currentDateLastValueReported = device.dateLastValueReported.value;
+
+      //   if (isFirstPoll) {
+      //     // Save the current state as the previous state during the first poll
+      //     previousState.set(device.id, {
+      //       value: currentValue,
+      //       dateLastValueReported: currentDateLastValueReported
+      //     });
+      //   } else {
+      //     const previousDevice = previousState.get(device.id);
+
+      //     if (!previousDevice || 
+      //         previousDevice.value !== currentValue || 
+      //         previousDevice.dateLastValueReported !== currentDateLastValueReported) {
+      //       previousState.set(device.id, {
+      //         value: currentValue,
+      //         dateLastValueReported: currentDateLastValueReported
+      //       });
+      //       // console.log('Device state changed:', device);
+
+      //       // Forward the data to the controller for processing
+      //       const result = await handleNFCDeviceUpdates(device, socket);
+
+      //       // Emit the change via Socket.IO
+      //       socket.emit('nfcDeviceUpdate', device, result);
+      //     }
+      //   }
+      // });
+      for (const device of deviceData) {
         const currentValue = device.value.value;
         const currentDateLastValueReported = device.dateLastValueReported.value;
-
+  
         if (isFirstPoll) {
           // Save the current state as the previous state during the first poll
           previousState.set(device.id, {
             value: currentValue,
-            dateLastValueReported: currentDateLastValueReported
+            dateLastValueReported: currentDateLastValueReported,
           });
         } else {
           const previousDevice = previousState.get(device.id);
-
-          if (!previousDevice || 
-              previousDevice.value !== currentValue || 
-              previousDevice.dateLastValueReported !== currentDateLastValueReported) {
+  
+          if (
+            !previousDevice ||
+            previousDevice.value !== currentValue ||
+            previousDevice.dateLastValueReported !== currentDateLastValueReported
+          ) {
             previousState.set(device.id, {
               value: currentValue,
-              dateLastValueReported: currentDateLastValueReported
+              dateLastValueReported: currentDateLastValueReported,
             });
-            // console.log('Device state changed:', device);
-
-            // Emit the change via Socket.IO
-            socket.emit('nfcDeviceUpdate', device);
-
             // Forward the data to the controller for processing
-            handleNFCDeviceUpdates(device, socket);
+            const result = await handleNFCDeviceUpdates(device, socket);
+            // Emit the change via Socket.IO
+            socket.emit('nfcDeviceUpdate', device, result);
           }
         }
-      });
+      }
 
       // Set isFirstPoll to false after the first poll
       isFirstPoll = false;

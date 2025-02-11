@@ -222,7 +222,7 @@ function App() {
         <div className="main-content">
           <div className="map-container">
             <DashboardMap
-            data={mapData[activeView]} 
+            data={mapData} 
             alerts={alerts}
             maintenanceSchedules={maintenanceSchedules} 
             viewType={activeView}
