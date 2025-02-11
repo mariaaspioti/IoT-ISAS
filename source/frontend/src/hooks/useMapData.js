@@ -16,6 +16,11 @@ const useMapData = () => {
       // const doors = await editMap.showDoors();
       const doors = await editMap.fetchAllSmartLocksData();
       const buildings = await editMap.showBuildings();
+      // const [peopleRaw, doors, buildings] = await Promise.all([
+      //   editMap.fetchTrackingData(),
+      //   editMap.fetchAllSmartLocksData(), // Should return array of door objects
+      //   editMap.showBuildings()
+      // ]);
 
       // Deduplicate PEOPLE data using a Map object (keeps latest entry per id)
       // console.log("peopleRaw:", peopleRaw);

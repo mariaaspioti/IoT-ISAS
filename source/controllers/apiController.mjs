@@ -717,9 +717,18 @@ let patchAlertActionTaken = async (req, res) => {
 let getAllSmartLocks = async (req, res) => {
     try {
         // Type is Device and name starts with SmartLock-
-        const response = await axios.get(`${orionUrl}?type=Device&q=name~=^SmartLock-`, {
-            headers: getHeaders
+        // const response = await axios.get(`${orionUrl}?type=Device&limit=1000&q=name~=^SmartLock-`, {
+        //     headers: getHeaders
+        // });
+        const response = await axios.get(`${orionUrl}`, {
+            headers: getHeaders,
+            params: {
+                type: 'Device',
+                limit: 1000,
+                q: 'name~=^SmartLock-'
+            }
         });
+        // console.log("Smart locks response in getAllSmartLocks:", response.data);
         res.json({ data: response.data });
     } catch (error) {
         console.error('Smart locks error in getAllSmartLocks:', error);

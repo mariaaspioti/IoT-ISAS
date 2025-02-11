@@ -281,7 +281,7 @@ export const fetchAllSmartLocksData = async () => {
         deviceState: smartlock.deviceState.value,
         entry: smartlock.entry.value,
         exit: smartlock.exit.value,
-        hardLock: smartlock.hardLock.value,
+        hardLock: smartlock?.hardLock?.value,
         name: smartlock.name.value,
         serialNumber: smartlock.serialNumber.value,
         value: smartlock.value.value
