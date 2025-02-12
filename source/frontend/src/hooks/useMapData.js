@@ -21,7 +21,7 @@ const useMapData = () => {
         editMap.fetchAllSmartLocksData(), // Should return array of door objects
         editMap.showBuildings()
       ]);
-      console.log("doors in useMapData:", doors);
+      // console.log("doors in useMapData:", doors);
       // Deduplicate PEOPLE data using a Map object (keeps latest entry per id)
       // console.log("peopleRaw:", peopleRaw);
       const latestPeople = Object.values(

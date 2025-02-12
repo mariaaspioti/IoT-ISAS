@@ -52,20 +52,24 @@ let handleNFCDeviceUpdates = async (device, socket) => {
                     console.log("access denied");
                     result = "denied";
                     }
-                } else {
-                    // The person is trying to go outside
-                    // We need to find the facility that they are in now
-                    const facilityPersonIsIn = getFacilityPersonIsIn(device.direction.value, smartLockData);
-                    const roleAccess = await checkUidAuthorizationAsync(device.value.value, facilityPersonIsIn);
-                    if (roleAccess) {
-                        console.log("access granted");
-                        unlockSmartLock(smartLockId);
-                        result = "success";
-                    } else {
-                        console.log("Inside unauthorized area");
-                        result = "denied";
-                    }
+            } else {
+                // The person is trying to go outside
+                // We need to find the facility that they are in now
+                const facilityPersonIsIn = getFacilityPersonIsIn(device.direction.value, smartLockData);
+                if (facilityPersonIsIn === '') {
+                    console.error('Facility not found for the specified smart lock');
+                    return;
                 }
+                const roleAccess = await checkUidAuthorizationAsync(device.value.value, facilityPersonIsIn);
+                if (roleAccess) {
+                    console.log("access granted");
+                    unlockSmartLock(smartLockId);
+                    result = "success";
+                } else {
+                    console.log("Inside unauthorized area");
+                    result = "denied";
+                }
+            }
         } else {
             console.log("Hardlock is active. Access is restricted until the security officer disables it.");
             result = "denied"

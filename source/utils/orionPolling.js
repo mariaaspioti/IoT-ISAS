@@ -157,11 +157,12 @@ export const startNFCPolling = (socket, intervalMs = 2000, limit = 100) => {
               value: currentValue,
               dateLastValueReported: currentDateLastValueReported,
             });
-            console.log('Device state changed:', device);
+            // console.log('Device state changed:', device);
 
             // Forward the data to the controller for processing
             const result = await handleNFCDeviceUpdates(device, socket);
             // Emit the change via Socket.IO
+            console.log("result in orionPolling:", result);
             socket.emit('nfcDeviceUpdate', device, result);
           }
         }

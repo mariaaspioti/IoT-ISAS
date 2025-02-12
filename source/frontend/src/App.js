@@ -148,13 +148,13 @@ function App() {
 
     // Access doors from mapData instead of separate state
     const doors = mapDataRef.current[VIEW_TYPES.DOORS] || [];
-    console.log("doors in handleNfcDeviceUpdate:", doors);
+    // console.log("doors in handleNfcDeviceUpdate:", doors);
     
     // Handle NGSI-LD URI format
     const targetDoorId = device.controlledAsset.value[0];
-    console.log("targetDoorId in handleNfcDeviceUpdate:", targetDoorId);
+    // console.log("targetDoorId in handleNfcDeviceUpdate:", targetDoorId);
     const door = doors.find(door => door.id === targetDoorId);
-    console.log("door in handleNfcDeviceUpdate:", door);
+    // console.log("door in handleNfcDeviceUpdate:", door);
     if (!door) {
       console.error('Controlled asset not found for the specified NFC reader');
       return;
@@ -166,7 +166,7 @@ function App() {
       }
 
       const newState = {
-        status: result.success ? 'success' : 'denied',
+        status: result,
         timerId: setTimeout(() => {
           setDoorStates(prev => ({
             ...prev,
@@ -178,10 +178,10 @@ function App() {
       return { ...prev, [door.id]: newState };
     });
 
-    if (!result.success) {
-      generateAccessViolationAlert(result.personId, door.entry, result.reason);
+    if (result === 'denied') {
+      generateAccessViolationAlert(device.personId, door.entry, result.reason);
     }
-  }, [])
+  }, []);
 
 
 

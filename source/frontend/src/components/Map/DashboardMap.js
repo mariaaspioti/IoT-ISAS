@@ -46,17 +46,17 @@ const DashboardMap = ({
   // Memoize data layers with proper dependencies
   const buildingsData = useMemo(
     () => data[VIEW_TYPES.BUILDINGS] || [],
-    [data[VIEW_TYPES.BUILDINGS]]
+    [data]
   );
 
   const doorsData = useMemo(
     () => data[VIEW_TYPES.DOORS] || [],
-    [data[VIEW_TYPES.DOORS]]
+    [data]
   );
 
   const peopleData = useMemo(
     () => data[VIEW_TYPES.PEOPLE] || [],
-    [data[VIEW_TYPES.PEOPLE]]
+    [data]
   );
 
   // Building polygons
@@ -96,7 +96,7 @@ const DashboardMap = ({
         data={door}
         color={color}
         fillColor={color}
-        radius={viewType === VIEW_TYPES.PEOPLE ? 3 : 5}
+        radius={viewType === VIEW_TYPES.PEOPLE ? (doorState === 'default' ? 3 : 10) : 5}
         fillOpacity={0.8}
       >
         {doorState !== 'default' && (
@@ -170,10 +170,10 @@ const DashboardMap = ({
   useEffect(() => {
     const fetchCoordinates = async () => {
       const coordinatesMap = {};
-      console.log("Maintenance schedule in useEffect of DashboardMap", maintenanceSchedules);
+      // console.log("Maintenance schedule in useEffect of DashboardMap", maintenanceSchedules);
       for (const schedule of maintenanceSchedules) {
         try {
-          console.log(`Fetching coordinates for ${schedule} in useEffect of DashboardMap`);
+          // console.log(`Fetching coordinates for ${schedule} in useEffect of DashboardMap`);
           const coords = await fetchBuildingCoordinates(schedule.facilityId);
           coordinatesMap[schedule.facilityId] = coords;
         } catch (error) {
