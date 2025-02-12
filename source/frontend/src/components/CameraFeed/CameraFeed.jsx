@@ -19,7 +19,7 @@ const CameraFeed = () => {
     };
 
     fetchImage();
-    const interval = setInterval(fetchImage, 5000);
+    const interval = setInterval(fetchImage, 2000);
 
     return () => clearInterval(interval);
   }, []);

@@ -46,4 +46,8 @@ router.get('/smart-locks', apiController.getAllSmartLocks);
 
 router.get('/latest-image', apiController.fetchCameraImage);
 
+// router.get('smart-locks/:id', apiController.getSmartLockData);
+// router.patch('/smart-locks/:id/enable', smartlockController.enableSmartLock);
+// router.patch('/smart-locks/:id/disable', smartlockController.disableSmartLock);
+
 export {router as apiRoutes};

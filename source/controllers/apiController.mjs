@@ -5,7 +5,7 @@ import axios from 'axios';
 import * as stateController from '../controllers/stateController.mjs';
 import * as maintenanceController from '../controllers/maintenanceController.mjs';
 import * as cameraController from '../controllers/cameraController.mjs';
-
+// import * as smartlockController from '../controllers/smartlockController.mjs'
 // Orion Context Broker URL
 const orionUrl = 'http://150.140.186.118:1026/v2/entities';
 const fiwareService = 'ISAS';
@@ -759,10 +759,27 @@ let getHistoricTrackingData = async (req, res) => {
     }
 }
 
+
+// let getSmartLockData = async(req, res) => {
+//     try {
+//         const smartLockId = req.params.id;
+//         const response = await axios.get(`${orionUrl}/${smartLockId}`, {
+//             headers: getHeaders
+//         });
+//         res.json({ data: response.data });
+//     } catch (error) {
+//         console.error('Smart lock error:', error);
+//         res.status(500).json({ error: 'Failed to fetch smart lock data' });
+//     }
+// }
+
+
+
 export { getData, getAllData, getDeviceData, getDeviceDataFromName, getDeviceLocationData, 
     getAllDevicesLocationData, getAllDevicesControlledAssets, saveCoordinates, getAllFacilities, 
     getFacilityLocationData, getFacilitiesNameAndLocation, findCurrentFacilities, getDoorsLocations, 
     getPersonData, getAllPeopleData, handleSOSAlert, handleMaintenanceSchedule, getScheduledMaintenances,
     updateMaintenanceStatus, checkAccessAuthorization, getActiveAlerts, getAlertLocation, patchAlertStatus, patchAlertLocation, 
-    patchAlertActionTaken, getAllSmartLocks, fetchCameraImage, handleTrackingData, getHistoricTrackingData
+    patchAlertActionTaken, getAllSmartLocks, fetchCameraImage, handleTrackingData, getHistoricTrackingData, 
+    // getSmartLockData,
  };
