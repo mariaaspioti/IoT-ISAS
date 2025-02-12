@@ -65,7 +65,7 @@ def save_camera_images():
 
                     if image_data:
                         current_time = time.time()
-                        if current_time - last_save_time >= 5:
+                        if current_time - last_save_time >= 1:
                             save_image(image_data, folder_path)
                             last_save_time = current_time
 
