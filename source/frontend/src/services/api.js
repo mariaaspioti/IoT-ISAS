@@ -336,6 +336,20 @@ export const fetchAllSmartLocks = async () => {
     }
 };
 
+export const fetchCameraImage = async () => {
+    try {
+      const response = await fetch('/api/latest-image');
+      if (!response.ok) {
+        console.error('Failed to fetch the latest image:', response.status, response.statusText);
+        throw new Error('Failed to fetch the latest image');
+      }
+      return response.url;
+    } catch (error) {
+      console.error('Error in fetchCameraImage:', error);
+      throw error;
+    }
+  };
+
 // Post Tracking Data to the server
 export const postTrackingData = async (trackingData) => {
     try {

@@ -7,6 +7,7 @@ import AlertsList from './components/Alerts/AlertsList';
 import DashboardMap from './components/Map/DashboardMap';
 import ScheduleMaintenance from './components/Maintenance/ScheduleMaintenance';
 import MaintenanceList from './components/Maintenance/MaintenanceList';
+import CameraFeed from './components/CameraFeed/CameraFeed';
 import HistoricRoutesView from './components/HistoricRoutes/HistoricRoutesView';
 import './App.css';
 
@@ -31,6 +32,8 @@ function App() {
   const [buildings, setBuildings] = useState([]);
   const [workers, setWorkers] = useState([]);
   const [doorStates, setDoorStates] = useState({});
+  // for the live cameras
+  const [showLiveCameras, setShowLiveCameras] = useState(false);
   // for the historic view of worker routes
   const [showHistoricRoutes, setShowHistoricRoutes] = useState(false);
   
@@ -352,6 +355,44 @@ function App() {
       <div className="update-notice">
               Map data updates every 2 seconds. Last update: {new Date().toLocaleTimeString()}
             </div>
+
+      <div className="live-cameras-controls">
+          <button onClick={() => setShowLiveCameras(!showLiveCameras)}>
+            {showLiveCameras ? 'Hide Live Cameras' : 'Show Live Cameras'}
+          </button>
+        </div>
+      
+      {showLiveCameras && (
+        <>
+          <h2 className="live-cameras-header">Live Cameras</h2>
+          <div className="camera-feed-grid">
+            <div className="camera-feed-container">
+              <div className="camera-feed">
+                <h3>Cleanroom #1</h3>
+                <CameraFeed />
+              </div>
+            </div>
+            <div className="camera-feed-container">
+              <div className="camera-feed">
+                <h3>Cleanroom #2</h3>
+                <CameraFeed />
+              </div>
+            </div>
+            <div className="camera-feed-container">
+              <div className="camera-feed">
+                <h3>Cleanroom #3</h3>
+                <CameraFeed />
+              </div>
+            </div>
+            <div className="camera-feed-container">
+              <div className="camera-feed">
+                <h3>Cleanroom #4</h3>
+                <CameraFeed />
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }

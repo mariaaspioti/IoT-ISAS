@@ -4,6 +4,7 @@ import axios from 'axios';
 // import * as turf from '@turf/turf';
 import * as stateController from '../controllers/stateController.mjs';
 import * as maintenanceController from '../controllers/maintenanceController.mjs';
+import * as cameraController from '../controllers/cameraController.mjs';
 
 // Orion Context Broker URL
 const orionUrl = 'http://150.140.186.118:1026/v2/entities';
@@ -757,7 +758,7 @@ let getAllSmartLocks = async (req, res) => {
 
 let fetchCameraImage = async (req, res) => {
     try {
-        getLatestImage(req, res);
+        cameraController.getLatestImage(req, res);
     } catch (error) {
         console.error('Error fetching camera image:', error);
         res.status(500).json({ error: 'Failed to fetch camera image' });

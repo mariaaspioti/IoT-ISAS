@@ -150,7 +150,7 @@
   /* margin-top: 20px; */
 }
 
-.scheduler-controls {
+.scheduler-controls, .live-camera-controls {
   margin: 20px 0;
   text-align: start;
 }

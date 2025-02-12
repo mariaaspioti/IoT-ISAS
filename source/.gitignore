@@ -49,3 +49,6 @@ Thumbs.db
 
 # Ignore pycache
 __pycache__/
+
+# Ignore the images from the live camera feed
+/frontend/public/cameraImages/

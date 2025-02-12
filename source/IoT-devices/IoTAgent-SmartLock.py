@@ -228,8 +228,8 @@ def send_lock_command_to_device(device_id):
 def main():
     try:
         print("Starting IoT Agent for Smart Locks...")
-        monitor_smart_locks()
-        # send_lock_command_to_device("urn:ngsi-ld:Device:91")
+        # monitor_smart_locks()
+        send_lock_command_to_device("urn:ngsi-ld:Device:93")
     except KeyboardInterrupt:
         print("\nShutting down gracefully...")
         stop_event.set()  # Signal all threads to stop
