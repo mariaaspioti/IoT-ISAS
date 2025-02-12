@@ -169,10 +169,8 @@ const DashboardMap = ({
   useEffect(() => {
     const fetchCoordinates = async () => {
       const coordinatesMap = {};
-      // console.log("Maintenance schedule in useEffect of DashboardMap", maintenanceSchedules);
       for (const schedule of maintenanceSchedules) {
         try {
-          // console.log(`Fetching coordinates for ${schedule} in useEffect of DashboardMap`);
           const coords = await fetchBuildingCoordinates(schedule.facilityId);
           coordinatesMap[schedule.facilityId] = coords;
         } catch (error) {

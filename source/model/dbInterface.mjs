@@ -82,7 +82,6 @@ export const insertMaintenanceRecord = (record, callback) => {
     // Maintenance reserves facility --> maintenanceId, facilityId
 
     const db = connectToDatabase();
-    console.log('Inserting maintenance record in insertMaintenanceRecord:', record);
     db.serialize(() => {
         db.run(sqlCode.insertMaintenance, [startTime, endTime, dateCreated, status, description], function (err) {
             if (err) {

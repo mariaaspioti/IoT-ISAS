@@ -140,7 +140,7 @@ const HistoricRoutesView = ({ people }) => {
                 range
                 min={minTime}
                 max={maxTime}
-                step={1 * 60 * 1000} // 5-minute steps for better usability
+                step={1 * 60 * 1000} // 1-minute steps for better usability
                 value={timeRange}
                 onChange={handleTimeRangeChange}
                 tipFormatter={(value) => new Date(value).toLocaleTimeString()}

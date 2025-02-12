@@ -51,9 +51,6 @@ function App() {
             fetchActiveAlertsData()
           ]);
           
-          console.log('Initial maintenanceData in App.js:', maintenanceData);
-          // console.log('Initial alertsData in App.js:', alertsData);
-          // console.log('Initial doorData in App.js:', doorData);
         setBuildings(buildingsData);
         setWorkers(workersData);
         // setDoors(doorData);
@@ -90,7 +87,6 @@ function App() {
   const handleScheduleSubmit = async (schedule) => {
     try {
       const newSchedule = await postMaintenanceSchedule(schedule);
-      console.log('New schedule:', newSchedule);
 
       setMaintenanceSchedules(prev => [...prev, newSchedule]);
     } catch (error) {
@@ -104,35 +100,13 @@ function App() {
       const updatedSchedules = maintenanceSchedules.map(schedule =>
         schedule.id === scheduleId ? { ...schedule, status: 'cancelled' } : schedule
       );
-      console.log('Updated schedules in handleCancelMaintenance:', updatedSchedules);
+
       setMaintenanceSchedules(updatedSchedules);
     } catch (error) {
       console.error('Error cancelling maintenance:', error);
     }
   }, [maintenanceSchedules]);
 
-  // const handleNewAlert = useCallback(async (alert) => {
-  //   try {
-  //     // Process alert asynchronously first
-  //     const formattedAlert = await fetchFormatAlertData(alert);
-      
-  //     // Then update state with processed alert
-  //     setAlerts(prev => {
-  //       const newAlert = {
-  //         ...formattedAlert,
-  //         frontend_timestamp: new Date().toLocaleTimeString()
-  //       };
-        
-  //       // Maintain temporal order while limiting count
-  //       const updated = [newAlert, ...prev];
-  //       return updated.length > MAX_ALERTS 
-  //         ? updated.slice(0, MAX_ALERTS)
-  //         : updated;
-  //     });
-  //   } catch (error) {
-  //     console.error('Error processing alert:', error);
-  //   }
-  // }, []);
   const handleNewAlert = useCallback(async (alert) => {
     try {
       const isNew = true;
@@ -147,7 +121,7 @@ function App() {
   }, []);
 
   const handleNfcDeviceUpdate = useCallback((device, result) => {
-    console.log('NFC Device Update:', device, result);
+    // console.log('NFC Device Update:', device, result);
     // device is the NFC reader Device entity
     // device.controlledAsset is the controlled Smart Lock entity, so
     // device.controlledAsset == doors[device.id] which is the Smart Lock entity
@@ -155,13 +129,12 @@ function App() {
 
     // Access doors from mapData instead of separate state
     const doors = mapDataRef.current[VIEW_TYPES.DOORS] || [];
-    // console.log("doors in handleNfcDeviceUpdate:", doors);
     
     // Handle NGSI-LD URI format
     const targetDoorId = device.controlledAsset.value[0];
-    // console.log("targetDoorId in handleNfcDeviceUpdate:", targetDoorId);
+
     const door = doors.find(door => door.id === targetDoorId);
-    // console.log("door in handleNfcDeviceUpdate:", door);
+
     if (!door) {
       console.error('Controlled asset not found for the specified NFC reader');
       return;
@@ -220,7 +193,6 @@ function App() {
     setAlerts(prev => prev.filter(alert => alert.id !== alertId));
 
     // update in the backend
-    console.log(`Dismissing alert in handleDismissAlert: ${alertId}`);
     const response = await patchUpdatedAlertStatusData(alertId, alertStatus);
     if (response) {
       console.log('State updated successfully');
@@ -271,8 +243,6 @@ function App() {
     // Add to your existing alert handling logic
   const checkAccessAuthorization = async (personId, buildingId) => {
     try {
-      // const response = await fetch(`/api/access-check?person=${personId}&building=${buildingId}`);
-      // const { authorized, reason } = await response.json();
       const { authorized, reason } = fetchAuthorizationData(personId, buildingId);
       
       if (!authorized) {

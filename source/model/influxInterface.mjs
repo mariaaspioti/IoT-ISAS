@@ -12,9 +12,6 @@ if (!token) {
     process.exit(1);
 }
 
-// export const connectToInflux = () => {
-//     return new InfluxDB({ url, token });
-// }
 const db = new InfluxDB({ url, token });
 const writeApi = db.getWriteApi(org, bucket, 's');
 
@@ -27,30 +24,6 @@ export const writeMultiplePoints = async (points) => {
         .then(() => console.log('BULK WRITE FINISHED'))
         .catch(e => { console.error('Error writing points:', e); });
 };
-
-// export const writeNewPoint = async (measurement, tags, floatFields, stringFields) => {
-//     const point = new Point(measurement);
-
-//     // Add tags
-//     Object.keys(tags).forEach(key => {
-//         point.tag(key, tags[key]);
-//     });
-
-//     // Add float fields
-//     Object.keys(floatFields).forEach(key => {
-//         point.floatField(key, floatFields[key]);
-//     });
-
-//     // Add string fields
-//     Object.keys(stringFields).forEach(key => {
-//         point.stringField(key, stringFields[key]);
-//     });
-
-//     writeApi.writePoint(point);
-//     await writeApi.flush()
-//       .then(() => console.log('WRITE FINISHED'))
-//       .catch(e => { console.error(e) });
-// }
 
 // Function to read points for a given timespan and person ID
 export const readPointsForTimespan = async (measurement, startTime, endTime, personId) => {

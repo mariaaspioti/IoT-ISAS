@@ -96,17 +96,6 @@ const ScheduleMaintenance = ({ buildings, workers, onSubmit }) => {
 
         <div className="form-group">
           <label>Exempt Personnel:</label>
-          {/* <select 
-            multiple
-            value={exemptWorkers}
-            onChange={(e) => setExemptWorkers([...e.target.selectedOptions].map(o => o.value))}
-          >
-            {workers.map(worker => (
-              <option key={worker.id} value={worker.id}>
-                {worker.name}
-              </option>
-            ))}
-          </select> */}
           <Select
             isMulti
             value={exemptWorkers}

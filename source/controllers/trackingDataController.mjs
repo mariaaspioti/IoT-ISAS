@@ -1,16 +1,6 @@
 import * as influxInterface from '../model/influxInterface.mjs';
 import { Point } from '@influxdata/influxdb-client';
 
-export const connectToDatabase = () => {
-    influxInterface.connectToInfluxDB();
-}
-
-//
-// export const writeNewPoint = async (measurement, tags, floatFields, stringFields) => {
-//     await influxInterface.writeNewPoint(influxInterface.connectToInfluxDB(), measurement, tags, floatFields, stringFields);
-// }
-
-
 export const writeWorkerTrackingData = async (trackingDataArray) => {
     // Expecting an array of objects with the following structure:
     // [{
@@ -24,7 +14,6 @@ export const writeWorkerTrackingData = async (trackingDataArray) => {
     // },
     // ...
 
-    // console.log("trackingData in writeWorkerTrackingData:", trackingData);
     if (!Array.isArray(trackingDataArray) || trackingDataArray.length === 0) {
         console.error("Invalid tracking data: Expected a non-empty array.");
         return;
@@ -49,7 +38,7 @@ export const writeWorkerTrackingData = async (trackingDataArray) => {
     // Write all points in bulk to InfluxDB
     try {
         await influxInterface.writeMultiplePoints(points);
-        console.log(`Successfully wrote ${trackingDataArray.length} tracking data points.`);
+        // console.log(`Successfully wrote ${trackingDataArray.length} tracking data points.`);
     } catch (error) {
         console.error("Error writing tracking data:", error);
     }

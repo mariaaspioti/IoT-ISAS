@@ -42,7 +42,7 @@
   }
 }
 
-/* Flex container to position map and alerts side by side */
+/* flex container to position map and alerts side by side */
 .main-content {
   display: flex;
   gap: 20px;
@@ -128,7 +128,7 @@
 }
 
 .description-scroll {
-  max-height: 80px;    /* Fixed height (adjust as needed) */
+  max-height: 80px;    /* Fixed height */
   max-width: 300px;
   overflow-y: auto;    /* Enable vertical scrolling */
 }
