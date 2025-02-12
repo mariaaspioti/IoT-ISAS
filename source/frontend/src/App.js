@@ -344,17 +344,15 @@ function App() {
               />
             )}
       
-      <button onClick={() => setShowHistoricRoutes(!showHistoricRoutes)}>
-        {showHistoricRoutes ? 'Hide Historic Routes' : 'Show Historic Routes'}
-      </button>
+      <div className='historic-routes-controls'>
+        <button onClick={() => setShowHistoricRoutes(!showHistoricRoutes)}>
+          {showHistoricRoutes ? 'Hide Historic Routes' : 'Show Historic Routes'}
+        </button>
+      </div>
 
       {showHistoricRoutes && <HistoricRoutesView 
         people={workers}
       />}
-
-      <div className="update-notice">
-              Map data updates every 2 seconds. Last update: {new Date().toLocaleTimeString()}
-            </div>
 
       <div className="live-cameras-controls">
           <button onClick={() => setShowLiveCameras(!showLiveCameras)}>
@@ -393,6 +391,9 @@ function App() {
           </div>
         </>
       )}
+      <div className="update-notice">
+              Map data updates every 2 seconds. Last update: {new Date().toLocaleTimeString()}
+            </div>
     </div>
   );
 }
