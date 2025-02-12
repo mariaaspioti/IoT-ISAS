@@ -81,7 +81,6 @@ const DashboardMap = ({
 
   // Door markers with state handling
   const doorElements = useMemo(() => doorsData.map(door => {
-    console.log("doorStates in useMemo of DashboardMap", doorStates);
     const doorState = doorStates[door.id]?.status || 'default';
     const color = {
       success: 'blue',
@@ -170,10 +169,8 @@ const DashboardMap = ({
   useEffect(() => {
     const fetchCoordinates = async () => {
       const coordinatesMap = {};
-      // console.log("Maintenance schedule in useEffect of DashboardMap", maintenanceSchedules);
       for (const schedule of maintenanceSchedules) {
         try {
-          // console.log(`Fetching coordinates for ${schedule} in useEffect of DashboardMap`);
           const coords = await fetchBuildingCoordinates(schedule.facilityId);
           coordinatesMap[schedule.facilityId] = coords;
         } catch (error) {

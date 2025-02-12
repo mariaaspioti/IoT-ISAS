@@ -99,18 +99,15 @@ let getDeviceData = (req, res) => {
 let getDeviceDataFromName = (req, res) => {
     // get the Entity data from the Orion Context Broker for a specific device given a :name
     const deviceName = req.params.name;
-    // console.log("Device Name:", deviceName, "in getDeviceDataFromName");
     const queryParams = {
         type: 'Device',
         q: `name==${deviceName}`,
     };
-    // console.log("Query Params:", queryParams, "in getDeviceDataFromName");
     axios.get(orionUrl, {
         headers: getHeaders,
         params: queryParams
     })
     .then((response) => {
-        // console.log("Response Data:", response.data, "in getDeviceDataFromName");
         res.json({
             success: true,
             data: response.data
@@ -125,7 +122,6 @@ let getDeviceDataFromName = (req, res) => {
 let getDeviceLocationData = (req, res) => {
     // get the coordinates from the Orion Context Broker for a specific device
     const device_id = req.params.id;
-    // let deviceCoords = `/${device_id}/attrs/location`;
     let deviceUrl = orionUrl;
     axios.get(deviceUrl, {
         headers: getHeaders,
@@ -294,8 +290,6 @@ let getFacilityLocationData = async (req, res) => {
             }
         });
 
-        // console.log('Facility location data in getFacilityLocationData:', response.data.location.coordinates);
-
         if (!response.data.location?.coordinates) {
             return res.status(404).json({ error: 'Coordinates not found' });
         }
@@ -338,21 +332,6 @@ let findCurrentFacilities = async (req, res) => {
       facility_id: data.id,
       facility_name: data.name
     })));
-
-    // console.log('Was a facility id found?\n=======');
-    // enriched.forEach((facility) => {
-    //     if (facility.id) {
-    //         console.log('Yes:', facility.id);
-    //     } else {
-    //         console.log('No:', facility.id);
-    //     }
-    //     });
-    // console.log('=======\n');
-    // // validate the correct update of the persons' currentFacility attribute
-    // const persons = await axios.get(`${orionUrl}?type=Person`, {
-    //   headers: getHeaders
-    // });
-    // // console.log('Persons:', persons.data);
     
   } catch (error) {
     console.error('Location error:', error);
@@ -455,7 +434,6 @@ let handleMaintenanceSchedule = async (req, res) => {
             }
         };
 
-        // console.log("Request Body in handleMaintenanceSchedule:", req.body);
         const startDateTime = req.body.start;
         const endDateTime = req.body.end;
         const status = 'scheduled';
@@ -465,14 +443,12 @@ let handleMaintenanceSchedule = async (req, res) => {
         const buildingReservedCBId = req.body.buildingId;
         // since the buildingId is a context broker id, we need to fetch the SQL id
         const buildingReserved = await maintenanceController.getFacilityByCBId(buildingReservedCBId);
-        // console.log('Building reserved in handleMaintenanceSchedule:', buildingReserved);
         const buildingReservedId = buildingReserved.facility_id;
 
         const peopleCBIds = req.body.exemptPersonnel;
         // since the peopleIds are context broker ids, we need to fetch the SQL ids
         const peopleArray = await Promise.all(peopleCBIds.map(async (personCBId) => {
             const person =  await maintenanceController.getPersonByCBId(personCBId);
-            // console.log('Person in handleMaintenanceSchedule:', person);
             return person
         }));
         const peopleIds = peopleArray.map(person => person.person_id);
@@ -494,7 +470,6 @@ let handleMaintenanceSchedule = async (req, res) => {
                 console.error('Error inserting maintenance record:', err);
                 res.status(500).json({ error: 'Failed to create maintenance reservation' });
             }
-            // console.log('Maintenance record inserted inn handleMaintenanceSchedule:', maintenanceRecord);
             const maintenance = {
                 startTime: startDateTime,
                 endTime: endDateTime,
@@ -506,13 +481,7 @@ let handleMaintenanceSchedule = async (req, res) => {
                 facilityName: buildingReserved.name,
                 facilityId: buildingReservedCBId
             };
-            // console.log('Maintenance reservation sent back to client:', maintenance);
             res.status(201).json(maintenance);
-
-            // const response = { data: sampleReservation };
-            // console.log('Maintenance reservation created:', response.data);
-
-            // res.status(201).json(sampleReservation);
         });
     } catch (error) {
         res.status(500).json({ error: 'Failed to create maintenance reservation' });
@@ -526,7 +495,6 @@ let getScheduledMaintenances = async (req, res) => {
                 console.error('Error fetching scheduled maintenance:', err);
                 res.status(500).json({ error: 'Failed to fetch scheduled maintenance' });
             }
-            // console.log('Scheduled maintenance in getScheduledMaintenances:', maintenances);
             // maintenances.facility_id and maintenances.person_ids are SQL ids, not context broker ids
             // we need to fetch the context broker ids
             const maintenancePromises = maintenances.map(async (maintenance) => {
@@ -570,7 +538,6 @@ let getScheduledMaintenances = async (req, res) => {
                 }
             });
             const enrichedMaintenances = await Promise.all(maintenancePromises);
-            // console.log('Enriched scheduled maintenance in getScheduledMaintenances:', enrichedMaintenances);
 
             res.json({ data: enrichedMaintenances });
         });
@@ -748,7 +715,6 @@ let getAllSmartLocks = async (req, res) => {
                 q: 'name~=^SmartLock-'
             }
         });
-        // console.log("Smart locks response in getAllSmartLocks:", response.data);
         res.json({ data: response.data });
     } catch (error) {
         console.error('Smart locks error in getAllSmartLocks:', error);
@@ -764,6 +730,34 @@ let fetchCameraImage = async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch camera image' });
     }
 };
+
+import * as trackingDataController from './trackingDataController.mjs';
+let handleTrackingData = async (req, res) => {
+    try {
+        const trackingData = req.body;
+        
+        // write tracking data to the database
+        await trackingDataController.writeWorkerTrackingData(trackingData);
+
+        res.json({ message: 'Tracking data received' });
+    } catch (error) {
+        console.error('Tracking data error in handleTrackingData:', error);
+        res.status(500).json({ error: 'Failed to handle tracking data' });
+    }
+};
+
+let getHistoricTrackingData = async (req, res) => {
+    // expects query ?date=YYYY-MM-DD&person_id=person_id
+    try {
+        const date = req.query.date;
+        const personId = req.query.person_id;
+        const trackingData = await trackingDataController.fetchHistoricTrackingData(date, personId);
+        res.json(trackingData);
+    } catch (error) {
+        console.error('Historic tracking data error:', error);
+        res.status(500).json({ error: 'Failed to fetch historic tracking data' });
+    }
+}
 
 
 // let getSmartLockData = async(req, res) => {
@@ -786,6 +780,6 @@ export { getData, getAllData, getDeviceData, getDeviceDataFromName, getDeviceLoc
     getFacilityLocationData, getFacilitiesNameAndLocation, findCurrentFacilities, getDoorsLocations, 
     getPersonData, getAllPeopleData, handleSOSAlert, handleMaintenanceSchedule, getScheduledMaintenances,
     updateMaintenanceStatus, checkAccessAuthorization, getActiveAlerts, getAlertLocation, patchAlertStatus, patchAlertLocation, 
-    patchAlertActionTaken, getAllSmartLocks, fetchCameraImage, 
+    patchAlertActionTaken, getAllSmartLocks, fetchCameraImage, handleTrackingData, getHistoricTrackingData, 
     // getSmartLockData,
  };

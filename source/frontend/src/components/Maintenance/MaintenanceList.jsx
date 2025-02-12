@@ -24,9 +24,6 @@ const MaintenanceList = ({
               <p className='description-scroll'><strong>Description:</strong> {schedule.description}</p>
               <p><strong>Exempt Personnel:</strong></p>
               <ul>
-                {/* {schedule?.peopleIds.map(personId => (
-                  <li key={personId}>{personId}</li>
-                ))} */}
                 {schedule.peopleNames && schedule.peopleNames.length > 0 ? (
                     schedule.peopleNames.map(personName => (
                         <li key={personName}>{personName}</li>

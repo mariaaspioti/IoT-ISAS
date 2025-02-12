@@ -281,7 +281,6 @@ export const patchAlertStatus = async (alertId, status) => {
         if (!response.ok) {
             throw new Error('Failed to update alert status');
         }
-        // console.log('Alert status updated successfully');
         return alertId;
     } catch (error) {
         console.error('Error updating alert status:', error);
@@ -299,7 +298,7 @@ export const patchAlertLocation = async (alertId, location) => {
         if (!response.ok) {
             throw new Error('Failed to update alert location');
         }
-        // console.log('Alert location updated successfully');
+
         return alertId;
     } catch (error) {
         console.error('Error updating alert location:', error);
@@ -317,7 +316,7 @@ export const patchAlertAction = async (alertId, action) => {
         if (!response.ok) {
             throw new Error('Failed to update alert action');
         }
-        // console.log('Alert action updated successfully');
+        
         return alertId;
     } catch (error) {
         console.error('Error updating alert action:', error);
@@ -349,3 +348,20 @@ export const fetchCameraImage = async () => {
       throw error;
     }
   };
+
+// Post Tracking Data to the server
+export const postTrackingData = async (trackingData) => {
+    try {
+        const response = await fetch('/api/tracking', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(trackingData)
+        });
+        if (!response.ok) {
+            throw new Error('Failed to post tracking data in postTrackingData');
+        }
+
+    } catch (error) {
+        console.error('Error posting tracking data in postTrackingData:', error);
+    }
+}

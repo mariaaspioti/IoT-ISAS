@@ -42,7 +42,7 @@
   }
 }
 
-/* Flex container to position map and alerts side by side */
+/* flex container to position map and alerts side by side */
 .main-content {
   display: flex;
   gap: 20px;
@@ -128,7 +128,7 @@
 }
 
 .description-scroll {
-  max-height: 80px;    /* Fixed height (adjust as needed) */
+  max-height: 80px;    /* Fixed height */
   max-width: 300px;
   overflow-y: auto;    /* Enable vertical scrolling */
 }
@@ -150,8 +150,8 @@
   /* margin-top: 20px; */
 }
 
-.scheduler-controls, .live-camera-controls {
-  margin: 20px 0;
+.scheduler-controls {
+  margin: 20px 0; 
   text-align: start;
 }
 
@@ -163,3 +163,10 @@
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
+.historic-routes-controls {
+  margin-bottom: 20px;
+}
+
+.live-cameras-controls {
+  margin-bottom: 20px;
+}

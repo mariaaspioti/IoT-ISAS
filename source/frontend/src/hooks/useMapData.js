@@ -12,18 +12,12 @@ const useMapData = () => {
 
   const fetchData = useCallback(async () => {
     try {
-      // const { mapData: peopleRaw } = await editMap.fetchTrackingData();
-      // // const doors = await editMap.showDoors();
-      // const doors = await editMap.fetchAllSmartLocksData();
-      // const buildings = await editMap.showBuildings();
       const [{mapData: peopleRaw}, doors, buildings] = await Promise.all([
         editMap.fetchTrackingData(),
         editMap.fetchAllSmartLocksData(), // Should return array of door objects
         editMap.showBuildings()
       ]);
-      // console.log("doors in useMapData:", doors);
-      // Deduplicate PEOPLE data using a Map object (keeps latest entry per id)
-      // console.log("peopleRaw:", peopleRaw);
+
       const latestPeople = Object.values(
         peopleRaw.reduce((acc, person) => {
           acc[person.person_id] = person; // Override previous entry with the same ID

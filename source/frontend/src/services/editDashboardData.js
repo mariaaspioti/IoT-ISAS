@@ -4,33 +4,19 @@ export const fetchTrackingData = async () => {
     try {
         // Fetch all devices' locations
         const data = await APICall.fetchAllDevicesLocations();
-        // console.log('Device data:', data);
 
 
         // Fetch all devices' controlledAssets i.e. people being tracked
         const controlledAssets = await APICall.fetchAllDevicesControlledAssets();
-        // console.log('Controlled assets data:', controlledAssets);
-        // setPeople(controlledAssets);
-
-        // const controlledAssetsMap = controlledAssets.reduce((acc, person) => ({
-        //     ...acc,
-        //     [person.device_id]: person
-        //   }), {});
-        // console.log("controlledAssetsMap:", controlledAssetsMap);
-
 
         // Determine the Facility in which the device is located
         const facilities = await APICall.findCurrentFacilities(data);
-        // console.log('Facilities data:', facilities);
 
         // 1. Map each device to its facility
         const deviceFacilityMap = data.reduce((acc, device, index) => {
             acc[device.id] = facilities[index];
             return acc;
         }, {});
-
-        // console.log("deviceFacilityMap:", JSON.stringify(deviceFacilityMap, null, 2));
-        // console.log("deviceFacilityMap:", deviceFacilityMap);
 
         // 2. Map each person to their BT and GPS devices
         const personDevicesMap = data.reduce((acc, device) => {
@@ -43,17 +29,12 @@ export const fetchTrackingData = async () => {
             return acc;
         }, {});
 
-        // console.log("personDevicesMap:", JSON.stringify(personDevicesMap, null, 2));
-        // console.log("personDevicesMap:", personDevicesMap);
 
         // 3. Build mapData based on people and their indoor/outdoor status
         let mapData = controlledAssets.map(person => {
-            // console.log("person:", person);
             const devices = personDevicesMap[person.person_id]|| {};
-            // console.log("devices:", devices);
             const isIndoors = person.isIndoors;
             const selectedDevice = isIndoors ? devices.bt : devices.gps;
-            // console.log("selectedDevice:", selectedDevice);
             
             if (!selectedDevice) {
                 console.warn(`No device found for person ${person.person_id}`);
@@ -65,7 +46,6 @@ export const fetchTrackingData = async () => {
             const lng = selectedDevice.lng;
             const lat = selectedDevice.lat;
             const initials = person.person_name.split(' ').map(n => n[0]).join('');
-            // console.log("selectedDevice:", selectedDevice);
             const selectedDeviceNum = selectedDevice.id.split('Device:')[1];
 
             return {
@@ -79,6 +59,11 @@ export const fetchTrackingData = async () => {
             };
         }).filter(Boolean);
 
+        // asynchronously from the normal data flow, post the
+        // location data mapData to the backend
+        // await APICall.postTrackingData(mapData);
+        APICall.postTrackingData(mapData); // No need to wait for this to finish
+
         return { mapData, facilities, controlledAssets, data };
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -88,7 +73,6 @@ export const fetchTrackingData = async () => {
 
 export const showDoors = async () => {
     const data = await APICall.fetchDoorsLocations();
-    // console.log('Door data:', data);
     // form: { id: 'Door1', location: { type: 'geo:json', value: {type: 'Point', coordinates: [ 51.5074, 0.1278 ] } } }
 
     const mapData = data.map((door, index) => {
@@ -104,7 +88,6 @@ export const showDoors = async () => {
 
 export const showBuildings = async () => {
     const data = await APICall.fetchBuildingsLocations();
-    // console.log('Building data in showBuildings:', data);
     // form: { id: 'Building1', location: { type: 'geo:json', value: {type: 'Polygon', coordinates: [ [ [ 51.5074, 0.1278 ], [ 51.5074, 0.1278 ], [ 51.5074, 0.1278 ] ] } } }
 
     const mapData = data.flatMap((building) => {
@@ -121,7 +104,6 @@ export const showBuildings = async () => {
 }
 
 export const fetchFormatAlertData = async (alertData, isNew = false) => {
-    console.log("Alert Data:", alertData, "in fetchFormatAlertData");
 
     // Common functions
     const formatAlertDate = (dateString) => {
@@ -191,7 +173,6 @@ export const fetchFormatAlertData = async (alertData, isNew = false) => {
         personCurrentFacility: facility.name ? facility.name : 'Outside'
     };
 
-    console.log('Formatted alert data:', baseData);
     return baseData;
 };
 
@@ -234,7 +215,6 @@ export const fetchAuthorizationData = async (personId, buildingId) => {
 
 export const fetchScheduledMaintenanceData = async () => {
     const schedules = await APICall.fetchScheduledMaintenance();
-    console.log("Schedules in fetchScheduledMaintenanceData:", schedules);
     const schedulesData = schedules.map(schedule => ({
         id: schedule.id,
         facilityId: schedule.facilityId,
@@ -256,11 +236,7 @@ export const updateMaintenanceStatus = async (scheduleId, status) => {
 
 export const fetchActiveAlertsData = async () => {
     const alerts = await APICall.fetchActiveAlerts();
-    // formattedAlerts = alerts.forEach(alert => {
-    //     return fetchFormatAlertData(alert);
-    // });
     const formattedAlerts = await Promise.all(alerts.map(alert => fetchFormatAlertData(alert, false)));
-    console.log("Formatted Alerts in fetchActiveAlertsData:", formattedAlerts);
     return formattedAlerts;
 }
 

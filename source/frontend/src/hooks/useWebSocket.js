@@ -54,7 +54,7 @@ const useWebSocket = (eventHandlers) => {
         socketRef.current = null;
       }
     };
-  }, []); // Empty dependency array ensures single setup
+  }, []);
 
   // Handle reconnect on network recovery
   const handleVisibilityChange = useCallback(() => {

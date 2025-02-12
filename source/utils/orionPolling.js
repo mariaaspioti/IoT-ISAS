@@ -54,7 +54,8 @@ export const startAlertPolling = (socket, intervalMs = 2000) => {
           console.log('Emitted new alert:', alert);
 
           // Log the new alert data to a file
-          fs.appendFile(logFile, JSON.stringify(alert, null, 2) + "\n", (err) => {
+          const content = `New alert at ${new Date().toISOString()} with ID: ${alert.id}\n`;
+          fs.appendFile(logFile, content, (err) => {
             if (err) {
               console.error('Error writing alert data to file:', err);
             }
@@ -104,37 +105,6 @@ export const startNFCPolling = (socket, intervalMs = 2000, limit = 100) => {
         return;
       }
 
-      // // Iterate over each device and check for changes
-      // deviceData.forEach((device) => {
-      //   const currentValue = device.value.value;
-      //   const currentDateLastValueReported = device.dateLastValueReported.value;
-
-      //   if (isFirstPoll) {
-      //     // Save the current state as the previous state during the first poll
-      //     previousState.set(device.id, {
-      //       value: currentValue,
-      //       dateLastValueReported: currentDateLastValueReported
-      //     });
-      //   } else {
-      //     const previousDevice = previousState.get(device.id);
-
-      //     if (!previousDevice || 
-      //         previousDevice.value !== currentValue || 
-      //         previousDevice.dateLastValueReported !== currentDateLastValueReported) {
-      //       previousState.set(device.id, {
-      //         value: currentValue,
-      //         dateLastValueReported: currentDateLastValueReported
-      //       });
-      //       // console.log('Device state changed:', device);
-
-      //       // Forward the data to the controller for processing
-      //       const result = await handleNFCDeviceUpdates(device, socket);
-
-      //       // Emit the change via Socket.IO
-      //       socket.emit('nfcDeviceUpdate', device, result);
-      //     }
-      //   }
-      // });
       for (const device of deviceData) {
         const currentValue = device.value.value;
         const currentDateLastValueReported = device.dateLastValueReported.value;

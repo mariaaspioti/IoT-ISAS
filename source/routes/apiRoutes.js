@@ -19,6 +19,9 @@ router.get('/facilities/name-location', apiController.getFacilitiesNameAndLocati
 router.get('/facilities/:id/location', apiController.getFacilityLocationData);
 router.post('/facilities/find', apiController.findCurrentFacilities);
 
+router.post('/tracking', apiController.handleTrackingData);
+router.get('/historic-tracking', apiController.getHistoricTrackingData); // expects
+// query ?date=YYYY-MM-DD&person_id=person_id
 
 router.get('/doors/location', apiController.getDoorsLocations);
 
