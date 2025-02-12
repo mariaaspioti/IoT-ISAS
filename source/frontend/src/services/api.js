@@ -335,3 +335,20 @@ export const fetchAllSmartLocks = async () => {
         throw error;
     }
 };
+
+// Post Tracking Data to the server
+export const postTrackingData = async (trackingData) => {
+    try {
+        const response = await fetch('/api/tracking', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(trackingData)
+        });
+        if (!response.ok) {
+            throw new Error('Failed to post tracking data in postTrackingData');
+        }
+        // console.log('Tracking data posted successfully:', trackingData);
+    } catch (error) {
+        console.error('Error posting tracking data in postTrackingData:', error);
+    }
+}

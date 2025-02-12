@@ -30,6 +30,8 @@ const useMapData = () => {
           return acc;
         }, {})
       );
+
+      console.log("latestPeople in useMapData:", latestPeople);
       
       setMapData(prev => ({
         [VIEW_TYPES.BUILDINGS]: buildings || prev[VIEW_TYPES.BUILDINGS],

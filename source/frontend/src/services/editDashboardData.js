@@ -79,6 +79,12 @@ export const fetchTrackingData = async () => {
             };
         }).filter(Boolean);
 
+        // asynchronously from the normal data flow, post the
+        // location data mapData to the backend
+        console.log("going to post mapData:", mapData, "in fetchTrackingData");
+        // await APICall.postTrackingData(mapData);
+        APICall.postTrackingData(mapData);
+
         return { mapData, facilities, controlledAssets, data };
     } catch (error) {
         console.error('Error fetching data:', error);

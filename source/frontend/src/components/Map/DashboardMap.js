@@ -81,7 +81,6 @@ const DashboardMap = ({
 
   // Door markers with state handling
   const doorElements = useMemo(() => doorsData.map(door => {
-    console.log("doorStates in useMemo of DashboardMap", doorStates);
     const doorState = doorStates[door.id]?.status || 'default';
     const color = {
       success: 'blue',

@@ -7,6 +7,7 @@ import AlertsList from './components/Alerts/AlertsList';
 import DashboardMap from './components/Map/DashboardMap';
 import ScheduleMaintenance from './components/Maintenance/ScheduleMaintenance';
 import MaintenanceList from './components/Maintenance/MaintenanceList';
+import HistoricRoutesView from './components/HistoricRoutes/HistoricRoutesView';
 import './App.css';
 
 import { fetchFormatAlertData, fetchAllFacilitiesData, fetchAllPeopleData,
@@ -30,6 +31,9 @@ function App() {
   const [buildings, setBuildings] = useState([]);
   const [workers, setWorkers] = useState([]);
   const [doorStates, setDoorStates] = useState({});
+  // for the historic view of worker routes
+  const [showHistoricRoutes, setShowHistoricRoutes] = useState(false);
+  
 
   // Load initial data
   useEffect(() => {
@@ -336,6 +340,15 @@ function App() {
                 onSubmit={handleScheduleSubmit}
               />
             )}
+      
+      <button onClick={() => setShowHistoricRoutes(!showHistoricRoutes)}>
+        {showHistoricRoutes ? 'Hide Historic Routes' : 'Show Historic Routes'}
+      </button>
+
+      {showHistoricRoutes && <HistoricRoutesView 
+        people={workers}
+      />}
+
       <div className="update-notice">
               Map data updates every 2 seconds. Last update: {new Date().toLocaleTimeString()}
             </div>

@@ -764,10 +764,41 @@ let fetchCameraImage = async (req, res) => {
     }
 };
 
+import * as trackingDataController from './trackingDataController.mjs';
+let handleTrackingData = async (req, res) => {
+    try {
+        const trackingData = req.body;
+        
+        // console.log('Tracking data received:', trackingData);
+        // write tracking data to the database
+        await trackingDataController.writeWorkerTrackingData(trackingData);
+
+        res.json({ message: 'Tracking data received' });
+    } catch (error) {
+        console.error('Tracking data error in handleTrackingData:', error);
+        res.status(500).json({ error: 'Failed to handle tracking data' });
+    }
+};
+
+let getHistoricTrackingData = async (req, res) => {
+    // expects query ?date=YYYY-MM-DD&person_id=person_id
+    try {
+        const date = req.query.date;
+        const personId = req.query.person_id;
+        console.log('Date in getHistoricTrackingData:', date, ' for person:', personId);
+        const trackingData = await trackingDataController.fetchHistoricTrackingData(date, personId);
+        console.log('Tracking data in getHistoricTrackingData:', trackingData);
+        res.json(trackingData);
+    } catch (error) {
+        console.error('Historic tracking data error:', error);
+        res.status(500).json({ error: 'Failed to fetch historic tracking data' });
+    }
+}
+
 export { getData, getAllData, getDeviceData, getDeviceDataFromName, getDeviceLocationData, 
     getAllDevicesLocationData, getAllDevicesControlledAssets, saveCoordinates, getAllFacilities, 
     getFacilityLocationData, getFacilitiesNameAndLocation, findCurrentFacilities, getDoorsLocations, 
     getPersonData, getAllPeopleData, handleSOSAlert, handleMaintenanceSchedule, getScheduledMaintenances,
     updateMaintenanceStatus, checkAccessAuthorization, getActiveAlerts, getAlertLocation, patchAlertStatus, patchAlertLocation, 
-    patchAlertActionTaken, getAllSmartLocks, fetchCameraImage
+    patchAlertActionTaken, getAllSmartLocks, fetchCameraImage, handleTrackingData, getHistoricTrackingData
  };
