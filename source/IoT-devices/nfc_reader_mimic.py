@@ -97,13 +97,13 @@ def main():
     mqtt_client = mqtt.Client(client_id)
     mqtt_client.connect(broker, port)
     mqtt_client.loop_start()
-    i=0
+    i=4
     print("Connected to MQTT broker")
 
     nfc_device_id = f"NFCReader-{i}"
     
     # Start mimic readers
-    # start_mimic_reader("NFCReader-1", 10, mqtt_client)
+    # start_mimic_reader("NFCReader-4", 10, mqtt_client)
     # start_mimic_reader("NFCReader-2", 10, mqtt_client)
     
     try:
