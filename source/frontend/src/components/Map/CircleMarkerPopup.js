@@ -1,10 +1,10 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { CircleMarker, Polyline, Popup, Tooltip } from 'react-leaflet';
 
-// Trail settings
-const TRAIL_DURATION = 25000;  // How long a trail segment stays visible
-const SMOOTHING_FACTOR = 1;   // Number of positions to average for smoothing
-const INTERPOLATION_STEPS = 5; // Extra points per segment to smooth motion
+// --- Trail Settings ---
+const TRAIL_DURATION = 25000;   // How long a trail segment stays visible (in ms)
+const SMOOTHING_FACTOR = 1;       // Number of positions to average for smoothing
+const INTERPOLATION_STEPS = 5;    // Extra points per segment to smooth motion
 
 const CircleMarkerPopup = ({ 
   type, 
@@ -13,52 +13,71 @@ const CircleMarkerPopup = ({
   fillColor, 
   radius, 
   fillOpacity, 
+  children,
   onDismissAlert, 
   onUnlockDoors, 
-  onActivateAlarm }) => {
-
+  onActivateAlarm 
+}) => {
+  // A ref for the CircleMarker to update position and style
   const markerRef = useRef(null);
+  // Local state for whether the popup is open
   const [popupOpen, setPopupOpen] = useState(false);
-  const [trail, setTrail] = useState([]); // Store past positions
+  // State to hold an array of past positions (the "trail")
+  const [trail, setTrail] = useState([]);
 
-  useEffect(() => {
-        if (markerRef.current) {
-          const marker = markerRef.current;
-          const onPopupOpen = () => setPopupOpen(true);
-          const onPopupClose = () => setPopupOpen(false);
-    
-          marker.on('popupopen', onPopupOpen);
-          marker.on('popupclose', onPopupClose);
-    
-          return () => {
-            marker.off('popupopen', onPopupOpen);
-            marker.off('popupclose', onPopupClose);
-          };
-        }
-    }, []);
-      
-
+  // --- Bind Popup Open/Close Events ---
   useEffect(() => {
     if (markerRef.current) {
-      markerRef.current.setLatLng([data.lat, data.lng]);
-      if (popupOpen) markerRef.current.openPopup();
+      const marker = markerRef.current;
+      const onPopupOpen = () => setPopupOpen(true);
+      const onPopupClose = () => setPopupOpen(false);
+      
+      marker.on('popupopen', onPopupOpen);
+      marker.on('popupclose', onPopupClose);
+      
+      return () => {
+        marker.off('popupopen', onPopupOpen);
+        marker.off('popupclose', onPopupClose);
+      };
     }
+  }, []);
 
-    // Append new position with a timestamp
+  // --- Update Marker Position and Record Trail ---
+  useEffect(() => {
+    if (markerRef.current) {
+      // Update the marker's position
+      markerRef.current.setLatLng([data.lat, data.lng]);
+      // If the popup was open, reopen it
+      if (popupOpen) {
+        markerRef.current.openPopup();
+      }
+    }
+    // Add this position (with a timestamp) to the trail array
     setTrail(prevTrail => [...prevTrail, { lat: data.lat, lng: data.lng, time: Date.now() }]);
   }, [data.lat, data.lng, popupOpen]);
 
-  // Remove old trail points over time
+  // --- Update Marker Style When Props Change ---
+  useEffect(() => {
+    if (markerRef.current) {
+      markerRef.current.setStyle({
+        color,
+        fillColor,
+        fillOpacity,
+        radius,
+      });
+    }
+  }, [color, fillColor, fillOpacity, radius]);
+
+  // --- Periodically Clean Up Old Trail Points ---
   useEffect(() => {
     const interval = setInterval(() => {
       const now = Date.now();
       setTrail(prevTrail => prevTrail.filter(point => now - point.time < TRAIL_DURATION));
     }, 100); // Update every 100ms
-
     return () => clearInterval(interval);
   }, []);
 
-  // Function to calculate a simple moving average for smoothing
+  // --- Smoothing Function: Simple Moving Average ---
   const getSmoothedTrail = (points, smoothingFactor) => {
     if (points.length < smoothingFactor) return points;
     return points.map((_, i, arr) => {
@@ -70,7 +89,7 @@ const CircleMarkerPopup = ({
     });
   };
 
-  // Function to interpolate extra points between two trail points
+  // --- Interpolation Function: Generate Extra Points Between Two Points ---
   const interpolatePoints = (pointA, pointB, steps) => {
     const interpolated = [];
     for (let i = 1; i <= steps; i++) {
@@ -84,57 +103,51 @@ const CircleMarkerPopup = ({
     return interpolated;
   };
 
-  // Apply smoothing and interpolation
+  // --- Apply Smoothing and Interpolation to the Trail ---
   const smoothedTrail = getSmoothedTrail(trail, SMOOTHING_FACTOR);
   const interpolatedTrail = [];
   for (let i = 1; i < smoothedTrail.length; i++) {
     interpolatedTrail.push(smoothedTrail[i - 1]);
     interpolatedTrail.push(...interpolatePoints(smoothedTrail[i - 1], smoothedTrail[i], INTERPOLATION_STEPS));
   }
-  interpolatedTrail.push(smoothedTrail[smoothedTrail.length - 1]);
+  if (smoothedTrail.length > 0) {
+    interpolatedTrail.push(smoothedTrail[smoothedTrail.length - 1]);
+  }
 
-  // Create fading polyline segments
+  // --- Build Fading Polyline Segments from the Trail ---
   const polylineSegments = [];
   for (let i = 1; i < interpolatedTrail.length; i++) {
     const pointA = interpolatedTrail[i - 1];
     const pointB = interpolatedTrail[i];
     const age = Date.now() - pointB.time;
     const opacity = Math.max(0, 0.9 - age / TRAIL_DURATION); // Fades over time
-
     if (opacity > 0) {
       polylineSegments.push(
         <Polyline
           key={`segment-${i}`}
-          positions={[
-            [pointA.lat, pointA.lng],
-            [pointB.lat, pointB.lng]
-          ]}
+          positions={[[pointA.lat, pointA.lng], [pointB.lat, pointB.lng]]}
           pathOptions={{
             color: color,
-            weight: 8, // Adjust line thickness
-            opacity: opacity, // Apply fading effect
+            weight: 8, // Adjust line thickness as desired
+            opacity: opacity,
           }}
         />
       );
     }
   }
 
+  // --- Determine the Popup Content Based on Marker Type ---
   let popupContent;
   if (type === 'door') {
     popupContent = <strong>{data.message}</strong>;
   } else if (type === 'person') {
     popupContent = (
       <>
-        <strong>Coordinates:</strong> {data.lat}, {data.lng}
-        <br />
-        <strong>Belongs To:</strong> {data.person_name}
-        <br />
-        <strong>Role:</strong> {data.person_role}
-        <br />
-        <strong>Current Facility:</strong> {data.facility_name}
-        <br />
-        <strong>Tracking Method:</strong> {data.tracking_type}
-        <br />
+        <strong>Coordinates:</strong> {data.lat}, {data.lng}<br />
+        <strong>Belongs To:</strong> {data.person_name}<br />
+        <strong>Role:</strong> {data.person_role}<br />
+        <strong>Current Facility:</strong> {data.facility_name}<br />
+        <strong>Tracking Method:</strong> {data.tracking_type}<br />
         <strong>Message:</strong> {data.message || 'No message'}
       </>
     );
@@ -144,30 +157,21 @@ const CircleMarkerPopup = ({
       : `${data.lat}, ${data.lng}`;
     popupContent = (
       <>
-        <strong>Alert:</strong> {data.description || 'No message'}
-        <br />
-        <strong>Time:</strong> {data.dateIssued}
-        <br />
-        <strong>Status:</strong> {data.status}
-        <br />
-        <strong>Owner:</strong> {data.personName}
-        <br />
+        <strong>Alert:</strong> {data.description || 'No message'}<br />
+        <strong>Time:</strong> {data.dateIssued}<br />
+        <strong>Status:</strong> {data.status}<br />
+        <strong>Owner:</strong> {data.personName}<br />
         <strong>Coordinates:</strong> {coordinates}
         <div className="alert-actions">
           <select 
             onChange={(e) => {
               if (e.target.value === 'dismiss') {
                 onDismissAlert(data.id);
-              }
-              else if (e.target.value === 'unlock') {
-                // console.log(`Unlocking doors for alert ${alertId}`);
+              } else if (e.target.value === 'unlock') {
                 onUnlockDoors(data.id);
-              }
-              else if (e.target.value === 'alarm') {
-                // console.log(`Activating alarm for alert ${alertId}`);
+              } else if (e.target.value === 'alarm') {
                 onActivateAlarm(data.id);
-              }
-              else {
+              } else {
                 console.log('Invalid action');
               }
               e.target.value = '';
@@ -185,17 +189,16 @@ const CircleMarkerPopup = ({
   } else {
     popupContent = (
       <>
-        <strong>Coordinates:</strong> {data.lat}, {data.lng}
-        <br />
+        <strong>Coordinates:</strong> {data.lat}, {data.lng}<br />
         <strong>Message:</strong> {data.message || 'No message'}
       </>
     );
   }
 
+  // --- Render the Combined Output ---
   return (
     <>
       {polylineSegments}
-
       <CircleMarker
         ref={markerRef}
         center={[data.lat, data.lng]}
@@ -213,7 +216,7 @@ const CircleMarkerPopup = ({
           opacity={1}
           className="marker-label"
         >
-          {data.person_id ||data.id ? data.person_id || data.id : data.message}
+          {data.person_id || data.id ? data.person_id || data.id : data.message}
         </Tooltip>
       </CircleMarker>
     </>
@@ -221,6 +224,231 @@ const CircleMarkerPopup = ({
 };
 
 export default CircleMarkerPopup;
+
+
+// import React, { useRef, useEffect, useState } from 'react';
+// import { CircleMarker, Polyline, Popup, Tooltip } from 'react-leaflet';
+
+// // Trail settings
+// const TRAIL_DURATION = 25000;  // How long a trail segment stays visible
+// const SMOOTHING_FACTOR = 1;   // Number of positions to average for smoothing
+// const INTERPOLATION_STEPS = 5; // Extra points per segment to smooth motion
+
+// const CircleMarkerPopup = ({ 
+//   type, 
+//   data, 
+//   color, 
+//   fillColor, 
+//   radius, 
+//   fillOpacity, 
+//   onDismissAlert, 
+//   onUnlockDoors, 
+//   onActivateAlarm }) => {
+
+//   const markerRef = useRef(null);
+//   const [popupOpen, setPopupOpen] = useState(false);
+//   const [trail, setTrail] = useState([]); // Store past positions
+
+//   useEffect(() => {
+//         if (markerRef.current) {
+//           const marker = markerRef.current;
+//           const onPopupOpen = () => setPopupOpen(true);
+//           const onPopupClose = () => setPopupOpen(false);
+    
+//           marker.on('popupopen', onPopupOpen);
+//           marker.on('popupclose', onPopupClose);
+    
+//           return () => {
+//             marker.off('popupopen', onPopupOpen);
+//             marker.off('popupclose', onPopupClose);
+//           };
+//         }
+//     }, []);
+      
+
+//   useEffect(() => {
+//     if (markerRef.current) {
+//       markerRef.current.setLatLng([data.lat, data.lng]);
+//       if (popupOpen) markerRef.current.openPopup();
+//     }
+
+//     // Append new position with a timestamp
+//     setTrail(prevTrail => [...prevTrail, { lat: data.lat, lng: data.lng, time: Date.now() }]);
+//   }, [data.lat, data.lng, popupOpen]);
+
+//   // Remove old trail points over time
+//   useEffect(() => {
+//     const interval = setInterval(() => {
+//       const now = Date.now();
+//       setTrail(prevTrail => prevTrail.filter(point => now - point.time < TRAIL_DURATION));
+//     }, 100); // Update every 100ms
+
+//     return () => clearInterval(interval);
+//   }, []);
+
+//   // Function to calculate a simple moving average for smoothing
+//   const getSmoothedTrail = (points, smoothingFactor) => {
+//     if (points.length < smoothingFactor) return points;
+//     return points.map((_, i, arr) => {
+//       const start = Math.max(0, i - smoothingFactor + 1);
+//       const slice = arr.slice(start, i + 1);
+//       const avgLat = slice.reduce((sum, p) => sum + p.lat, 0) / slice.length;
+//       const avgLng = slice.reduce((sum, p) => sum + p.lng, 0) / slice.length;
+//       return { lat: avgLat, lng: avgLng, time: arr[i].time };
+//     });
+//   };
+
+//   // Function to interpolate extra points between two trail points
+//   const interpolatePoints = (pointA, pointB, steps) => {
+//     const interpolated = [];
+//     for (let i = 1; i <= steps; i++) {
+//       const t = i / (steps + 1);
+//       interpolated.push({
+//         lat: pointA.lat + t * (pointB.lat - pointA.lat),
+//         lng: pointA.lng + t * (pointB.lng - pointA.lng),
+//         time: pointA.time + t * (pointB.time - pointA.time)
+//       });
+//     }
+//     return interpolated;
+//   };
+
+//   // Apply smoothing and interpolation
+//   const smoothedTrail = getSmoothedTrail(trail, SMOOTHING_FACTOR);
+//   const interpolatedTrail = [];
+//   for (let i = 1; i < smoothedTrail.length; i++) {
+//     interpolatedTrail.push(smoothedTrail[i - 1]);
+//     interpolatedTrail.push(...interpolatePoints(smoothedTrail[i - 1], smoothedTrail[i], INTERPOLATION_STEPS));
+//   }
+//   interpolatedTrail.push(smoothedTrail[smoothedTrail.length - 1]);
+
+//   // Create fading polyline segments
+//   const polylineSegments = [];
+//   for (let i = 1; i < interpolatedTrail.length; i++) {
+//     const pointA = interpolatedTrail[i - 1];
+//     const pointB = interpolatedTrail[i];
+//     const age = Date.now() - pointB.time;
+//     const opacity = Math.max(0, 0.9 - age / TRAIL_DURATION); // Fades over time
+
+//     if (opacity > 0) {
+//       polylineSegments.push(
+//         <Polyline
+//           key={`segment-${i}`}
+//           positions={[
+//             [pointA.lat, pointA.lng],
+//             [pointB.lat, pointB.lng]
+//           ]}
+//           pathOptions={{
+//             color: color,
+//             weight: 8, // Adjust line thickness
+//             opacity: opacity, // Apply fading effect
+//           }}
+//         />
+//       );
+//     }
+//   }
+
+//   let popupContent;
+//   if (type === 'door') {
+//     popupContent = <strong>{data.message}</strong>;
+//   } else if (type === 'person') {
+//     popupContent = (
+//       <>
+//         <strong>Coordinates:</strong> {data.lat}, {data.lng}
+//         <br />
+//         <strong>Belongs To:</strong> {data.person_name}
+//         <br />
+//         <strong>Role:</strong> {data.person_role}
+//         <br />
+//         <strong>Current Facility:</strong> {data.facility_name}
+//         <br />
+//         <strong>Tracking Method:</strong> {data.tracking_type}
+//         <br />
+//         <strong>Message:</strong> {data.message || 'No message'}
+//       </>
+//     );
+//   } else if (type === 'alert') {
+//     const coordinates = data.personCurrentLocation && Array.isArray(data.personCurrentLocation)
+//       ? `${data.personCurrentLocation[0]}, ${data.personCurrentLocation[1]}`
+//       : `${data.lat}, ${data.lng}`;
+//     popupContent = (
+//       <>
+//         <strong>Alert:</strong> {data.description || 'No message'}
+//         <br />
+//         <strong>Time:</strong> {data.dateIssued}
+//         <br />
+//         <strong>Status:</strong> {data.status}
+//         <br />
+//         <strong>Owner:</strong> {data.personName}
+//         <br />
+//         <strong>Coordinates:</strong> {coordinates}
+//         <div className="alert-actions">
+//           <select 
+//             onChange={(e) => {
+//               if (e.target.value === 'dismiss') {
+//                 onDismissAlert(data.id);
+//               }
+//               else if (e.target.value === 'unlock') {
+//                 // console.log(`Unlocking doors for alert ${alertId}`);
+//                 onUnlockDoors(data.id);
+//               }
+//               else if (e.target.value === 'alarm') {
+//                 // console.log(`Activating alarm for alert ${alertId}`);
+//                 onActivateAlarm(data.id);
+//               }
+//               else {
+//                 console.log('Invalid action');
+//               }
+//               e.target.value = '';
+//             }}
+//             disabled={data.status === 'resolved'}
+//           >
+//             <option value="">Actions...</option>
+//             <option value="unlock" disabled={data.personCurrentFacility === "Outside"}>Unlock all doors</option>
+//             <option value="alarm">Activate Alarm</option>
+//             <option value="dismiss">Dismiss</option>
+//           </select>
+//         </div>
+//       </>
+//     );
+//   } else {
+//     popupContent = (
+//       <>
+//         <strong>Coordinates:</strong> {data.lat}, {data.lng}
+//         <br />
+//         <strong>Message:</strong> {data.message || 'No message'}
+//       </>
+//     );
+//   }
+
+//   return (
+//     <>
+//       {polylineSegments}
+
+//       <CircleMarker
+//         ref={markerRef}
+//         center={[data.lat, data.lng]}
+//         color={color}
+//         fillColor={fillColor}
+//         radius={radius}
+//         fillOpacity={fillOpacity}
+//         pane={type === 'alert' ? 'alertPane' : undefined}
+//         zIndexOffset={type === 'alert' ? 1000 : 0}
+//       >
+//         <Popup>{popupContent}</Popup>
+//         <Tooltip
+//           direction="bottom"
+//           offset={[0, 8]}
+//           opacity={1}
+//           className="marker-label"
+//         >
+//           {data.person_id ||data.id ? data.person_id || data.id : data.message}
+//         </Tooltip>
+//       </CircleMarker>
+//     </>
+//   );
+// };
+
+// export default CircleMarkerPopup;
 
 
 // ======================= GRADIENT TRAIL ======================= //

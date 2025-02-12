@@ -27,6 +27,7 @@ router.get('/people', apiController.getAllPeopleData);
 
 router.get('/maintenances/scheduled', apiController.getScheduledMaintenances);
 router.post('/maintenance', apiController.handleMaintenanceSchedule);
+router.patch('/maintenances/:id/status', apiController.updateMaintenanceStatus);
 
 // router.post('/alert/sos', apiController.handleSOSAlert); // For Orion subscription
 // router.get('/alert/sos', apiController.handleSOSAlert); // For polling

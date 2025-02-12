@@ -307,9 +307,9 @@ def insert_has_access(cursor):
     facility_mapping = {facility[1]: facility[0] for facility in facilities}
     
     # Defining which facilities each role has access to
-    engineer_facilities = ["FAB 1", "FAB 2", "FAB 10", "FAB 14", "FAB 10 ENERGY CENTRE", "FAB 14 ENERGY CENTRE", "R&D", "Ryebrook 110kV Substation"]
+    engineer_facilities = ["Cleanroom 1", "Cleanroom 2", "Cleanroom 3", "Cleanroom 4", "FAB 1", "FAB 2", "FAB 10", "FAB 14", "FAB 10 ENERGY CENTRE", "FAB 14 ENERGY CENTRE", "R&D", "Ryebrook 110kV Substation"]
     technician_facilities = ["FAB 1", "FAB 2", "FAB 10", "FAB 14", "R&D", "Waste Water Treatment Building", "Water Treatment Building"]
-    cleanroom_facilities = ["Cleanroom 1", "Cleanroom 3", "Cleanroom 4", "FAB 1", "FAB 2", "FAB 10", "FAB 14"]
+    cleanroom_facilities = ["Cleanroom 1", "Cleanroom 2", "Cleanroom 3", "Cleanroom 4", "FAB 1", "FAB 2", "FAB 10", "FAB 14"]
     janitor_facilities = list(facility_mapping.keys())  # Janitors have access to all facilities
 
     # Get all roles and map role names to IDs

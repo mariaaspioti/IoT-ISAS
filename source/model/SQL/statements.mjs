@@ -47,9 +47,16 @@ export const selectScheduledMaintenances = `
     FROM Maintenance m
     LEFT JOIN Conducts c ON m.maintenance_id = c.maintenance_id
     LEFT JOIN Reserves r ON m.maintenance_id = r.maintenance_id
-    WHERE datetime(m.startTime) > datetime('now')
+    WHERE datetime(m.startTime) > datetime('now') AND m.status = 'scheduled'
     GROUP BY m.maintenance_id, m.startTime, m.endTime, m.dateCreated, m.status, m.description
     ORDER BY m.startTime;
+    `;
+
+// given the maintenance id and the new status, update the status of the maintenance
+export const updateMaintenanceStatus = `
+    UPDATE Maintenance
+    SET status = ?
+    WHERE maintenance_id = ?;
     `;
 
 

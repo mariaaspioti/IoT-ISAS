@@ -13,7 +13,8 @@ const ScheduleMaintenance = ({ buildings, workers, onSubmit }) => {
 
   const workerOptions = workers.map(worker => ({
     value: worker.id,
-    label: worker.name
+    label: worker.name,
+    role: worker.role,
   }));
 
   const handleSubmit = (e) => {
@@ -26,7 +27,21 @@ const ScheduleMaintenance = ({ buildings, workers, onSubmit }) => {
       description,
       exemptPersonnel: exemptPersonnel
     });
+
+    // Reset form fields to initial state
+    setSelectedBuilding('');
+    setStartDate(new Date());
+    setEndDate(new Date());
+    setExemptWorkers([]);
+    setDescription('');
   };
+
+  const formatOptionLabel = ({ label, role }) => (
+    <div>
+      <span>{label}</span>
+      <span style={{ color: '#aaa', marginLeft: '10px' }}>({role})</span>
+    </div>
+  );
 
   return (
     <div className="schedule-form">
@@ -99,6 +114,7 @@ const ScheduleMaintenance = ({ buildings, workers, onSubmit }) => {
             options={workerOptions}
             placeholder="Select exempt personnel..."
             className="exempt-workers-select"
+            formatOptionLabel={formatOptionLabel}
           />
         </div>
 

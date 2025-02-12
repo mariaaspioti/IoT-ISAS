@@ -249,6 +249,11 @@ export const fetchScheduledMaintenanceData = async () => {
     return schedulesData;
 }
 
+export const updateMaintenanceStatus = async (scheduleId, status) => {
+    const response = await APICall.updateMaintenanceStatus(scheduleId, status);
+    return response;
+}
+
 export const fetchActiveAlertsData = async () => {
     const alerts = await APICall.fetchActiveAlerts();
     // formattedAlerts = alerts.forEach(alert => {

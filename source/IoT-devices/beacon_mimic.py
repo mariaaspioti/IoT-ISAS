@@ -187,6 +187,7 @@ def get_parameters():
               [-6.523518562316895, 53.374850513125764],
               [-6.523271799087524, 53.374568736425694],
               [-6.523389816284181, 53.37424853336731] ])
+    
     route_3 = np.array([ [-6.519856626052614, 53.37632097874124],
               [-6.520039059345767, 53.376090565227486],
               [-6.520200029898573, 53.375872951319856],
@@ -224,6 +225,7 @@ def get_parameters():
               [-6.520200029898573, 53.375872951319856],
               [-6.520039059345767, 53.376090565227486],
               [-6.519856626052614, 53.37632097874124] ])
+    
     route_4 = np.array([ [-6.518441677804626, 53.375872737975605],
               [-6.518844104186584, 53.37547910999251],
               [-6.51919287371764, 53.3755975187928],
@@ -409,6 +411,8 @@ def get_parameters():
 
     routes = [route_1, route_2, route_3, route_4, route_5, route_6, route_7, route_8, route_9, route_10, route_11]
     speeds = [speed_1, speed_2, speed_3, speed_4, speed_5, speed_6, speed_7, speed_8, speed_9, speed_10, speed_11]
+    # routes = [route_1, route_2, route_4, route_5, route_6, route_7, route_8, route_9, route_10, route_11]
+    # speeds = [speed_1, speed_2, speed_4, speed_5, speed_6, speed_7, speed_8, speed_9, speed_10, speed_11]
     return routes, speeds
 
 def mimic_beacon(mqtt_client, route, speed, device_id, base_topic):
@@ -465,6 +469,8 @@ def main():
     for i in range(len(routes)):
         route = routes[i]
         speed = speeds[i]
+        if i == 2:
+            continue
 
         # Bluetooth device setup
         bt_device_id = f"BluetoothTracker-{i}"
