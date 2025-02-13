@@ -16,6 +16,15 @@
 ---
 ![System architecture](images/final-architecture.png)
 
+## Start system
+---
+- Go to IoT-devices folder
+- Make sure to run all IoT Agents (camera, NFC, SmartLock, SOSButtons, Trackers)
+- Run fakers beacon_mimic.py, button_mimic.py (to send SOS alerts), ( optional nfc_reader_mimic.py)
+- Go to `./source.`
+- Execute `npm run install-start:all`
+- Visit http://localhost:3000
+
 ## Run worker routes simulation
 ---
 - Go to IoT-devices
