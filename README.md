@@ -18,6 +18,12 @@
 
 ## Start system
 ---
+- Run gui_manage_system.py
+- Press install
+- Press start all
+
+_Alternatively:_
+
 - Go to IoT-devices folder
 - Make sure to run all IoT Agents (camera, NFC, SmartLock, SOSButtons, Trackers)
 - Run fakers beacon_mimic.py, button_mimic.py (to send SOS alerts), ( optional nfc_reader_mimic.py)
@@ -43,7 +49,7 @@
 - Press Enter in the button_mimic.py to send a SOS button message
 - Visit the app
 
-## HOW TO START:
+## Server setup
 
 ---
 - Go to `./source.`
