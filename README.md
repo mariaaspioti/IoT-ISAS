@@ -1,12 +1,20 @@
 # IoT-ISAS
 ---
-![Dashboard with buildings defined](images/earlyDashboard3.png)
+![Worker Tracking functionality](images/worker-tracking.jpg)
 
-![Map and dashboard with active alerts](images/activeAlertsWaypoint.png)
+![SOS Button press functionality](images/sos-button-pressing.jpg)
+
+![Alert Handling](images/alert-handling.jpg)
+
+![Smart Lock Access Control functionality](images/door-unlocking-scenario.jpg)
+
+![Camera Feed and Scheduling Maintenances functionality](images/camera-feed-maintenances.jpg)
+
+![Historic View functionality](images/historic-view.jpg)
 
 ## Architecture
 ---
-![System architecture](images/implementationArchitecture.png)
+![System architecture](images/final-architecture.png)
 
 ## Run worker routes simulation
 ---
