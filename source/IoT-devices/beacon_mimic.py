@@ -454,8 +454,8 @@ def mimic_beacon(mqtt_client, route, speed, device_id, base_topic):
         topic = f"{base_topic}/{device_id}"
         mqtt_client.publish(topic, json.dumps(payload))
         print(f"{device_id} published to {topic}")#: {payload}")
-        # if (device_id == "BluetoothTracker-0"):
-        #     handle_door_entry(mqtt_client, position[1], position[0], device_id)
+        if (device_id == "BluetoothTracker-0"):
+            handle_door_entry(mqtt_client, position[1], position[0], device_id)
         time.sleep(1)
 
 def main():
