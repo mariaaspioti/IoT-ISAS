@@ -365,3 +365,25 @@ export const postTrackingData = async (trackingData) => {
         console.error('Error posting tracking data in postTrackingData:', error);
     }
 }
+
+
+export const patchSmartLockAction = async (smartLockId, action) => {
+    try {
+      const response = await fetch(`/api/smart-locks/${smartLockId}/action`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ action }),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to update smart lock action');
+      }
+  
+      return await response.json();
+    } catch (error) {
+      console.error('Error updating smart lock action:', error);
+      throw error;
+    }
+  };

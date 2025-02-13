@@ -170,3 +170,41 @@
 .live-cameras-controls {
   margin-bottom: 20px;
 }
+
+.smart-locks-controls {
+  margin-bottom: 20px;
+}
+
+/* HandleSmartLocks.css */
+
+.handle-smart-locks-form {
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 8px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.smart-lock-select,
+.action-select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+.smart-lock-select:focus,
+.action-select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}

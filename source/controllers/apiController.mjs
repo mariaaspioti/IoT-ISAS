@@ -5,7 +5,7 @@ import axios from 'axios';
 import * as stateController from '../controllers/stateController.mjs';
 import * as maintenanceController from '../controllers/maintenanceController.mjs';
 import * as cameraController from '../controllers/cameraController.mjs';
-// import * as smartlockController from '../controllers/smartlockController.mjs'
+import * as smartlockController from '../controllers/smartlockController.mjs'
 // Orion Context Broker URL
 const orionUrl = 'http://150.140.186.118:1026/v2/entities';
 const fiwareService = 'ISAS';
@@ -759,6 +759,16 @@ let getHistoricTrackingData = async (req, res) => {
     }
 }
 
+// redirect the patch to the corresponding function in the smartlockcontroller
+export const handleSmartLockAction = async (req, res) => {
+    try {
+        await smartlockController.handleSmartLockAction(req, res);
+        
+    } catch (error) {
+        console.error('Error handling smart lock action:', error);
+        res.status(500).send('Internal server error.');
+    }
+};
 
 // let getSmartLockData = async(req, res) => {
 //     try {

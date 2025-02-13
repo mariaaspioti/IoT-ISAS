@@ -1,6 +1,6 @@
 import * as dbInterface from '../model/dbInterface.mjs';
 import axios from 'axios';
-import { unlockSmartLock } from './smartlockController.mjs';
+import { unlockSmartLock, lockSmartLock } from './smartlockController.mjs';
 
 
 const orionUrl = 'http://150.140.186.118:1026/v2/entities';
@@ -47,6 +47,10 @@ let handleNFCDeviceUpdates = async (device, socket) => {
                 if (roleAccess) {
                     console.log("access granted");
                     unlockSmartLock(smartLockId);
+                    setTimeout(() => {
+                        console.log("Locking the smart lock after 15 seconds");
+                        lockSmartLock(smartLockId);
+                    }, 15000);
                     result = "success";
                 } else {
                     console.log("access denied");
@@ -64,6 +68,11 @@ let handleNFCDeviceUpdates = async (device, socket) => {
                 if (roleAccess) {
                     console.log("access granted");
                     unlockSmartLock(smartLockId);
+                    setTimeout(() => {
+                        console.log("Locking the smart lock after 15 seconds");
+                        // Assuming there's a function to lock the smart lock
+                        lockSmartLock(smartLockId);
+                    }, 15000);
                     result = "success";
                 } else {
                     console.log("Inside unauthorized area");

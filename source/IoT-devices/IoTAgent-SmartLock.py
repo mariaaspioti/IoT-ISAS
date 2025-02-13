@@ -163,14 +163,27 @@ def monitor_single_smart_lock(smart_lock_id, serial_number):
                 if device_state == "unlocked":
                     if current_serial_number == 18043712356:
                         unlock_smartlock()
-                        print(f"Smart Lock {smart_lock_id} unlocked, will lock again in 15 seconds")
-                        time.sleep(15)
-                        send_lock_command(smart_lock_id)
-                        lock_smartlock()
+                        print(f"Smart Lock {smart_lock_id} unlocked")
+                        # time.sleep(15)
+                        # send_lock_command(smart_lock_id)
+                        # lock_smartlock()
                     else:
-                        print(f"Smart Lock {smart_lock_id} unlocked, will lock again in 15 seconds")
-                        time.sleep(15)
-                        send_lock_command(smart_lock_id)
+                        print(f"Smart Lock {smart_lock_id} unlocked")
+                        # time.sleep(15)
+                        # send_lock_command(smart_lock_id)
+                elif device_state == "locked":
+                    if current_serial_number == 18043712356:
+                        lock_smartlock()
+                        # time.sleep(15)
+                        # send_lock_command(smart_lock_id)
+                        # lock_smartlock()
+                    else:
+                        # print(f"Smart Lock {smart_lock_id} unlocked, will lock again in 15 seconds")
+                        # time.sleep(15)
+                        # send_lock_command(smart_lock_id)
+                        print(f"Smart lock {smart_lock_id} is now locked")
+                    
+                
         time.sleep(5)
 
 def monitor_smart_locks():
@@ -228,8 +241,8 @@ def send_lock_command_to_device(device_id):
 def main():
     try:
         print("Starting IoT Agent for Smart Locks...")
-        # monitor_smart_locks()
-        send_lock_command_to_device("urn:ngsi-ld:Device:93")
+        monitor_smart_locks()
+        # send_lock_command_to_device("urn:ngsi-ld:Device:91")
     except KeyboardInterrupt:
         print("\nShutting down gracefully...")
         stop_event.set()  # Signal all threads to stop

@@ -9,13 +9,15 @@ import ScheduleMaintenance from './components/Maintenance/ScheduleMaintenance';
 import MaintenanceList from './components/Maintenance/MaintenanceList';
 import CameraFeed from './components/CameraFeed/CameraFeed';
 import HistoricRoutesView from './components/HistoricRoutes/HistoricRoutesView';
+import HandleSmartLocks from './components/SmartLocks/HandleSmartLocks';
 import './App.css';
 
-import { fetchFormatAlertData, fetchAllFacilitiesData, fetchAllPeopleData,
+import {
+  fetchFormatAlertData, fetchAllFacilitiesData, fetchAllPeopleData,
   postMaintenanceSchedule, fetchAuthorizationData, fetchScheduledMaintenanceData,
   fetchActiveAlertsData, patchUpdatedAlertStatusData, patchUpdatedAlertActionData,
-  fetchAllSmartLocksData, updateMaintenanceStatus
- } from './services/editDashboardData';
+  updateMaintenanceStatus
+} from './services/editDashboardData';
 
 function App() {
   // for the view controls
@@ -36,21 +38,21 @@ function App() {
   const [showLiveCameras, setShowLiveCameras] = useState(false);
   // for the historic view of worker routes
   const [showHistoricRoutes, setShowHistoricRoutes] = useState(false);
-  
+  // for the smart locks
+  const [showSmartLocks, setShowSmartLocks] = useState(false);
 
   // Load initial data
   useEffect(() => {
     const loadInitialData = async () => {
       try {
-        const [buildingsData, workersData, maintenanceData, alertsData] = 
+        const [buildingsData, workersData, maintenanceData, alertsData] =
           await Promise.all([
             fetchAllFacilitiesData(),
             fetchAllPeopleData(),
-            // fetchAllSmartLocksData(),
             fetchScheduledMaintenanceData(),
             fetchActiveAlertsData()
           ]);
-          
+
         setBuildings(buildingsData);
         setWorkers(workersData);
         // setDoors(doorData);
@@ -60,14 +62,14 @@ function App() {
         console.error('Initial data load error:', error);
       }
     };
-    
+
     loadInitialData();
   }, []);
 
   const mapDataRef = useRef(mapData);
-    useEffect(() => {
-      mapDataRef.current = mapData;
-    }, [mapData]);
+  useEffect(() => {
+    mapDataRef.current = mapData;
+  }, [mapData]);
 
   const generateAccessViolationAlert = (personId, buildingId, reason) => {
     const violationAlert = {
@@ -79,7 +81,7 @@ function App() {
       severity: 'high',
       timestamp: new Date().toISOString()
     };
-  
+
     // setAlerts(prev => [violationAlert, ...prev].slice(0, MAX_ALERTS));
   };
 
@@ -129,7 +131,7 @@ function App() {
 
     // Access doors from mapData instead of separate state
     const doors = mapDataRef.current[VIEW_TYPES.DOORS] || [];
-    
+
     // Handle NGSI-LD URI format
     const targetDoorId = device.controlledAsset.value[0];
 
@@ -170,7 +172,7 @@ function App() {
     alertSOSbutton: handleNewAlert,
     nfcDeviceUpdate: handleNfcDeviceUpdate
   }), [handleNewAlert, handleNfcDeviceUpdate]);
-  
+
   // Update the useWebSocket usage
   useWebSocket(eventHandlers);
 
@@ -197,7 +199,7 @@ function App() {
     if (response) {
       console.log('State updated successfully');
     }
-    
+
   }, []);
 
   const handleUnlockDoors = useCallback(async (alertId) => {
@@ -240,11 +242,11 @@ function App() {
     }
   }, []);
 
-    // Add to your existing alert handling logic
+  // Add to your existing alert handling logic
   const checkAccessAuthorization = async (personId, buildingId) => {
     try {
       const { authorized, reason } = fetchAuthorizationData(personId, buildingId);
-      
+
       if (!authorized) {
         generateAccessViolationAlert(personId, buildingId, reason);
       }
@@ -253,15 +255,18 @@ function App() {
     }
   };
 
-  
+  const handleSmartLockAction = (data) => {
+    console.log('Smart Lock Action:', data);
+    // Implement the logic to handle the smart lock action
+  };
 
   return (
     <div className="app-container">
       <div className="header-controls">
         <h1>Industrial Spatial Authorization System</h1>
       </div>
-      
-      <ViewControls 
+
+      <ViewControls
         activeView={activeView}
         setActiveView={setActiveView}
       />
@@ -274,25 +279,25 @@ function App() {
         <div className="main-content">
           <div className="map-container">
             <DashboardMap
-            data={mapData} 
-            alerts={alerts}
-            maintenanceSchedules={maintenanceSchedules} 
-            viewType={activeView}
-            onDismissAlert={handleDismissAlert}
-            onUnlockDoors={handleUnlockDoors}
-            onActivateAlarm={handleActivateAlarm}
-            doorStates={doorStates}
-             />
+              data={mapData}
+              alerts={alerts}
+              maintenanceSchedules={maintenanceSchedules}
+              viewType={activeView}
+              onDismissAlert={handleDismissAlert}
+              onUnlockDoors={handleUnlockDoors}
+              onActivateAlarm={handleActivateAlarm}
+              doorStates={doorStates}
+            />
           </div>
 
           <div className="data-panels">
-            <AlertsList 
+            <AlertsList
               alerts={alerts}
               onDismissAlert={handleDismissAlert}
               onUnlockDoors={handleUnlockDoors}
               onActivateAlarm={handleActivateAlarm}
             />
-            <MaintenanceList 
+            <MaintenanceList
               maintenanceSchedules={maintenanceSchedules}
               onCancelMaintenance={handleCancelMaintenance}
             />
@@ -300,36 +305,47 @@ function App() {
         </div>
       )}
 
-    <div className="scheduler-controls">
-          <button onClick={() => setShowScheduler(!showScheduler)}>
-            {showScheduler ? 'Hide Scheduler' : 'Schedule Maintenance'}
-          </button>
-        </div>
+      <div className="scheduler-controls">
+        <button onClick={() => setShowScheduler(!showScheduler)}>
+          {showScheduler ? 'Hide Scheduler' : 'Schedule Maintenance'}
+        </button>
+      </div>
 
       {showScheduler && (
-              <ScheduleMaintenance
-                buildings={buildings}
-                workers={workers}
-                onSubmit={handleScheduleSubmit}
-              />
-            )}
-      
+        <ScheduleMaintenance
+          buildings={buildings}
+          workers={workers}
+          onSubmit={handleScheduleSubmit}
+        />
+      )}
+
       <div className='historic-routes-controls'>
         <button onClick={() => setShowHistoricRoutes(!showHistoricRoutes)}>
           {showHistoricRoutes ? 'Hide Historic Routes' : 'Show Historic Routes'}
         </button>
       </div>
 
-      {showHistoricRoutes && <HistoricRoutesView 
+      {showHistoricRoutes && <HistoricRoutesView
         people={workers}
       />}
 
+
+      <div className="smart-locks-controls">
+        <button onClick={() => setShowSmartLocks(!showSmartLocks)}>
+          {showSmartLocks ? 'Hide Lock Actions' : 'Show Lock Actions'}
+        </button>
+      </div>
+
+      {showSmartLocks && (
+        <HandleSmartLocks onSubmit={handleSmartLockAction} />
+      )}
+
       <div className="live-cameras-controls">
-          <button onClick={() => setShowLiveCameras(!showLiveCameras)}>
-            {showLiveCameras ? 'Hide Live Cameras' : 'Show Live Cameras'}
-          </button>
-        </div>
-      
+        <button onClick={() => setShowLiveCameras(!showLiveCameras)}>
+          {showLiveCameras ? 'Hide Live Cameras' : 'Show Live Cameras'}
+        </button>
+      </div>
+
       {showLiveCameras && (
         <>
           <h2 className="live-cameras-header">Live Cameras</h2>
@@ -361,9 +377,11 @@ function App() {
           </div>
         </>
       )}
+
+
       <div className="update-notice">
-              Map data updates every 2 seconds. Last update: {new Date().toLocaleTimeString()}
-            </div>
+        Map data updates every 2 seconds. Last update: {new Date().toLocaleTimeString()}
+      </div>
     </div>
   );
 }

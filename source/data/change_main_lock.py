@@ -79,19 +79,19 @@ def restore_serial_number(device_id):
         
 
 def main():
-    restore_serial_number("urn:ngsi-ld:Device:93")
-    # device_id = input("Enter the device ID: ")
-    # new_serial_number = input("Enter the new serial number: ")
-    # try:
-    #     new_serial_number = int(new_serial_number)
-    # except ValueError:
-    #     print("Invalid input. Please enter a valid integer for the serial number.")
-    #     return
+    # restore_serial_number("urn:ngsi-ld:Device:93")
+    device_id = input("Enter the device ID: ")
+    new_serial_number = input("Enter the new serial number: ")
+    try:
+        new_serial_number = int(new_serial_number)
+    except ValueError:
+        print("Invalid input. Please enter a valid integer for the serial number.")
+        return
     
-    # old_serial_number = get_device_serial_number(device_id)
-    # if old_serial_number:
-    #     backup_serial_number(device_id, old_serial_number)
-    #     change_device_serial_number(device_id, new_serial_number)
+    old_serial_number = get_device_serial_number(device_id)
+    if old_serial_number:
+        backup_serial_number(device_id, old_serial_number)
+        change_device_serial_number(device_id, new_serial_number)
 
 if __name__ == "__main__":
     main()
