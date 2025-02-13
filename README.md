@@ -22,6 +22,7 @@
 - Make sure to run all IoT Agents (camera, NFC, SmartLock, SOSButtons, Trackers)
 - Run fakers beacon_mimic.py, button_mimic.py (to send SOS alerts), ( optional nfc_reader_mimic.py)
 - Go to `./source.`
+- Execute `npm install`
 - Execute `npm run install-start:all`
 - Visit http://localhost:3000
 
