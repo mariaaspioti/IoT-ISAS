@@ -15,6 +15,8 @@ base_bt_topic = "ISAS/devices/BT"
 base_gps_topic = "ISAS/devices/GPS"
 base_nfc_reader_topic = "ISAS/devices/NFC"
 
+
+# For the door entry event handling
 door_cooldown = 4  # Cooldown time in seconds
 last_door_trigger = {}  # Format: {(device_id, door_index): last_trigger_timestamp}
 cooldown_lock = threading.Lock()  # Thread-safe access to last_door_trigger
@@ -142,11 +144,11 @@ def handle_door_entry(mqtt_client, lat, lng, device_id):
         log_file.write(f"Published door entry for {device_id} to {topic} with payload: {payload}\n")
     
 def get_parameters():
-    # route_1 = np.array([ [-6.528346538543702, 53.376431064762556],
-    #           [-6.52765989303589, 53.37647589103842],
-    #           [-6.5271878242492685, 53.37693055488485], # End of route
-    #           [-6.52765989303589, 53.37647589103842], # Retrace
-    #           [-6.528346538543702, 53.376431064762556] ])
+    route_1 = np.array([ [-6.528346538543702, 53.376431064762556],
+              [-6.52765989303589, 53.37647589103842],
+              [-6.5271878242492685, 53.37693055488485], # End of route
+              [-6.52765989303589, 53.37647589103842], # Retrace
+              [-6.528346538543702, 53.376431064762556] ])
     route_1 = np.array([ [-6.527753477659821, 53.37587935174477], 
                         [-6.527571044366648, 53.37600095963548], 
                         [-6.527388611073495, 53.376173770251256], 
@@ -469,8 +471,8 @@ def main():
     for i in range(len(routes)):
         route = routes[i]
         speed = speeds[i]
-        if i == 2:
-            continue
+        # if i == 2:
+        #     continue
 
         # Bluetooth device setup
         bt_device_id = f"BluetoothTracker-{i}"

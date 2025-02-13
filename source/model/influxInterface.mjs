@@ -21,7 +21,7 @@ export const writeMultiplePoints = async (points) => {
     writeApi.writePoints(points);
 
     await writeApi.flush()
-        .then(() => console.log('BULK WRITE FINISHED'))
+        // .then(() => console.log('BULK WRITE FINISHED'))
         .catch(e => { console.error('Error writing points:', e); });
 };
 

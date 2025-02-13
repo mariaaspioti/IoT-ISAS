@@ -55,7 +55,6 @@ function App() {
 
         setBuildings(buildingsData);
         setWorkers(workersData);
-        // setDoors(doorData);
         setMaintenanceSchedules(maintenanceData);
         setAlerts(alertsData);
       } catch (error) {
@@ -99,15 +98,26 @@ function App() {
   const handleCancelMaintenance = useCallback(async (scheduleId) => {
     try {
       await updateMaintenanceStatus(scheduleId, 'cancelled');
-      const updatedSchedules = maintenanceSchedules.map(schedule =>
-        schedule.id === scheduleId ? { ...schedule, status: 'cancelled' } : schedule
+      // Update the schedule status to 'cancelled'
+      setMaintenanceSchedules(prevSchedules => 
+        prevSchedules.map(schedule =>
+          schedule.id === scheduleId ? { ...schedule, status: 'cancelled' } : schedule
+        )
       );
 
-      setMaintenanceSchedules(updatedSchedules);
+      // Remove the cancelled schedule from the frontend after 5 seconds
+      const timeoutId = setTimeout(() => {
+        setMaintenanceSchedules(prevSchedules => 
+          prevSchedules.filter(schedule => schedule.status !== 'cancelled')
+        );
+      }, 5000);
+
+      // Clear the timeout when the component unmounts
+      return () => clearTimeout(timeoutId);
     } catch (error) {
       console.error('Error cancelling maintenance:', error);
     }
-  }, [maintenanceSchedules]);
+  }, []);
 
   const handleNewAlert = useCallback(async (alert) => {
     try {

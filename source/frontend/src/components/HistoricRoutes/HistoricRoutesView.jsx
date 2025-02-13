@@ -71,6 +71,12 @@ const HistoricRoutesView = ({ people }) => {
     } else if (selectedTimeSpan === 'last_1_hour') {
       newMaxTime = Date.now();
       newMinTime = newMaxTime - 60 * 60 * 1000; // Last 1 hour
+    } else if (selectedTimeSpan === 'last_10_min') {
+      newMaxTime = Date.now();
+      newMinTime = newMaxTime - 10 * 60 * 1000; // Last 10 minutes
+    } else if (selectedTimeSpan === 'last_5_min') {
+      newMaxTime = Date.now();
+      newMinTime = newMaxTime - 5 * 60 * 1000; // Last 5 minutes
     }
 
     setMinTime(newMinTime);
@@ -126,6 +132,8 @@ const HistoricRoutesView = ({ people }) => {
             <option value="afternoon_shift">Afternoon Shift (12 PM - 6 PM)</option>
             <option value="last_1_hour">Last 1 Hour</option>
             <option value="last_30_min">Last 30 Minutes</option>
+            <option value="last_10_min">Last 10 Minutes</option>
+            <option value="last_5_min">Last 5 Minutes</option>
           </select>
         </div>
       </div>
