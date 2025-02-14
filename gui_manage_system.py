@@ -116,7 +116,7 @@ class SystemManager:
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 shell=shell_flag,
-                preexec_fn=os.setsid if sys.platform == "win32" else None   
+                # preexec_fn=os.setsid if sys.platform == "win32" else None   
             )
             self.processes.append(self.npm_process)
             print(f"Started Node.js server in {self.source_dir}")
