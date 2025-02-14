@@ -34,11 +34,6 @@ class SystemManager:
         if self.is_agent_running(agent_path):
             self._stop_process(agent_path)
 
-    def start_system(self):
-        """Start all components of the system."""
-        self.start_all_agents()
-        self.start_npm_server()
-
     def start_all_agents(self):
         """Start all IoT agents and required mock devices."""
         # Start IoT Agents
@@ -65,6 +60,18 @@ class SystemManager:
         self._stop_process(agent_path)
         self._start_agent(agent_path)
 
+    def start_system(self):
+        """Start all components (agents + server)."""
+        self.start_all_agents()
+        self.start_npm_server()
+
+    def shutdown(self):
+        """Terminate all running processes (agents + npm)."""
+        print("Shutting down all processes...")
+        self.stop_all_agents()
+        self.stop_npm_server()
+        print("All processes stopped.")
+
     def _start_agent(self, agent_path):
         """Helper to start a single agent process."""
         if agent_path in self.agents:
@@ -74,8 +81,8 @@ class SystemManager:
         try:
             proc = subprocess.Popen(
                 [sys.executable, agent_path],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE
+                stdout=sys.stdout,
+                stderr=sys.stderr
             )
             self.agents[agent_path] = proc
             self.processes.append(proc)
@@ -94,26 +101,22 @@ class SystemManager:
             except Exception as e:
                 print(f"Error terminating agent {agent_path}: {str(e)}")
             finally:
-                # Remove from tracking
                 if proc in self.processes:
                     self.processes.remove(proc)
                 del self.agents[agent_path]
 
     def start_npm_server(self):
-        # return None # Placeholder 
-
         """Start the Node.js server via npm."""
         npm_cmd = ["npm", "run", "install-start:all"]
         try:
-            # Use shell=True on Windows to find npm in PATH
             shell_flag = sys.platform == "win32"
-            
             self.npm_process = subprocess.Popen(
                 npm_cmd,
                 cwd=str(self.source_dir),
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
-                shell=shell_flag  # Add this line
+                shell=shell_flag,
+                preexec_fn=os.setsid if sys.platform == "win32" else None   
             )
             self.processes.append(self.npm_process)
             print(f"Started Node.js server in {self.source_dir}")
@@ -121,14 +124,15 @@ class SystemManager:
             print(f"Error starting npm server: {str(e)}")
             print(f"Command attempted: {' '.join(npm_cmd)}")
             print(f"Working directory: {self.source_dir}")
-            print(f"PATH environment: {os.environ.get('PATH', '')}")
 
     def stop_npm_server(self):
         """Stop the Node.js server if it's running."""
         if self.npm_process:
             try:
                 print("Stopping Node.js server (npm).")
-                self.npm_process.terminate()
+                # self.npm_process.terminate()
+                # On Windows, send CTRL_BREAK_EVENT to the process group
+                self.npm_process.send_signal(signal.CTRL_BREAK_EVENT)
                 self.npm_process.wait(timeout=5)
             except Exception as e:
                 print(f"Error terminating npm server: {str(e)}")
@@ -137,15 +141,8 @@ class SystemManager:
                     self.processes.remove(self.npm_process)
                 self.npm_process = None
 
-    def shutdown(self):
-        """Terminate all running processes (agents + npm)."""
-        print("Shutting down all processes...")
-        self.stop_all_agents()
-        self.stop_npm_server()
-        print("All processes stopped.")
-
     def install_npm_dependencies(self):
-        """Run npm install to install dependencies"""
+        """Run npm install to install dependencies."""
         npm_cmd = ["npm", "install"]
         try:
             shell_flag = sys.platform == "win32"
@@ -156,7 +153,6 @@ class SystemManager:
                 stderr=subprocess.PIPE,
                 shell=shell_flag
             )
-            # Store process reference if needed for later termination
             self.processes.append(install_process)
             print(f"Running npm install in {self.source_dir}")
             return True
@@ -176,34 +172,44 @@ class GUIManager:
         main_frame = ttk.Frame(self.root, padding="10")
         main_frame.pack(fill=tk.BOTH, expand=True)
 
-        # Control buttons
-        control_frame = ttk.Frame(main_frame)
+        # ========== CONTROL FRAME FOR NPM AND AGENTS ==========
+        control_frame = ttk.LabelFrame(main_frame, text="Global Controls", padding="10")
         control_frame.pack(fill=tk.X, pady=5)
-        
+
+        # NPM (server) controls
+        ttk.Button(control_frame, text="Start Server", command=self.start_server).pack(side=tk.LEFT, padx=5)
+        ttk.Button(control_frame, text="Stop Server", command=self.stop_server).pack(side=tk.LEFT, padx=5)
+
+        # Agent controls
+        ttk.Button(control_frame, text="Start Agents", command=self.start_agents).pack(side=tk.LEFT, padx=5)
+        ttk.Button(control_frame, text="Stop Agents", command=self.stop_agents).pack(side=tk.LEFT, padx=5)
+
+        # Combined controls
         ttk.Button(control_frame, text="Start All", command=self.start_all).pack(side=tk.LEFT, padx=5)
         ttk.Button(control_frame, text="Stop All", command=self.stop_all).pack(side=tk.LEFT, padx=5)
 
-        # Agent list
+        # ========== INSTALL FRAME ==========
+        install_frame = ttk.LabelFrame(main_frame, text="Installation", padding="10")
+        install_frame.pack(fill=tk.X, pady=5)
+        ttk.Button(install_frame, text="Install NPM Dependencies", command=self.install_npm).pack(side=tk.LEFT, padx=5)
+
+        # ========== AGENT LIST ==========
         list_frame = ttk.LabelFrame(main_frame, text="Agents & Devices", padding="10")
         list_frame.pack(fill=tk.BOTH, expand=True)
 
-        # Create agent rows
+        # Create agent rows (IoT Agents)
         self.create_agent_rows(list_frame, "IoT Agents:", self.system_manager.iot_agent_files)
-        self.create_agent_rows(list_frame, "Fakers:", 
-                            [str(self.system_manager.iot_dir / d) for d in self.system_manager.required_devices])
+        # Required devices
+        faker_paths = [str(self.system_manager.iot_dir / d) for d in self.system_manager.required_devices]
+        self.create_agent_rows(list_frame, "Fakers:", faker_paths)
+        # NFC reader if it exists
         if self.system_manager.nfc_reader_file.exists():
-            self.create_agent_rows(list_frame, "---", [str(self.system_manager.nfc_reader_file)])
-
-        # Modified control frame with Install button
-        control_frame = ttk.Frame(main_frame)
-        control_frame.pack(fill=tk.X, pady=5)
-        
-        ttk.Button(control_frame, text="Install", command=self.install_npm).pack(side=tk.LEFT, padx=5)
-        ttk.Button(control_frame, text="Start All", command=self.start_all).pack(side=tk.LEFT, padx=5)
-        ttk.Button(control_frame, text="Stop All", command=self.stop_all).pack(side=tk.LEFT, padx=5)
+            self.create_agent_rows(list_frame, "NFC Reader:", [str(self.system_manager.nfc_reader_file)])
 
         self.root.protocol("WM_DELETE_WINDOW", self.on_close)
-    
+
+    # -------------- BUTTON HANDLERS --------------
+
     def install_npm(self):
         """Handle npm install button click"""
         success = self.system_manager.install_npm_dependencies()
@@ -212,22 +218,46 @@ class GUIManager:
         else:
             self.show_status("Failed to start npm install!", error=True)
 
-    def show_status(self, message, error=False):
-        """Show status message to user"""
-        status_color = "#ff0000" if error else "#006600"
-        status_label = ttk.Label(self.root, text=message, foreground=status_color)
-        status_label.pack(pady=5)
-        self.root.after(5000, status_label.destroy)
+    def start_server(self):
+        self.system_manager.start_npm_server()
+        self.show_status("Server started.")
+
+    def stop_server(self):
+        self.system_manager.stop_npm_server()
+        self.show_status("Server stopped.")
+
+    def start_agents(self):
+        self.system_manager.start_all_agents()
+        self.refresh_all_buttons()
+        self.show_status("All agents started.")
+
+    def stop_agents(self):
+        self.system_manager.stop_all_agents()
+        self.refresh_all_buttons()
+        self.show_status("All agents stopped.")
+
+    def start_all(self):
+        self.system_manager.start_system()  # Agents + server
+        self.refresh_all_buttons()
+        self.show_status("System started (all agents + server).")
+
+    def stop_all(self):
+        self.system_manager.shutdown()  # Agents + server
+        self.refresh_all_buttons()
+        self.show_status("System stopped.")
+
+    # -------------- UI HELPERS --------------
 
     def create_agent_rows(self, parent, section_title, items):
+        """Create a row for each agent/device file, with a Start/Stop button."""
         if not items:
             return
 
         section_frame = ttk.Frame(parent)
         section_frame.pack(fill=tk.X, pady=5)
-        
+
         ttk.Label(section_frame, text=section_title, font=('Arial', 9, 'bold')).pack(anchor=tk.W)
-        
+
         for path in items:
             row_frame = ttk.Frame(parent)
             row_frame.pack(fill=tk.X, pady=2)
@@ -241,9 +271,11 @@ class GUIManager:
                 command=lambda p=path: self.toggle_agent(p)
             )
             btn.pack(side=tk.RIGHT, padx=5)
+
             self.agent_widgets[path] = {'button': btn, 'label': label_text}
 
     def toggle_agent(self, agent_path):
+        """Toggle a single agent on/off."""
         if self.system_manager.is_agent_running(agent_path):
             self.system_manager.stop_agent(agent_path)
         else:
@@ -255,19 +287,17 @@ class GUIManager:
         btn.config(text="Stop" if self.system_manager.is_agent_running(agent_path) else "Start")
 
     def refresh_all_buttons(self):
+        """Refresh the Start/Stop text for all agent buttons."""
         for agent_path in self.agent_widgets:
             self.update_button_state(agent_path)
 
-    def start_all(self):
-        self.system_manager.start_system()
-        self.refresh_all_buttons()
-
-    def stop_all(self):
-        self.system_manager.shutdown()
-        self.refresh_all_buttons()
-
-    def reload_agent(self, agent_path):
-        self.system_manager.reload_agent(agent_path)
+    def show_status(self, message, error=False):
+        """Display a status message at the bottom of the window."""
+        status_color = "#ff0000" if error else "#006600"
+        status_label = ttk.Label(self.root, text=message, foreground=status_color)
+        status_label.pack(pady=5)
+        # Remove status after 5 seconds
+        self.root.after(5000, status_label.destroy)
 
     def on_close(self):
         # Gracefully shut down everything before closing
