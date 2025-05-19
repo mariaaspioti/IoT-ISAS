@@ -1,16 +1,20 @@
 # IoT-ISAS
 ---
-![Worker Tracking functionality](images/worker-tracking.jpg)
+IoT-ISAS is a smart security and access management system designed to monitor personnel movement, manage authorized access, and handle emergency notifications. Using technologies like NFC Tags & Readers, Bluetooth & GPS trackers, smart locks, SOS buttons, and cameras, the system provides centralized control through a dashboard. It also supports scheduling and tracking facility maintenances, as well as viewing historical movement data for personnel.
 
-![SOS Button press functionality](images/sos-button-pressing.jpg)
+## 🎥 Videos
 
-![Alert Handling](images/alert-handling.jpg)
+### Personnel Tracking & Access Control 
 
-![Smart Lock Access Control functionality](images/door-unlocking-scenario.jpg)
+https://github.com/user-attachments/assets/2492adac-3ba0-4fd6-8320-3c37528405c1
 
-![Camera Feed and Scheduling Maintenances functionality](images/camera-feed-maintenances.jpg)
+### SOS Button - Alert in Dashboard
 
-![Historic View functionality](images/historic-view.jpg)
+https://github.com/user-attachments/assets/2be752e6-6724-42ab-83a6-3f0810d8ad1f
+
+### Maintenance Scheduling
+https://github.com/user-attachments/assets/939664b3-e0d0-475c-973e-9631ca7ab51b
+
 
 ## Architecture
 ---
