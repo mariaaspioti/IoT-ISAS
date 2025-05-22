@@ -13,7 +13,13 @@ https://github.com/user-attachments/assets/2492adac-3ba0-4fd6-8320-3c37528405c1
 https://github.com/user-attachments/assets/2be752e6-6724-42ab-83a6-3f0810d8ad1f
 
 ### Maintenance Scheduling
+
 https://github.com/user-attachments/assets/939664b3-e0d0-475c-973e-9631ca7ab51b
+
+### Worker Movement History View
+
+https://github.com/user-attachments/assets/3beb409a-ecd3-434e-b908-3d890954bd09
+
 
 
 ## Architecture
