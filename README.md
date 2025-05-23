@@ -2,9 +2,7 @@
 ---
 IoT-ISAS (Industrial Spatial Authorization System) is a simulated smart security and access management system developed as an undergraduate project for an IoT course. Designed around a fictional scenario at Ireland's chip fabrication in Leixlip, the system models how personnel movement, role-based access control, and emergencies could be managed in an industrial setting. 
 
-The project simulates the integration of a variety of devices, such as NFC tags and readers, Bluetooth and GPS trackers, smart locks, SOS buttons, and cameras. These devices communicate with the Orion Context Broker via IoT tools like MQTT, LoraWAN and HTTP. All data is then managed and visualized thourgh a centralized dashboard built with Node.js, React, SQlite, and InfluxDB.
-
-Users can monitor worker locations, review historical movement data, respond to emergency alerts, schedule and track facility maintenance events, and manually control door access. While the system wasn't implemented in a real facility, some hardware components, namely an NFC reader and tags, a smart lock, an SOS button and a GPS tracker, were available and used during development and demostration.
+Users can monitor worker locations, review historical movement data, respond to emergency alerts, schedule and track facility maintenance events, manually control door access, and view camera footage. While the system wasn't implemented in a real facility, some hardware components, including an NFC reader and tags, a smart lock, an SOS button and a GPS tracker, were available and used during development and demonstration.
 
 ## 🎥 Videos
 
@@ -46,6 +44,9 @@ https://github.com/user-attachments/assets/3beb409a-ecd3-434e-b908-3d890954bd09
 
 ## Architecture
 ---
+
+The project simulates the integration of a variety of devices, such as NFC tags and readers, Bluetooth and GPS trackers, smart locks, SOS buttons, and cameras. These devices communicate with the Orion Context Broker via IoT tools like MQTT, LoraWAN and HTTP. All data is then managed and visualized thourgh a centralized dashboard built with Node.js, React, SQlite, and InfluxDB.
+
 ![System architecture](images/final-architecture.png)
 
 ## Start system
