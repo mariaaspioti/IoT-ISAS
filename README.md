@@ -29,9 +29,7 @@ The demo video shows a real SOS button press, the real time visual output in the
 
 https://github.com/user-attachments/assets/939664b3-e0d0-475c-973e-9631ca7ab51b
 
-The SOS Button provided to all workers for emergencies, creates an alert that appears both as a mark on the map and in the Active Alerts list on the dashboard. Each alert diplays essential information, including who pressed the button, their coordinates and whether they are inside a building or outdoors. Security officers can handle the alert by unlocking all doors, activating the alarm, or dismissing the alert.
-
-The demo video shows a real SOS button press, the real time visual output in the dashboard and the alert being dismissed. 
+The dashboard allows you to __schedule maintenance events__ by selecting the designated building, setting the start and end date and time, and specifying which personnel are allowed access during the maintenance period. Scheduled maintenances are displayed next to the map for quick reference and can be cancelled if needed. This demo shows how a new maintenance entry is created and added to the _Scheduled Maintenance_ list, and later cancelled. Currently,  access restrictions are not enforced during active maintenance periods.
 
 ### Worker Movement History View
 
