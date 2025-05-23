@@ -15,13 +15,13 @@ __Personnel Tracking__ is simulated using predefined movement routes for each wo
 
 __Access Control__ is role-based, meaning it is implemented based on each worker's assigned role, which determines the facilities they are authorized to enter. Each worker is assigned an NFC tag, which is scanned at NFC readers when entering or exiting a building or room.
 
-While access control is not enforced in the general tracking simulation, we showcase a scenario using a real NFC reader, NFC tag, and smart lock. In the demo video, a technician (represented by the yellow marker near the bottom center of the map) scans their tag at the NFC reader which is linked to Fab 1 and is granted access, as shown by a blue marker appearing on the door in the map and the smart lock unlocking. The same technician then scans his tag at the NFC reader which is now linked to Cleanroom 1. Since their role doesn't authorize access to Cleanrooms, the smart lock remains locked, and a red marker appears on the door in the map to indicate the denied entry.
+We showcase a scenario using a real NFC reader, NFC tag, and smart lock. In the demo video, a technician (represented by the yellow marker near the bottom center of the map) scans their tag at the NFC reader which is linked to Fab 1 and is granted access, as shown by a blue marker appearing on the door in the map and the smart lock unlocking. The same technician then scans his tag at the NFC reader which is now linked to Cleanroom 1. Since their role doesn't authorize access to Cleanrooms, the smart lock remains locked, and a red marker appears on the door in the map to indicate the denied entry.
 
 ### SOS Button - Alert in Dashboard
 
 https://github.com/user-attachments/assets/2be752e6-6724-42ab-83a6-3f0810d8ad1f
 
-The SOS Button provided to all workers for emergencies, creates an alert that appears both as a mark on the map and in the Active Alerts list on the dashboard. Each alert diplays essential information, including who pressed the button, their coordinates and whether they are inside a building or outdoors. Security officers can handle the alert by unlocking all doors, activating the alarm, or dismissing the alert. 
+The __SOS Button__ provided to all workers for __emergencies__, creates an alert that appears both as a mark on the map and in the _Active Alerts_ list on the dashboard. Each alert diplays essential information, including who pressed the button, their coordinates and whether they are inside a building or outdoors. Security officers can handle the alert by unlocking all doors, activating the alarm, or dismissing the alert. 
 
 The demo video shows a real SOS button press, the real time visual output in the dashboard and the alert being dismissed. 
 
@@ -29,7 +29,9 @@ The demo video shows a real SOS button press, the real time visual output in the
 
 https://github.com/user-attachments/assets/939664b3-e0d0-475c-973e-9631ca7ab51b
 
-The dashboard allows you to __schedule maintenance events__ by selecting the designated building, setting the start and end date and time, and specifying which personnel are allowed access during the maintenance period. Scheduled maintenances are displayed next to the map for quick reference and can be cancelled if needed. This demo shows how a new maintenance entry is created and added to the _Scheduled Maintenance_ list, and later cancelled. Currently,  access restrictions are not enforced during active maintenance periods.
+The dashboard allows you to __schedule maintenance events__ by selecting the designated building, setting the start and end date and time, and specifying which personnel are allowed access during the maintenance period. Scheduled maintenances are displayed next to the map for quick reference and can be cancelled if needed. 
+
+This demo shows how a new maintenance entry is created and added to the _Scheduled Maintenance_ list, and later cancelled.
 
 ### Worker Movement History View
 
@@ -42,9 +44,10 @@ This video showcases the trails of two simulated workers during 30-minute period
 ## Architecture
 ---
 
-The project simulates the integration of a variety of devices, such as NFC tags and readers, Bluetooth and GPS trackers, smart locks, SOS buttons, and cameras. These devices communicate with the Orion Context Broker via IoT tools like MQTT, LoraWAN and HTTP. All data is then managed and visualized thourgh a centralized dashboard built with Node.js, React, SQlite, and InfluxDB.
-
 ![System architecture](images/final-architecture.png)
+
+Above is an overview of the IoT-ISAS architecture. The project simulates the integration of a variety of devices, such as NFC tags and readers, Bluetooth and GPS trackers, smart locks, SOS buttons, and cameras. These devices communicate with the Orion Context Broker via IoT tools like MQTT, LoraWAN and HTTP. All data is then managed and visualized thourgh a centralized dashboard built with Node.js, React, SQlite, and InfluxDB.
+
 
 ## Start system
 ---
