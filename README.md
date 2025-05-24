@@ -62,6 +62,6 @@ _Alternatively:_
 - Run fakers beacon_mimic.py, button_mimic.py (to send SOS alerts), ( optional nfc_reader_mimic.py)
 - Go to `./source.`
 - Execute `npm install`
-- Execute `npm run install-start:all`
+- Execute `npm run install-start`
 - Visit http://localhost:3000
 
