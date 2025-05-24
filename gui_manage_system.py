@@ -132,7 +132,8 @@ class SystemManager:
                 print("Stopping Node.js server (npm).")
                 # self.npm_process.terminate()
                 # On Windows, send CTRL_BREAK_EVENT to the process group
-                self.npm_process.send_signal(signal.CTRL_BREAK_EVENT)
+                # self.npm_process.send_signal(signal.CTRL_BREAK_EVENT)
+                subprocess.run(["taskkill", "/F", "/T", "/PID", str(self.npm_process.pid)], shell=True)
                 self.npm_process.wait(timeout=5)
             except Exception as e:
                 print(f"Error terminating npm server: {str(e)}")
