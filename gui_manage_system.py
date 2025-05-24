@@ -4,6 +4,7 @@ import glob
 import signal
 import subprocess
 from pathlib import Path
+import threading
 import tkinter as tk
 from tkinter import ttk
 
@@ -22,6 +23,9 @@ class SystemManager:
         self.required_devices = ["beacon_mimic.py", "button_mimic.py"]
         self.nfc_reader_file = self.iot_dir / "nfc_reader_mimic.py"
         self.npm_process = None
+
+        print(f"Source directory: {self.source_dir}")
+        print(f"Working directory: {os.getcwd()}")  
 
     def is_agent_running(self, agent_path):
         return agent_path in self.agents
@@ -107,7 +111,7 @@ class SystemManager:
 
     def start_npm_server(self):
         """Start the Node.js server via npm."""
-        npm_cmd = ["npm", "run", "install-start:all"]
+        npm_cmd = ["npm", "run", "install-start"]
         try:
             shell_flag = sys.platform == "win32"
             self.npm_process = subprocess.Popen(
@@ -116,8 +120,21 @@ class SystemManager:
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 shell=shell_flag,
+                text=True,
                 # preexec_fn=os.setsid if sys.platform == "win32" else None   
             )
+            # Start thread to consume output
+            def log_output(process, output_type):
+                for line in iter(getattr(process, output_type).readline, ''):
+                    print(f"[npm {output_type}] {line.strip()}")
+
+            threading.Thread(
+                target=log_output, args=(self.npm_process, 'stdout'), daemon=True
+            ).start()
+            threading.Thread(
+                target=log_output, args=(self.npm_process, 'stderr'), daemon=True
+            ).start()
+
             self.processes.append(self.npm_process)
             print(f"Started Node.js server in {self.source_dir}")
         except Exception as e:

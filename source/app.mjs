@@ -1,7 +1,9 @@
 import express from 'express';
 import axios from 'axios';
 import http from 'http';
-import cors from 'cors';
+// import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import {Server as SocketIOServer} from 'socket.io';
 
 // 
@@ -24,7 +26,7 @@ const getHeaders = {
 };
 
 // Enable CORS
-app.use(cors({ origin: 'http://localhost:3000' })); // allow requests from this, React development server
+// app.use(cors({ origin: 'http://localhost:3000' })); // allow requests from this, React development server
 
 // Parse JSON bodies (as sent by API clients)
 app.use(express.json()); 
@@ -54,9 +56,19 @@ indexRouter.get('/entities', async (req, res) => {
 });
 
 //
-indexRouter.get('/', (req, res) => {
-    res.send('Go to /entities to fetch entities from Orion Context Broker');
+// indexRouter.get('/', (req, res) => {
+//     res.send('Go to /entities to fetch entities from Orion Context Broker');
+// });
+// Serve static files from the React app
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use(express.static(path.join(__dirname, 'frontend', 'build')));
+
+// Catch-all handler to serve React's index.html for any other routes
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend', 'build', 'index.html'));
 });
+
 
 // handle errors
 app.use((req, res) => {

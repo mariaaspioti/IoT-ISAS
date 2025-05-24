@@ -19,11 +19,13 @@
   "scripts": {
     "clean": "rm -rf node_modules",
     "reinstall": "npm run clean && npm install",
+    "postinstall": "cd frontend && npm install && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "node ./node_modules/nodemon/bin/nodemon.js ./index.mjs",
     "start": "node ./index.mjs",
     "start:react": "cd ./frontend && npm start",
     "start:all": "concurrently \"npm run start\" \"npm run start:react\"",
+    "install-start": "npm install && npm run start",
     "install-start:all": "cross-env npm install && cd ./frontend && npm install && cd .. && npm run start:all"
   },
   "nodemonConfig": {
