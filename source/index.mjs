@@ -7,7 +7,7 @@
 
 import { application } from './app.mjs';
 
-const port = process.env.PORT || '3001';
+const port = process.env.PORT || '3000';
 
 const server = application.listen(port, () => {
     console.log(`Server listening at http://localhost:${port}`);
